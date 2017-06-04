@@ -8,3 +8,45 @@
     /*禁止用户选中文字*/
     -webkit-user-select: none;
 }
+
+.box {
+    margin: 20px auto;
+    padding: 20px;
+    width: 400px;
+    border: 1px green solid;
+
+    border-radius: 10px;
+    box-shadow: 3px 3px 15px 0 #DBEEBD;
+}
+
+.box thead {
+    background: green;
+    color: #ffffff;
+}
+
+.box thead tr {
+    height: 35px;
+}
+
+.box thead tr th {
+    width: 100px;
+    text-align: center;
+}
+
+.box thead tr th.cursor {
+    cursor: pointer;
+}
+
+.box tbody tr {
+    height: 30px;
+}
+
+.box tbody tr.bg {
+    background: lightyellow;
+}
+
+
+.box tbody tr td {
+    width: 100px;
+    text-align: center;
+}
