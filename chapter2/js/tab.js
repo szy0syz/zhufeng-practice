@@ -78,6 +78,7 @@ function sort(mouseEvent) {
   }
   var rowsAry = [].__proto__.slice.call(tb.children)
   rowsAry.sort(function (a, b) {
+    // 注意：在这个匿名函数里this是window！
     var curValue = a.children[columnIndex].firstChild.nodeValue
     var nextValue = b.children[columnIndex].firstChild.nodeValue
     if (isNaN(parseFloat(curValue)) || isNaN(parseFloat(nextValue))) {
