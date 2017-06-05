@@ -15,10 +15,44 @@ var xhr = new XMLHttpRequest
 xhr.open("get", "./json/data.txt", true) // 第三个参数布尔值表明是异步请求
 // -->> (3). 创建一个Ajax对象
 xhr.onreadystatechange = function () {
-  if(xhr.readyState === 4 && /^2\d{2}/.test(xhr.status)) {
+  if (xhr.readyState === 4 && /^2\d{2}/.test(xhr.status)) {
     var val = xhr.responseText;
     data = utils.jsonParse(val)
+    bind()
+    changeBg()
   }
 }
 // -->> (4). 创建一个Ajax对象
 xhr.send()
+
+// -> 2.实现数据绑定
+function bind() {
+  var frg = document.createDocumentFragment()
+  for (var i = 0; i < data.length; i++) {
+    var cur = data[i]
+    //创建文档碎片
+    var oTr = document.createElement('tr')
+    for (var key in cur) {
+      if(key == 'sex') {
+        cur[key] = cur[key] == 1 ? '男' : '女'
+      }
+      var oTd = document.createElement('td')
+      oTd.appendChild(document.createTextNode(cur[key]))
+      oTr.appendChild(oTd)
+    }
+    frg.appendChild(oTr)
+  }
+  tBody.appendChild(frg)
+}
+
+function changeBg () {
+  //classList有点新~看要不要加垫片啊~
+  for (var i=0; i<oRows.length; i++) {
+    if( i%2 === 1) {
+      oRows[i].classList.add("bg")
+    } else {
+      oRows[i].classList.remove("bg")
+    }
+  }
+}
+//changeBg() //这里这么执行没颜色啊, 都还没有获取数据呢！行都没有怎么隔行变色。

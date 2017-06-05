@@ -9,6 +9,7 @@
     -webkit-user-select: none;
 }
 
+/*实现盒子阴影*/
 .box {
     margin: 20px auto;
     padding: 20px;

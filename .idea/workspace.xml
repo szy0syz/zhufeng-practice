@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0fe151a-6264-4b8e-8fbf-849a04e481af" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chapter2/css/tab.css" afterPath="$PROJECT_DIR$/chapter2/css/tab.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chapter2/js/tab.js" afterPath="$PROJECT_DIR$/chapter2/js/tab.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chapter2/课时31_表格综合排序.html" afterPath="$PROJECT_DIR$/chapter2/课时31_表格综合排序.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,21 +22,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="课时31_表格综合排序.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="课时31_表格综合排序.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chapter2/课时31_表格综合排序.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+            <state relative-caret-position="1084">
+              <caret line="85" column="35" lean-forward="true" selection-start-line="85" selection-start-column="34" selection-end-line="85" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tab.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tab.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chapter2/css/tab.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-26">
+              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tab.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/chapter2/js/tab.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+            <state relative-caret-position="-6">
+              <caret line="20" column="10" lean-forward="true" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
               <folding>
                 <element signature="e#0#40#0" expanded="false" />
               </folding>
@@ -53,6 +65,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>con</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -60,10 +77,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/chapter2/课时31_表格综合应用.html" />
-        <option value="$PROJECT_DIR$/chapter2/css/tab.css" />
-        <option value="$PROJECT_DIR$/chapter2/课时31_表格综合排序.html" />
         <option value="$PROJECT_DIR$/chapter2/js/utils.js" />
+        <option value="$PROJECT_DIR$/chapter2/课时31_表格综合排序.html" />
         <option value="$PROJECT_DIR$/chapter2/js/tab.js" />
+        <option value="$PROJECT_DIR$/chapter2/css/tab.css" />
       </list>
     </option>
   </component>
@@ -74,8 +91,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="831" />
-    <option name="y" value="151" />
+    <option name="x" value="769" />
+    <option name="y" value="154" />
     <option name="width" value="1158" />
     <option name="height" value="759" />
   </component>
@@ -171,6 +188,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -264,15 +282,15 @@
       <updated>1496590403279</updated>
       <workItem from="1496590404994" duration="1996000" />
       <workItem from="1496668705701" duration="1744000" />
-      <workItem from="1496671664929" duration="29000" />
+      <workItem from="1496671664929" duration="2746000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3769000" />
+    <option name="totallyTimeSpent" value="6486000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="831" y="151" width="1158" height="759" extended-state="0" />
+    <frame x="769" y="154" width="1158" height="759" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21635884" sideWeight="0.49516907" order="0" side_tool="false" content_ui="combo" />
@@ -322,14 +340,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/chapter2/css/tab.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chapter2/js/utils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -340,21 +350,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/chapter2/js/tab.js">
+    <entry file="file://$PROJECT_DIR$/chapter2/课时31_表格综合排序.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="1084">
+          <caret line="85" column="35" lean-forward="true" selection-start-line="85" selection-start-column="34" selection-end-line="85" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/chapter2/课时31_表格综合排序.html">
+    <entry file="file://$PROJECT_DIR$/chapter2/css/tab.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+        <state relative-caret-position="-26">
+          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter2/js/tab.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6">
+          <caret line="20" column="10" lean-forward="true" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
