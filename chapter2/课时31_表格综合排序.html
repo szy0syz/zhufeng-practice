@@ -11,10 +11,10 @@
         <table id="tab" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
-                    <th>姓名</th>
-                    <th class="cursor">年龄</th>
-                    <th class="cursor">武力</th>
-                    <th>性别</th>
+                    <th class="cursor" onclick="sort(this)">姓名</th>
+                    <th class="cursor" onclick="sort(this)">年龄</th>
+                    <th class="cursor" onclick="sort(this)">武力</th>
+                    <th class="cursor" onclick="sort(this)">性别</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,5 +51,32 @@
             </tbody>
         </table>
     </div>
+    <script type="text/javascript">
+
+
+        function sort(th) {
+            var tb = document.getElementsByTagName("tbody")[0]
+            if(tb.children.length < 2) return // 如果就一行数据那就不排序了
+            var columnIndex = -1 // 点的到底是哪一列
+            var siblingThAry = [].__proto__.slice.call(th.parentNode.children)
+            for (var i=0; i< siblingThAry.length; i++) {
+                if(siblingThAry[i].isEqualNode((th))) {
+                    columnIndex = i //第几列
+                }
+            }
+            var rowsAry = [].__proto__.slice.call(tb.children)
+            rowsAry.sort(function (a,b) {
+                var curValue = a.children[columnIndex].firstChild.nodeValue
+                var nextValue = b.children[columnIndex].firstChild.nodeValue
+                if (isNaN(parseFloat(curValue)) || isNaN(parseFloat(nextValue))) {
+                    return curValue.toString().localeCompare(nextValue.toString())
+                }
+                return parseFloat(curValue) - parseFloat(nextValue)
+            })
+            var frg = document.createDocumentFragment()
+            rowsAry.forEach(function (item) { frg.appendChild(item)})
+            tb.appendChild(frg)
+        }
+    </script>
 </body>
 </html>
