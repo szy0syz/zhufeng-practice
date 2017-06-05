@@ -53,7 +53,15 @@
     </div>
     <script type="text/javascript">
 
-
+        //算法分析：
+        //1.那个table的那个tbody
+        //2.看数据行是否小于2，小于就没必要排序
+        //3.确定所点的列序号
+        //4.tbody里的tr行对象转换成数组
+        //5.在数组中用列序号确认用哪个值排序，取得时候直接拿到nodeValue
+        //6.创建文档碎片
+        //7.循环排序后的数组，逐一将tr_dom对象存入文档碎片的childList里
+        //8.将文档碎片对象appendChild到tbody上
         function sort(th) {
             var tb = document.getElementsByTagName("tbody")[0]
             if(tb.children.length < 2) return // 如果就一行数据那就不排序了
