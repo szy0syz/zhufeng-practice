@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>伪类</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+            font-family: "PingFang SC";
+        }
+
+        .box {
+            border: 10px dashed rebeccapurple;
+            height: 300px;
+            width: 400px;
+            margin: 30px auto;
+            padding: 30px;
+        }
+
+        .box p {
+            font-size: medium;
+            line-height: 40px;
+        }
+
+        .box p:before {
+            display: block;
+            background: lightgreen;
+            content: "我是老司机";
+            text-align: center;
+        }
+
+        .box p:after {
+            display: block;
+            background: lightblue;
+            content: "开车上省城";
+            text-align: center;
+        }
+
+        .clear {
+            zoom: 1;
+        }
+
+        .clear:after {
+            display: block;
+            width: 0;
+            height: 0;
+            content: "";
+            overflow: hidden;
+            clear: both;
+        }
+
+        ul,li {
+            list-style: none;
+        }
+
+        .list {
+            margin: 20px auto;
+            width: 300px;
+            border:1px solid #000;
+            padding: 30px;
+        }
+
+        .list li {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: lightgoldenrodyellow;
+        }
+
+        /*CSS3中新增的伪类：nth-child*/
+        /*.list li:nth-child(odd) {*/
+            /*background: red;*/
+        /*}*/
+        /*.list li:nth-child(even) {*/
+            /*background: green;*/
+        /*}*/
+
+        .list li:nth-child(4n+1) {
+            background: red;
+        }
+        .list li:nth-child(4n+2) {
+            background: orange;
+        }
+        .list li:nth-child(4n+3) {
+            background: yellow;
+        }
+        .list li:nth-child(4n+4) {
+            background: green;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box" class="box">
+        <p id="boxP">
+            要得到你必须付出，要付出你还要学会坚持，如果你真的觉得很难，那你就放弃，但是你放弃了就不要抱怨，我觉得人生就是这样，世界真的是平衡的，每个人都是通过自己的努力，去决定自己生活的样子。
+        </p>
+    </div>
+
+    <ul class="list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ul class="list clear">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>
