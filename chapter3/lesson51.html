@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>元素偏移量</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #outer {
+            margin: 50px auto;
+            width: 180px;
+            height: 180px;
+            padding: 50px;
+            border: 10px solid #000000;
+            background: yellow;
+        }
+
+        #inner {
+            margin: 0px auto;
+            width: 80px;
+            height: 80px;
+            padding: 50px;
+            border: 10px solid #000000;
+            background: green;
+        }
+
+        #center {
+            margin: 0px auto;
+            width: 80px;
+            height: 80px;
+            border: 10px solid #000000;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="outer">
+        <div id="inner">
+            <div id="center">
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var outer = document.getElementById("outer"),
+            inner = document.getElementById("inner"),
+            center = document.getElementById("center")
+
+        center.parentNode // -> inner
+        inner.parentNode // ->  outer
+        outer.parentNode // ->  body
+
+        center.offsetParent // -> body element
+        inner.offsetParent // ->  body element
+        outer.offsetParent // ->  body element
+
+        outer.style.position = "relative"
+
+        function offset (curElement) {
+          var totalLfet = 0, totalTop = 0, parant = curElement.offsetParent
+          // 先算自己的
+          totalLfet += curElement.offsetLeft
+          totalTop += curElement.offsetTop
+
+          while (parant) {
+            // 判断是不是IE8
+            if (window.navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+                // 累加父级参照物的边框
+              totalLfet += parant.clientLeft
+              totalTop += parant.clientTop
+            }
+            // 累加父级外边框到上级参照物的距离
+            totalLfet += parant.offsetLeft
+            totalTop += parant.offsetTop
+            // 重新设置父级参照物
+            parant = parant.offsetParent
+          }
+          return {left: totalLfet, top: totalTop}
+        }
+
+    </script>
+</body>
+</html>
