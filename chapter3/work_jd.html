@@ -43,8 +43,58 @@
         }
 
         .line {
-            height: 1px;
-            border: 1px solid;
+            height: 2px;
+            background: #cc0000;
+        }
+
+        .cat1 {
+            position: absolute;
+            top: 2440px;
+        }
+
+        .cat2 {
+            position: absolute;
+            top: 3181px;
+        }
+
+        .cat3 {
+            position: absolute;
+            top: 3797px;
+        }
+
+        .cat4 {
+            position: absolute;
+            top: 4352px;
+        }
+
+        .cat5 {
+            position: absolute;
+            top: 4904px;
+        }
+
+        .cat6 {
+            position: absolute;
+            top: 5587px;
+        }
+
+        .cat7 {
+            position: absolute;
+            top: 6141px;
+        }
+
+        .cat8 {
+            position: absolute;
+            top: 6691px;
+        }
+
+        .cat9 {
+            position: absolute;
+            top: 7246px;
+        }
+
+        .cat10 {
+            position: absolute;
+            top: 8149px;
         }
     </style>
 </head>
@@ -84,27 +134,45 @@
         </a>
     </li>
 </ul>
-<div class="line"></div>
+<div class="line cat1" id="cat1"></div>
+<div class="line cat2" id="cat2"></div>
+<div class="line cat3" id="cat3"></div>
+<div class="line cat4" id="cat4"></div>
+<div class="line cat5" id="cat5"></div>
+<div class="line cat6" id="cat6"></div>
+<div class="line cat7" id="cat7"></div>
+<div class="line cat8" id="cat8"></div>
+<div class="line cat9" id="cat9"></div>
+<div class="line cat10" id="cat10"></div>
 <div align="center">
     <img src="jd.jpeg" alt="jd">
 </div>
 
 <script type="text/javascript">
-    lis = document.getElementsByClassName("lift_list")[0];
-    // 不兼容ie6~8
-    var arrLi = [].__proto__.slice.call(lis.children);
-    for (var i=0; i<arrLi.length; i++) {
-        arrLi[i].onmousemove = function () {
-            this.classList.add("lift_item_on")
-        }
-        arrLi[i].onmouseout = function () {
-            this.classList.remove("lift_item_on")
-        }
-        if(i === arrLi.length - 2) break; // 循环到倒数第二个后就不需要再循环最后一次了
+  lis = document.getElementsByClassName("lift_list")[0];
+  // 不兼容ie6~8
+  var arrLi = [].__proto__.slice.call(lis.children);
+  for (var i = 0; i < arrLi.length; i++) {
+    arrLi[i].onmousemove = function () {
+      this.classList.add("lift_item_on")
     }
+    arrLi[i].onmouseout = function () {
+      this.classList.remove("lift_item_on")
+    }
+    if (i === arrLi.length - 2) break; // 循环到倒数第二个后就不需要再循环最后一次了
+  }
 
+  // 获取当前浏览器可视页面最大高度，要做补偿
+  var arrOffset = (document.documentElement.clientHeight || document.body.clientHeight)
 
-    // 专项品2440
+  var arr0 = [2440, 3181, 3797, 4352, 4904, 5587, 6141, 6691, 7246, 8149]
+
+  var arr1 = arr0.map(function (item) { return (item - (arrOffset)/2).toFixed()  })
+
+  window.onscroll = function () {
+    // 获取当前滚动轴的卷去高度
+    var curScrollTop = document.documentElement.scrollTop || document.body.scrollTop
+  }
 </script>
 </body>
 </html>
