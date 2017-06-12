@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>京东商城</title>
+    <link rel="stylesheet" href="./css/jd_default.css">
+    <style type="text/css">
+        html, body {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .lift_list {
+            width: 34px;
+            height: auto;
+            position: fixed;
+            top: 200px;
+            left: 10px;
+        }
+
+        .lift_item {
+            height: 40px;
+            border: 1px solid #9c9a9c;
+            background: #9c9a9c;
+        }
+
+        .lift_btn_txt {
+            color: #fefefe;
+            text-align: center;
+            align-content: center;
+        }
+
+        .lift_item_on {
+            background: #cc0000;
+        }
+
+        .lift_item_first {
+
+        }
+
+        .lift_item_top {
+            background: #665555;
+        }
+
+        .line {
+            height: 1px;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+<ul class="lift_list">
+    <li class="J_lift_item lift_item lift_item_first lift_item_on" clstag="h|keycount|2016|41a01">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">享品质</span></a>
+    </li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a02">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">服饰美妆</span></a>
+    </li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a03">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">家电手机</span></a>
+    </li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a04">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">电脑数码</span></a>
+    </li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a05">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">3 C运动</span></a>
+    </li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a06">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">爱吃</span></a>
+    </li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a07">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">母婴家居</span></a></li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a08">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">图书汽车</span></a></li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a09">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">虚拟</span></a></li>
+    <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a10">
+        <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">还没逛够</span></a></li>
+    <li class="J_lift_item J_lift_item_top lift_item lift_item_top" clstag="h|keycount|2016|41a11">
+        <a href="javascript:;" class="lift_btn">
+            <span class="lift_btn_txt">顶部
+                <i class="lift_btn_arrow"><!--&#xe606;--></i>
+            </span>
+        </a>
+    </li>
+</ul>
+<div class="line"></div>
+<div align="center">
+    <img src="jd.jpeg" alt="jd">
+</div>
+
+<script type="text/javascript">
+    lis = document.getElementsByClassName("lift_list")[0];
+    // 不兼容ie6~8
+    var arrLi = [].__proto__.slice.call(lis.children);
+    for (var i=0; i<arrLi.length; i++) {
+        arrLi[i].onmousemove = function () {
+            this.classList.add("lift_item_on")
+        }
+        arrLi[i].onmouseout = function () {
+            this.classList.remove("lift_item_on")
+        }
+        if(i === arrLi.length - 2) break; // 循环到倒数第二个后就不需要再循环最后一次了
+    }
+
+
+    // 专项品2440
+</script>
+</body>
+</html>
