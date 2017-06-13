@@ -43,14 +43,64 @@
         }
 
         .line {
-            height: 1px;
-            border: 1px solid;
+            height: 2px;
+            background: #cc0000;
+        }
+
+        .cat1 {
+            position: absolute;
+            top: 2440px;
+        }
+
+        .cat2 {
+            position: absolute;
+            top: 3181px;
+        }
+
+        .cat3 {
+            position: absolute;
+            top: 3797px;
+        }
+
+        .cat4 {
+            position: absolute;
+            top: 4352px;
+        }
+
+        .cat5 {
+            position: absolute;
+            top: 4904px;
+        }
+
+        .cat6 {
+            position: absolute;
+            top: 5587px;
+        }
+
+        .cat7 {
+            position: absolute;
+            top: 6141px;
+        }
+
+        .cat8 {
+            position: absolute;
+            top: 6691px;
+        }
+
+        .cat9 {
+            position: absolute;
+            top: 7246px;
+        }
+
+        .cat10 {
+            position: absolute;
+            top: 8149px;
         }
     </style>
 </head>
 <body>
 <ul class="lift_list">
-    <li class="J_lift_item lift_item lift_item_first lift_item_on" clstag="h|keycount|2016|41a01">
+    <li class="J_lift_item lift_item lift_item_first" clstag="h|keycount|2016|41a01">
         <a href="javascript:;" class="lift_btn"><span class="lift_btn_txt">享品质</span></a>
     </li>
     <li class="J_lift_item lift_item" clstag="h|keycount|2016|41a02">
@@ -84,27 +134,101 @@
         </a>
     </li>
 </ul>
-<div class="line"></div>
+<div class="line cat1" id="cat1"></div>
+<div class="line cat2" id="cat2"></div>
+<div class="line cat3" id="cat3"></div>
+<div class="line cat4" id="cat4"></div>
+<div class="line cat5" id="cat5"></div>
+<div class="line cat6" id="cat6"></div>
+<div class="line cat7" id="cat7"></div>
+<div class="line cat8" id="cat8"></div>
+<div class="line cat9" id="cat9"></div>
+<div class="line cat10" id="cat10"></div>
 <div align="center">
     <img src="jd.jpeg" alt="jd">
 </div>
 
 <script type="text/javascript">
-    lis = document.getElementsByClassName("lift_list")[0];
-    // 不兼容ie6~8
-    var arrLi = [].__proto__.slice.call(lis.children);
-    for (var i=0; i<arrLi.length; i++) {
-        arrLi[i].onmousemove = function () {
-            this.classList.add("lift_item_on")
-        }
-        arrLi[i].onmouseout = function () {
-            this.classList.remove("lift_item_on")
-        }
-        if(i === arrLi.length - 2) break; // 循环到倒数第二个后就不需要再循环最后一次了
+  var ul = document.getElementsByClassName("lift_list")[0];
+  // 不兼容ie6~8
+  var arrLi = [].__proto__.slice.call(ul.children);
+  for (var i = 0; i < arrLi.length; i++) {
+    arrLi[i].onmousemove = function () {
+      this.classList.add("lift_item_on")
+    };
+    arrLi[i].onmouseout = function () {
+      this.classList.remove("lift_item_on")
+    };
+    // 绑定导航的点击事件
+    arrLi[i].onclick = naviClickHandle;
+    if (i === arrLi.length - 2) break; // 循环到倒数第二个后就不需要再循环最后一次了
+  }
+
+  // 获取当前浏览器可视页面最大高度，要做补偿
+  var arrOffset = (document.documentElement.clientHeight || document.body.clientHeight);
+  var maxHeight = (document.documentElement.scrollTop || document.body.scrollTop);
+  // 分类绝对位置，用于点击后定位
+  var arr0 = [2440, 3181, 3797, 4352, 4904, 5587, 6141, 6691, 7246, 8149];
+  // 分类补偿位置，用于滚动条事件
+  var arr1 = arr0.map(function (item) {
+    return (item - (arrOffset) / 4).toFixed();
+  });
+
+  //
+  window.onscroll = function () {
+    // 获取当前滚动轴的卷去高度
+    var curScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    if (curScrollTop < arr1[0]) {
+      ul.style.display = "none";
+    } else {
+      ul.style.display = "block";
     }
+    //虽然ul被隐藏了，但背景色改变还是要侦测的。
+    arr1.reduce(function (pre, cur, index, ary) {
+      if (curScrollTop >= pre && curScrollTop < cur) {
+        ul.children[index].classList.add("lift_item_on")
+      } else {
+        ul.children[index].classList.remove("lift_item_on")
+      }
+      if (curScrollTop >= arr1[arr1.length-1]) {
+        ul.children[arr1.length-1].classList.add("lift_item_on")
+      }
+      return cur;
+    }, 0)
+  }
+  ;
 
+  // 整个函数，给他滚去哪里的高度，他就自动滚上去或者滚下去，滚到的是绝对位置，死的。
+  function naviClickHandle(ev) {
+    var index = numberOfLi(ev.path);
+    move(arr0[index]);
+  }
 
-    // 专项品2440
+  // 再整个函数，确认哈li是ul的第几个孩子~~~~
+  function numberOfLi(path) {
+    var li = null;
+    var ul = null;
+    path.forEach(function (item) {
+      if (item.tagName === "LI") {
+        li = item
+      }
+      if (item.tagName === "UL") {
+        ul = item
+      }
+    });
+    clds = [].__proto__.slice.call(ul.children);
+    for (var i = 0; i < clds.length; i++) {
+      if (clds[i].isEqualNode(li)) {
+        return i;
+      }
+    }
+  }
+
+  // 再整个函数，要整个动画啊！
+  function move(target) {
+    document.documentElement.scrollTop = target;
+    document.body.scrollTop = target;
+  }
 </script>
 </body>
 </html>
