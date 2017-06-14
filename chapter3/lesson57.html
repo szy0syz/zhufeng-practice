@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片延迟加载_plus</title>
+    <style type="text/css">
+        #box {
+            width: 1000px;
+            height: 410px;
+            border: 2px solid lightgray;
+            padding: 2px;
+            margin: 1000px auto;
+            background: url("./img/tb_default.gif") no-repeat center #fefefe;
+        }
+        #box img {
+            height: 100%;
+            width: 100%;
+            display: none;
+        }
+    </style>
+<body>
+<div id="box">
+    <img id="img" src="" rscr="./img/yngf.jpg" alt="yngf">
+</div>
+
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var img = document.getElementById("img");
+
+    window.onscroll = function () {
+        var A = offset(box).top + box.offsetHeight;
+        var B = (document.documentElement.clientHeight || document.body.clientHeight) + (document.documentElement.scrollTop || document.body.scrollTop)
+        console.log(A, B);
+    }
+
+
+
+
+
+
+    function offset (curElement) {
+        var totalLfet = 0, totalTop = 0, parant = curElement.offsetParent
+        // 先算自己的
+        totalLfet += curElement.offsetLeft
+        totalTop += curElement.offsetTop
+
+        while (parant) {
+            // 判断是不是IE8
+            if (window.navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+                // 累加父级参照物的边框
+                totalLfet += parant.clientLeft
+                totalTop += parant.clientTop
+            }
+            // 累加父级外边框到上级参照物的距离
+            totalLfet += parant.offsetLeft
+            totalTop += parant.offsetTop
+            // 重新设置父级参照物
+            parant = parant.offsetParent
+        }
+        return {left: totalLfet, top: totalTop}
+    }
+</script>
+</body>
+</html>
