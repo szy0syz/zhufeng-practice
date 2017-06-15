@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取元素所有元素子节点</title>
+</head>
+<body>
+
+<div id="box">
+    <div>
+        <p>d-p-1</p>
+        <p>d-p-2</p>
+        <p>d-p-3</p>
+    </div>
+    <div></div>
+    <div></div>
+    <p>p1</p>
+    <p>p2</p>
+    <p>p3</p>
+</div>
+
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    function children (curEle, tagName) {
+        // 待处理
+        if (/MSIE [6|7|8]/.test(window.navigator.userAgent)) {
+            var arr = [];
+            var cnodes = utils.listToArray(curEle.childNodes);
+            cnodes.forEach(function (item) {
+                // 先亲子鉴定！！！再鉴定nodeType是不是元素节点，元素节点为1
+                if (item.parentNode === curEle && item.nodeType === 1) {
+                    if(tagName !== undefined) {
+                        if (item.tagName.toLowerCase() === tagName.toLowerCase()) {
+                            arr[arr.length] = item;
+                        }
+                    } else {
+                        arr[arr.length] = item;
+                    }
+                }
+            });
+            return arr;
+        }
+        return curEle.children;
+    }
+
+
+</script>
+</body>
+</html>

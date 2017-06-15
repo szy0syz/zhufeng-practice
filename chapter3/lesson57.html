@@ -22,14 +22,14 @@
 <div id="box">
     <img id="img" src="" rscr="./img/yngf.jpg" alt="yngf">
 </div>
-
+<script type="text/javascript" src="../utils.js"></script>
 <script type="text/javascript">
     var box = document.getElementById("box");
     var img = document.getElementById("img");
 
     window.onscroll = function () {
         if (img.isLoad) return;
-        var A = offset(box).top + box.offsetHeight;
+        var A = utils.offset(box).top + box.offsetHeight;
         var B = (document.documentElement.clientHeight || document.body.clientHeight) + (document.documentElement.scrollTop || document.body.scrollTop)
         if (A < B) {
             var timg = new Image;
@@ -40,35 +40,7 @@
                 img.style.display = 'block';
                 img.isLoad = true;
             }
-
         }
-    }
-
-
-
-
-
-
-    function offset (curElement) {
-        var totalLfet = 0, totalTop = 0, parant = curElement.offsetParent
-        // 先算自己的
-        totalLfet += curElement.offsetLeft
-        totalTop += curElement.offsetTop
-
-        while (parant) {
-            // 判断是不是IE8
-            if (window.navigator.userAgent.indexOf("MSIE 8.0") === -1) {
-                // 累加父级参照物的边框
-                totalLfet += parant.clientLeft
-                totalTop += parant.clientTop
-            }
-            // 累加父级外边框到上级参照物的距离
-            totalLfet += parant.offsetLeft
-            totalTop += parant.offsetTop
-            // 重新设置父级参照物
-            parant = parant.offsetParent
-        }
-        return {left: totalLfet, top: totalTop}
     }
 </script>
 </body>
