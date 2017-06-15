@@ -3,8 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>ynamp</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        ul, li {
+            /*去除ul和li默认样式(小圆点)*/
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        /*移动端布局小技巧：最外层盒子是不设置宽和高的*/
+
+        .news {
+            padding: 10px;
+        }
+
+        .news li{
+            /*设置li下级元素的父级参照物为li*/
+            position: relative;
+            height: 60px;
+            padding: 10px 0;
+            /*在每个li下面拿底边框加一个灰色分割线*/
+            border-bottom: 1px dashed #9c9a9c;
+        }
+
+        /*.news li > div:nth-child(1)*/
+        .news li > div:first-child{
+            /*固定此div根据上级li为父级参照物来定位*/
+            position: absolute;
+            top: 10px;
+            left: 0px;
+            width: 120px;
+            height: 80px;
+            background: url("./img/58/tb_default.gif") no-repeat center #fefefe;
+        }
+
+        .news li > div:first-child img {
+            /*设置图片的宽高为父级盒子的匡和高*/
+            height: 100%;
+            width: 100%;
+            display: none;
+        }
+
+        .news li > div:last-child {
+            height: 80px;
+            margin-left: 125px;
+        }
+
+        .news li > div:last-child h2 {
+            height: 20px;
+            line-height: 20px;
+            /*实现文字溢出后出现台阶*/
+            overflow: hidden;
+            /*文字超出的拆切部分以'...'代表*/
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .news li > div:last-child p {
+            height: 40px;
+            line-height: 20px;
+            font-size: 12px;
+            color: #616161;
+            overflow: hidden;
+            /*文字超出的拆切部分以'...'代表*/
+            text-overflow: ellipsis;
+            white-space: pre-wrap;
+        }
+
+    </style>
 </head>
 <body>
-
+<ul id="news" class="news">
+    <li>
+        <div>
+            <img src="./img/58/n001.min.png" alt="mf">
+        </div>
+        <div>
+            <h2>云农与美丰签署战略合作协议，强强联合深耕云</h2>
+            <p>2017年6月2日，云南农业生产资料股份有限公司和四川美丰农资化工有限责任公司在四川德阳签署战略合作协议签。美丰化工董事长陈红浪和云农股份党委书记、董事长朱华国出席签约仪式并在签约仪式上致辞。</p>
+        </div>
+    </li>
+</ul>
 </body>
 </html>
