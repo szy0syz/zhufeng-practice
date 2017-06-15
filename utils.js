@@ -2,49 +2,53 @@
  * Created by jerry on 2017/6/15.
  */
 
-var utils = {
+var utils = (function () {
+    // 判断当前浏览器环境是否是ie6~8
+    var flag = "getComputedStyle" in window;
+
     // 类数据转换成数组
-    listToArray: function (similarArray) {
+    function listToArray (similarArray) {
+        if (!flag) {
+            return Array.prototype.slice.call(similarArray);
+        }
         var arr = [];
-        try {
-            arr = Array.prototype.slice.call(similarArray)
-        } catch (err) {
-            console.log('ie6 ~ ie8');
-            for (var i=0, len = similarArray.length; i < len; i++) {
-                // 没有数组塌陷，安心用。
-                arr[arr.length] = similarArray[i];
-            }
+        for (var i=0, len = similarArray.length; i < len; i++) {
+            // 没有数组塌陷，安心用。
+            arr[arr.length] = similarArray[i];
         }
         return arr;
-    },
-    // 将字符串转换为对象
-    jsonParse: function (jsonStr) {
-        return 'JSON' in window ? JSON.parse(jsonStr) : eval('('  + jsonStr + ')');
-    },
-    // 获取元素距离body的绝对距离
-    offset: function (curElement) {
-    var totalLfet = 0, totalTop = 0, parant = curElement.offsetParent
-    // 先算自己的
-    totalLfet += curElement.offsetLeft
-    totalTop += curElement.offsetTop
-
-    while (parant) {
-        // 判断是不是IE8
-        if (window.navigator.userAgent.indexOf("MSIE 8.0") === -1) {
-            // 累加父级参照物的边框
-            totalLfet += parant.clientLeft
-            totalTop += parant.clientTop
-        }
-        // 累加父级外边框到上级参照物的距离
-        totalLfet += parant.offsetLeft
-        totalTop += parant.offsetTop
-        // 重新设置父级参照物
-        parant = parant.offsetParent
     }
-    return {left: totalLfet, top: totalTop}
-},
+
+    // 将字符串转换为对象
+    function jsonParse (jsonStr) {
+        return 'JSON' in window ? JSON.parse(jsonStr) : eval('('  + jsonStr + ')');
+    }
+
+    // 获取元素距离body的绝对距离
+    function offset (curElement) {
+        var totalLfet = 0, totalTop = 0, parant = curElement.offsetParent
+        // 先算自己的
+        totalLfet += curElement.offsetLeft
+        totalTop += curElement.offsetTop
+
+        while (parant) {
+            // 判断是不是IE8
+            if (window.navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+                // 累加父级参照物的边框
+                totalLfet += parant.clientLeft
+                totalTop += parant.clientTop
+            }
+            // 累加父级外边框到上级参照物的距离
+            totalLfet += parant.offsetLeft
+            totalTop += parant.offsetTop
+            // 重新设置父级参照物
+            parant = parant.offsetParent
+        }
+        return {left: totalLfet, top: totalTop}
+    }
+
     // 获取或设置html+body的属性
-    win: function (attr, val) {
+    function win (attr, val) {
         if (val === undefined) {
             var first = document.documentElement[attr];
             var second = document.body[attr];
@@ -56,12 +60,13 @@ var utils = {
         }
         document.documentElement[attr] = val;
         document.body[attr] = val;
-    },
+    }
+
     // 获取元素当前所有经过浏览器计算渲染过的样式中的[attr]对应的值(兼容(ie6~8))
-    getComputedCss: function (curEle, attr) {
+    function getComputedCss (curEle, attr) {
         var val = null;
         var reg = /^-?\d+(\.\d+)?(px|pt|rem|em)?$/
-        if ("getComputedStyle" in window) {
+        if (flag) {
             val = window.getComputedStyle(curEle, null)[attr];
         } else {  // -> 如果是IE6~8
             if (attr === 'opacity') {
@@ -76,4 +81,12 @@ var utils = {
         }
         return reg.test(val) ? parseFloat(val) : val;  // 只返回数值!正则匹配的是复合值,如padding background, floaf...
     }
-}
+
+    return {
+        listToArray: listToArray,
+        jsonParse: jsonParse,
+        offset: offset,
+        win: win,
+        getComputedCss: getComputedCss
+    }
+})()

@@ -5,7 +5,6 @@
     <title>获取元素所有元素子节点</title>
 </head>
 <body>
-
 <div id="box">
     <div>
         <p>d-p-1</p>
@@ -18,32 +17,35 @@
     <p>p2</p>
     <p>p3</p>
 </div>
-
 <script type="text/javascript" src="../utils.js"></script>
 <script type="text/javascript">
     function children (curEle, tagName) {
-        // 待处理
-        if (/MSIE [6|7|8]/.test(window.navigator.userAgent)) {
-            var arr = [];
+        var arr = [];
+        var flag = /MSIE [6|7|8]/.test(window.navigator.userAgent);
+        if (flag) {
             var cnodes = utils.listToArray(curEle.childNodes);
             cnodes.forEach(function (item) {
                 // 先亲子鉴定！！！再鉴定nodeType是不是元素节点，元素节点为1
                 if (item.parentNode === curEle && item.nodeType === 1) {
-                    if(tagName !== undefined) {
-                        if (item.tagName.toLowerCase() === tagName.toLowerCase()) {
-                            arr[arr.length] = item;
-                        }
-                    } else {
-                        arr[arr.length] = item;
-                    }
+                    arr[arr.length] = item;
                 }
-            });
-            return arr;
+            })
+        } else {
+            arr = utils.listToArray(curEle.children);
         }
-        return curEle.children;
+        if (tagName !== undefined) {
+            for (var j = 0; j < arr.length; j++) {
+                // 循环找tabName不匹配的元素
+                if(arr[j].tagName.toLowerCase() !== tagName.toLowerCase()) {
+                    // 找到不匹配的元素就删除
+                    arr.splice(j, 1);
+                    // 恢复索引
+                    j--;
+                }
+            }
+        }
+        return arr;
     }
-
-
 </script>
 </body>
 </html>
