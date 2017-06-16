@@ -28,7 +28,7 @@
             padding: 10px;
         }
 
-        .news li{
+        .news li {
             /*设置li下级元素的父级参照物为li*/
             position: relative;
             height: 60px;
@@ -38,11 +38,11 @@
         }
 
         /*.news li > div:nth-child(1)*/
-        .news li > div:first-child{
+        .news li > div:first-child {
             /*固定此div根据上级li为父级参照物来定位*/
             position: absolute;
             top: 10px;
-            left: 0px;
+            left: 0;
             width: 120px;
             height: 80px;
             background: url("./img/58/tb_default.gif") no-repeat center #fefefe;
@@ -53,6 +53,7 @@
             height: 100%;
             width: 100%;
             display: none;
+            opacity: 0;
         }
 
         .news li > div:last-child {
@@ -97,108 +98,127 @@
 </ul>
 <script type="text/javascript" src="../utils.js"></script>
 <script type="text/javascript">
-    var oul = document.getElementById('news')
-    //一、获取远程数据
-    // 1. 创建xhr对象~兼容ie
-    var xhr = null
-    if (window.XMLHttpRequest) {
-        xhr = new XMLHttpRequest()
-    } else { // 兼容IE
-        xhr = new ActiveXObject('Microsoft.XMLHTTP')
+  var oul = document.getElementById('news')
+  //一、获取远程数据
+  // 1. 创建xhr对象~兼容ie
+  var xhr = null
+  if (window.XMLHttpRequest) {
+    xhr = new XMLHttpRequest()
+  } else { // 兼容IE
+    xhr = new ActiveXObject('Microsoft.XMLHTTP')
+  }
+  // 2. 配置xhr对象
+  xhr.open("get", "./json/ynamp.txt") // 别加什么false
+  // 3. 设置xhr回调函数
+  // 3. 监听xhr对象的状态变化
+  xhr.onreadystatechange = function handler() {
+    // 如果xhr的readyState阶段为DONE 且 xhr的状态码为2开头的数字组成字符串
+    if (xhr.readyState === 4 && /^2\d+/.test(xhr.status)) {
+      var data = utils.jsonParse(xhr.responseText)
+      if (data) {
+        bindData(data, oul)
+      }
     }
-    // 2. 配置xhr对象
-    xhr.open("get", "./json/ynamp.txt") // 别加什么false
-    // 3. 设置xhr回调函数
-    // 3. 监听xhr对象的状态变化
-    xhr.onreadystatechange = function handler () {
-        // 如果xhr的readyState阶段为DONE 且 xhr的状态码为2开头的数字组成字符串
-        if (xhr.readyState === 4 && /^2\d+/.test(xhr.status)) {
-            var data = utils.jsonParse(xhr.responseText)
-            if (data) {
-                bindData(data, oul)
-            }
-        }
-    }
-    // 4. 发送xhr请求
-    xhr.send(null)
+  }
+  // 4. 发送xhr请求
+  xhr.send(null)
 
-    //二、数据绑定
-    function bindData (data, ele) {
-        if (data) {
-            var sb = ''
-            data.forEach(function (item) {
-                sb +=
-                    '<li>' +
-                        '<div>' +
-                            '<img src="#" rsrc="'+ item.img +'" alt="">'+
-                        '</div>' +
-                        '<div>' +
-                            '<h2>'+ item.title +'</h2>' +
-                            '<p>'+ item.desc +'</p>' +
-                        '</div>' +
-                    '</li>'
-            })
-            ele.innerHTML = sb
-            // 数据绑定完了得来检查一哈哪些图片要加载~
-            lazyLoadImg()
-        }
-        return ''
+  //二、数据绑定
+  function bindData(data, ele) {
+    if (data) {
+      var sb = ''
+      data.forEach(function (item) {
+        sb +=
+          '<li>' +
+          '<div>' +
+          '<img src="#" rsrc="' + item.img + '" alt="">' +
+          '</div>' +
+          '<div>' +
+          '<h2>' + item.title + '</h2>' +
+          '<p>' + item.desc + '</p>' +
+          '</div>' +
+          '</li>'
+      })
+      ele.innerHTML = sb
+      // 数据绑定完了得来检查一哈哪些图片要加载~
+      allImglazyLoad()
     }
+    return ''
+  }
 
-    //三、onscroll
-    // 首先得把img的rsrc替换到src里，然后检查图片加载情况，没问题就display:block。
-    // 还要给img的idLoad加个判断
-    // 又是异步害死人，得把数据取完以后再lazyload
-    function lazyLoadImg () {
-        var imgList = utils.listToArray(oul.getElementsByTagName('img'))
-        var curImg = null
-        for (var i = 0, len = imgList.length; i < len; i++) {
-            curImg = imgList[i]
-            // 过滤图片还没加载的
-            if (curImg.isLoad !== true) {
-                // A = 包图片的盒子外面框到body的距离 + 包图片盒子自身容器的高度
-                // var A = utils.offset(curImg.parentNode).top + curImg.parentNode.offsetHeight
-                var A = utils.offset(curImg.parentNode).top + curImg.parentNode.offsetHeight / 2
-                // B = 当前浏览器可视窗口的高度 + 滚动条卷去的高度
-                var B = utils.win('clientHeight') + utils.win('scrollTop')
-                if (A < B) {
-                    curImg.src = curImg.getAttribute('rsrc')
-                    curImg.isLoad = true
-                    curImg.style.display = 'block'
-                    curImg.style.opacity = 0
-                    var timer = window.setInterval(move(curImg, timer), 10)
-                    // 这里在使用onload加载时，是一个异步时间，他找不到curImg了
-                    // 咋个子证明呢？ 它里面的i已经是30~~~~~~~~~~！！！！！！
-                    // 这里异步咋理解呢？就是说，引擎不等图片是否给加载完成，是直接你小子是异步，后面好了你再更我说，老子先往下面执行着，我好了我会告诉你，你再执行。
-                    // 再说清楚点吧，也就是说curImg里的i已经是最后一个index了，所以他永远指向最后一个元素
-                    // 这种异步，一个图片还好整，一堆图片它就不等你加载完再处理了
-//                    var timg = new Image
-//                    timg.src = curImg.getAttribute('rsrc')
-//                    console.log(timg.src)
-//                    timg.onload = function () {
-//                        console.dir(curImg)
-//                        console.log("图片地址没问题")
-//                        curImg.src = curImg.getAttribute('rsrc')
-//                        curImg.isLoad = true
-//                        curImg.style.display = 'block'
-//                    }
-                }
-            }
-        }
+  //三、onscroll
+  // 首先得把img的rsrc替换到src里，然后检查图片加载情况，没问题就display:block。
+  // 还要给img的idLoad加个判断
+  // 又是异步害死人，得把数据取完以后再lazyload
+  function allImglazyLoad() {
+    var imgList = utils.listToArray(oul.getElementsByTagName('img'));
+    var curImg = null;
+    for (var i = 0, len = imgList.length; i < len; i++) {
+      curImg = imgList[i];
+      // 过滤图片还没加载的
+      if (curImg.isLoad) {
+        return
+      }
+      // A = 包图片的盒子外边框到body的距离 + 包图片盒子自身容器的高度
+      // var A = utils.offset(curImg.parentNode).top + curImg.parentNode.offsetHeight
+      // A = 包图片的盒子外边框到body的具体 + 包图片的自身容器一半的高度
+      var A = utils.offset(curImg.parentNode).top + curImg.parentNode.offsetHeight / 2
+      // B = 当前浏览器可视窗口的高度 + 滚动条卷去的高度
+      var B = utils.win('clientHeight') + utils.win('scrollTop');
+      if (A < B) {
+        imgLoad(curImg);
+        fadeIn(curImg);
+      }
     }
+  }
 
-    function move(ele, timer) {
-        var opacity = parseFloat(ele.style.opacity)
-        console.log(opacity)
-        opacity += 0.1
-        console.log(opacity)
-        ele.style.opacity = 0.5
-        if (ele.style.opacity >= 1) {
-            window.clearInterval(timer)
-        }
-    }
+  function imgLoad(curImg) {
+    //新建一个临时Image实例对象用于验证图片url是否有错
+    var tempImg = new Image();
+    tempImg.src = curImg.src = curImg.getAttribute('rsrc');
+    tempImg.onload = function () {
+      curImg.style.display = 'block';
+      curImg.src = this.src; // 这里this就是调用主体tempImg
+      tempImg = null;  // 清除无用栈内存
+    };
+    curImg.isload = true; // 设置图片的isload属性为true，以后检测是直接跳过该元素标签
 
-    window.onscroll = lazyLoadImg
+      // 这里在使用onload加载时，是一个异步时间，他找不到curImg了
+      // 咋个子证明呢？ 它里面的i已经是30~~~~~~~~~~！！！！！！
+      // 这里异步咋理解呢？就是说，引擎不等图片是否给加载完成，是直接你小子是异步，后面好了你再更我说，老子先往下面执行着，我好了我会告诉你，你再执行。
+      // 再说清楚点吧，也就是说curImg里的i已经是最后一个index了，所以他永远指向最后一个元素
+      // 这种异步，一个图片还好整，一堆图片它就不等你加载完再处理了
+      // 为了解决异步问题，把处理函数单独写成一个，传参时直接传内存地址即可解决问题
+      //var timg = new Image
+      //timg.src = curImg.getAttribute('rsrc')
+      //console.log(timg.src)
+      //timg.onload = function () {
+      //  console.dir(curImg)
+      //  console.log("图片地址没问题")
+      //  curImg.src = curImg.getAttribute('rsrc')
+      //  curImg.isLoad = true
+      //  curImg.style.display = 'block'
+  }
+
+  function fadeIn(curImg) {
+    var duration = 1000; // 动画的持续时间
+    var target = 1; // 动画完成时的目标数值
+    var interval = 10; // 动画每隔多少毫米执行一次
+    var step = (target / duration) * interval;  // 每次执行定时器需要加上的步长
+    var timer = window.setInterval(function () {
+      if (curOpacity >= target) { // curOpacity为预解释声明，第一次定时器执行时为null
+        window.clearInterval(timer);
+        return
+      }
+      var curOpacity = utils.getComputedCss(curImg, 'opacity');
+      curOpacity += step;
+      curImg.style.opacity = curOpacity;
+      curImg.style.filter = 'alpha(opacity=' + curOpacity * 100 + ')'
+    }, interval)
+
+  }
+
+  window.onscroll = allImglazyLoad
 
 </script>
 </body>
