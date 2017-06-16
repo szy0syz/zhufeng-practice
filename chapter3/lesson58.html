@@ -81,7 +81,6 @@
             text-overflow: ellipsis;
             white-space: pre-wrap;
         }
-
     </style>
 </head>
 <body>
@@ -183,21 +182,21 @@
     };
     curImg.isload = true; // 设置图片的isload属性为true，以后检测是直接跳过该元素标签
 
-      // 这里在使用onload加载时，是一个异步时间，他找不到curImg了
-      // 咋个子证明呢？ 它里面的i已经是30~~~~~~~~~~！！！！！！
-      // 这里异步咋理解呢？就是说，引擎不等图片是否给加载完成，是直接你小子是异步，后面好了你再更我说，老子先往下面执行着，我好了我会告诉你，你再执行。
-      // 再说清楚点吧，也就是说curImg里的i已经是最后一个index了，所以他永远指向最后一个元素
-      // 这种异步，一个图片还好整，一堆图片它就不等你加载完再处理了
-      // 为了解决异步问题，把处理函数单独写成一个，传参时直接传内存地址即可解决问题
-      //var timg = new Image
-      //timg.src = curImg.getAttribute('rsrc')
-      //console.log(timg.src)
-      //timg.onload = function () {
-      //  console.dir(curImg)
-      //  console.log("图片地址没问题")
-      //  curImg.src = curImg.getAttribute('rsrc')
-      //  curImg.isLoad = true
-      //  curImg.style.display = 'block'
+    // 这里在使用onload加载时，是一个异步时间，他找不到curImg了
+    // 咋个子证明呢？ 它里面的i已经是30~~~~~~~~~~！！！！！！
+    // 这里异步咋理解呢？就是说，引擎不等图片是否给加载完成，是直接你小子是异步，后面好了你再更我说，老子先往下面执行着，我好了我会告诉你，你再执行。
+    // 再说清楚点吧，也就是说curImg里的i已经是最后一个index了，所以他永远指向最后一个元素
+    // 这种异步，一个图片还好整，一堆图片它就不等你加载完再处理了
+    // 为了解决异步问题，把处理函数单独写成一个，传参时直接传内存地址即可解决问题
+    //var timg = new Image
+    //timg.src = curImg.getAttribute('rsrc')
+    //console.log(timg.src)
+    //timg.onload = function () {
+    //  console.dir(curImg)
+    //  console.log("图片地址没问题")
+    //  curImg.src = curImg.getAttribute('rsrc')
+    //  curImg.isLoad = true
+    //  curImg.style.display = 'block'
   }
 
   function fadeIn(curImg) {
@@ -215,7 +214,6 @@
       curImg.style.opacity = curOpacity;
       curImg.style.filter = 'alpha(opacity=' + curOpacity * 100 + ')'
     }, interval)
-
   }
 
   window.onscroll = allImglazyLoad

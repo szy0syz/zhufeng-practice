@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson64</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .size {
+            height: 300px;
+            width: 400px;
+        }
+
+        .center {
+            margin: 20px auto;
+        }
+
+        .border {
+            border: dashed 2px #cc0000;
+        }
+
+        .bg {
+            background: lightgreen;
+        }
+
+        .op {
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="size center border">
+
+</div>
+
+<script type="text/javascript">
+  function hasClass(curEle, className) {
+    // 分析需求：
+    // 情况1 -> "size" === /^size +/ , 当判断的类名在字符串首位时，就是以某某开头后面可以跟一到多个空格
+    // 情况2 -> "center" === / +center +/ ，当判断的类名在字符串中间时，就是以一到多空格开头和结尾中间就是类名
+    // 情况3 -> "className" === / +border^/
+    // 从以上三种情况分析可得：/(^| +)className( +|&)/
+    // 别忘了再给className传入参数左右两边取空格
+    var reg = new RegExp('(^| +)?' + className + '( +|&)?')
+    return reg.test(curEle.className)
+  }
+
+  console.log(hasClass(box, "size"))
+  console.log(hasClass(box, "center"))
+  console.log(hasClass(box, "border"))
+  console.log(hasClass(box, "bg"))
+
+  function addClass(curEle, className) {
+    var classAry = className.trim().split(/ +/g);
+    classAry.forEach(function (item) {
+      if(!hasClass(curEle,item)) {
+        curEle.className += ' ' + item;
+      }
+    })
+  }
+
+  function removeClass(curEle, className) {
+    var classAry = className.trim().split(/ +/g);
+    classAry.forEach(function (item) {
+      if(hasClass(curEle,item)) { //如果存在则移除
+        var reg = new RegExp("(^| +)"+ item +"( +|&)", 'g')
+        curEle.className = curEle.className.replace(reg, " ")
+      }
+    })
+  }
+
+</script>
+</body>
+</html>
