@@ -95,5 +95,96 @@
         </div>
     </li>
 </ul>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    var oul = document.getElementById('news')
+    //一、获取远程数据
+    // 1. 创建xhr对象~兼容ie
+    var xhr = null
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest()
+    } else { // 兼容IE
+        xhr = new ActiveXObject('Microsoft.XMLHTTP')
+    }
+    // 2. 配置xhr对象
+    xhr.open("get", "./json/ynamp.txt") // 别加什么false
+    // 3. 设置xhr回调函数
+    // 3. 监听xhr对象的状态变化
+    xhr.onreadystatechange = function handler () {
+        // 如果xhr的readyState阶段为DONE 且 xhr的状态码为2开头的数字组成字符串
+        if (xhr.readyState === 4 && /^2\d+/.test(xhr.status)) {
+            var data = utils.jsonParse(xhr.responseText)
+            if (data) {
+                bindData(data, oul)
+            }
+        }
+    }
+    // 4. 发送xhr请求
+    xhr.send(null)
+
+    //二、数据绑定
+    function bindData (data, ele) {
+        if (data) {
+            var sb = ''
+            data.forEach(function (item) {
+                sb +=
+                    '<li>' +
+                        '<div>' +
+                            '<img src="#" rsrc="'+ item.img +'" alt="">'+
+                        '</div>' +
+                        '<div>' +
+                            '<h2>'+ item.title +'</h2>' +
+                            '<p>'+ item.desc +'</p>' +
+                        '</div>' +
+                    '</li>'
+            })
+            ele.innerHTML = sb
+            // 数据绑定完了得来检查一哈哪些图片要加载~
+            lazyLoadImg()
+        }
+        return ''
+    }
+
+    //三、onscroll
+    // 首先得把img的rsrc替换到src里，然后检查图片加载情况，没问题就display:block。
+    // 还要给img的idLoad加个判断
+    // 又是异步害死人，得把数据取完以后再lazyload
+    function lazyLoadImg () {
+        var imgList = utils.listToArray(oul.getElementsByTagName('img'))
+        var curImg = null
+        for (var i = 0, len = imgList.length; i < len; i++) {
+            curImg = imgList[i]
+            // 过滤图片还没加载的
+            if (curImg.isLoad !== true) {
+                // A = 包图片的盒子外面框到body的距离 + 包图片盒子自身容器的高度
+                // var A = utils.offset(curImg.parentNode).top + curImg.parentNode.offsetHeight
+                var A = utils.offset(curImg.parentNode).top + curImg.parentNode.offsetHeight / 2
+                // B = 当前浏览器可视窗口的高度 + 滚动条卷去的高度
+                var B = utils.win('clientHeight') + utils.win('scrollTop')
+                if (A < B) {
+                    curImg.src = curImg.getAttribute('rsrc')
+                    curImg.isLoad = true
+                    curImg.style.display = 'block'
+                    // 这里在使用onload加载时，是一个异步时间，他找不到curImg了
+                    // 咋个子证明呢？ 它里面的i已经是30~~~~~~~~~~！！！！！！
+                    // 这里异步咋理解呢？就是说，引擎不等图片是否给加载完成，是直接你小子是异步，后面好了你再更我说，老子先往下面执行着，我好了我会告诉你，你再执行。
+//                    var timg = new Image
+//                    timg.src = curImg.getAttribute('rsrc')
+//                    console.log(timg.src)
+//                    timg.onload = function () {
+//                        console.dir(curImg)
+//                        console.log("图片地址没问题")
+//                        curImg.src = curImg.getAttribute('rsrc')
+//                        curImg.isLoad = true
+//                        curImg.style.display = 'block'
+//                    }
+                }
+            }
+        }
+    }
+
+    window.onscroll = lazyLoadImg
+
+</script>
 </body>
 </html>

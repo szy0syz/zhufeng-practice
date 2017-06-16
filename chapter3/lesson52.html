@@ -22,12 +22,12 @@
             background: lightgreen;
             /*CSS3 背景颜色渐变实现*/
             background: -webkit-linear-gradient(top, lightgreen, lightcoral, lightcyan, lightblue, limegreen, lightgray, lightsalmon);
-            background: webkit-linear-gradient(top, lightgreen, lightcoral, lightcyan, lightblue, limegreen, lightgray, lightsalmon);
+            background: linear-gradient(top, lightgreen, lightcoral, lightcyan, lightblue, limegreen, lightgray, lightsalmon);
         }
 
         a {
             /*让a标签没有下划线*/
-            text-decoration: node;
+            text-decoration: none;
             color: #000000;
         }
 
@@ -59,25 +59,25 @@
 
         #goTop:hover {
             opacity: 1;
-            filter: alpha(opacit=100);
+            filter: alpha(opacity=100);
         }
     </style>
 </head>
 
 <body>
-    <!--a便签本身是做页面跳转的，
-      1.如果href值为空则效果为刷新本页面
-      2.如果href值为#id，则为锚点定位，将scrollTop值设为元素相对body的距离，也就是定为该元素。
-      3.如果href值为“javascript:;”，则表示取消a标签的默认跳转行为
-    -->
-    <a href="javscript:;" id="goTop">Top</a>
+<!--a便签本身是做页面跳转的，
+  1.如果href值为空则效果为刷新本页面
+  2.如果href值为#id，则为锚点定位，将scrollTop值设为元素相对body的距离，也就是定为该元素。
+  3.如果href值为“javascript:;”，则表示取消a标签的默认跳转行为
+-->
+<a href="javscript:;" id="goTop">Top</a>
 
-    <script type="text/javascript">
-        var goTop = document.getElementById("goTop")
-        goTop.onclick = function () {
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-        }
-    </script>
+<script type="text/javascript">
+    var goTop = document.getElementById("goTop")
+    goTop.onclick = function () {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+    }
+</script>
 </body>
 </html>
