@@ -165,9 +165,13 @@
                     curImg.src = curImg.getAttribute('rsrc')
                     curImg.isLoad = true
                     curImg.style.display = 'block'
+                    curImg.style.opacity = 0
+                    var timer = window.setInterval(move(curImg, timer), 10)
                     // 这里在使用onload加载时，是一个异步时间，他找不到curImg了
                     // 咋个子证明呢？ 它里面的i已经是30~~~~~~~~~~！！！！！！
                     // 这里异步咋理解呢？就是说，引擎不等图片是否给加载完成，是直接你小子是异步，后面好了你再更我说，老子先往下面执行着，我好了我会告诉你，你再执行。
+                    // 再说清楚点吧，也就是说curImg里的i已经是最后一个index了，所以他永远指向最后一个元素
+                    // 这种异步，一个图片还好整，一堆图片它就不等你加载完再处理了
 //                    var timg = new Image
 //                    timg.src = curImg.getAttribute('rsrc')
 //                    console.log(timg.src)
@@ -180,6 +184,17 @@
 //                    }
                 }
             }
+        }
+    }
+
+    function move(ele, timer) {
+        var opacity = parseFloat(ele.style.opacity)
+        console.log(opacity)
+        opacity += 0.1
+        console.log(opacity)
+        ele.style.opacity = 0.5
+        if (ele.style.opacity >= 1) {
+            window.clearInterval(timer)
         }
     }
 
