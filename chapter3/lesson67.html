@@ -25,6 +25,20 @@
 </div>
 
 <script type="text/javascript">
+function setGroupCss (curEle, options) {
+  options = options || 0;
+  if (Object.prototype.toString.call(options) !== '[object Object]') {
+    return;
+  }
+  // 这里for...in循环时遍历公有+私有
+  for (var key in options) {
+    // 则必须过滤只循环私有属性
+    if(options.hasOwnProperty(key)) {
+      setCss(curEle, key, options[key])
+    }
+  }
+}
+
 function setCss (curEle, attr, value) {
   //处理特殊样式设置
   //特殊1：opacity  (兼容IE6~8)
@@ -50,10 +64,14 @@ function setCss (curEle, attr, value) {
   curEle.style[attr] = value;
 }
 
-setCss(box,'opacity', 0.5);
-setCss(box,'margin', 30);
-setCss(box, 'float', 'right');
-setCss(box,'borderBottom', '10px solid #000');
+//setCss(box,'opacity', 0.5);
+//setCss(box,'margin', 30);
+//setCss(box, 'float', 'right');
+setGroupCss(box, {
+  margin: 30,
+  opacity: 0.5,
+  float: 'right'
+})
 </script>
 </body>
 </html>

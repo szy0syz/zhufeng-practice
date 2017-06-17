@@ -187,6 +187,131 @@ var utils = (function () {
     return ec[ec.length - 1] ? ec[ec.length - 1] : null
   }
 
+  // 向指定容器的开头追加元素
+  function prepend (newEle, container) {
+    var fir = this.firstChild(container);
+    if (fir) { // 如果容器中有节点
+      container.insertBefore(newEle, fir)
+      return
+    }
+    container.appendChild(fir)
+  }
+
+  // 把新元素追加到指定元素的前面
+  function insertBefore (newEle, oldEle) {
+    oldEle.parentNode.insertBefore(newEle, oldEle)
+  }
+
+  // 判断元素style属性是否存在某类名
+  function hasClass(curEle, className) {
+    // 分析需求：
+    // 情况1 -> "size" === /^size +/ , 当判断的类名在字符串首位时，就是以某某开头后面可以跟一到多个空格
+    // 情况2 -> "center" === / +center +/ ，当判断的类名在字符串中间时，就是以一到多空格开头和结尾中间就是类名
+    // 情况3 -> "className" === / +border^/
+    // 从以上三种情况分析可得：/(^| +)className( +|&)/
+    // 别忘了再给className传入参数左右两边取空格
+    var reg = new RegExp('(^| +)?' + className + '( +|&)?')
+    return reg.test(curEle.className)
+  }
+
+  // 为指定元素添加css类名
+  function addClass(curEle, className) {
+    // 首先去除参数字符串左右两边的多余空格，然后一定要用正则的split分割
+    var classAry = className.trim().split(/ +/g);
+    classAry.forEach(function (item) {
+      if(!hasClass(curEle,item)) {
+        curEle.className += ' ' + item;
+      }
+    })
+  }
+
+  // 为元素删除某些css类名
+  function removeClass(curEle, className) {
+    // 首先去除参数字符串左右两边的多余空格，然后一定要用正则的split分割
+    var classAry = className.trim().split(/ +/g);
+    classAry.forEach(function (item) {
+      if(hasClass(curEle,item)) { //如果存在则移除
+        // 设置正则匹配以className开头或者一到多个空格开头或结尾
+        var reg = new RegExp("(^| +)"+ item +"( +|&)", 'g')
+        curEle.className = curEle.className.replace(reg, " ")
+      }
+    })
+  }
+
+  function getElementsByClassName (className, container) {
+    // 如果没传className或者不是字符串则返回空数组
+    if(!className && (typeof className !== "string")) {
+      return [];
+    }
+    // 如果没传container容器则默认设为document
+    if (!container) {
+      container = document;
+    }
+    var res = [];
+    // 使用所有浏览器都兼容的getElementsByTagName方法加通配符获取所有节点
+    var elemtnts = container.getElementsByTagName('*');
+    // 使用正则分割传递进来的类名字符串成数组
+    var classAry = className.trim().split(/ +/g);
+    for (var i =0; i<elemtnts.length; i++) // 循环容器内的元素节点
+    { // 假设结果验证为true
+      var isValid = true;
+      var curEle = elemtnts[i];
+      for (var j=0, len=classAry.length; j<len; j++) {
+        // 判断当前元素节点是否有该类名，没有就直接中断内循环设置isValid为false
+        if(!hasClass(curEle, classAry[j])) {
+          isValid = false;
+          break;
+        }
+      }
+      if (isValid) { // 只有当验证通过才将元素加入结果数组
+        res.push(elemtnts[i]);
+      }
+    }
+    return res; // 返回结果数组
+  }
+
+  // 设置元素的样式值setCss
+  function setCss (curEle, attr, value) {
+    //处理特殊样式设置
+    //特殊1：opacity  (兼容IE6~8)
+    if (attr === "opacity") {
+      curEle.style.opacity = value;
+      curEle.style.filter = 'alpha(opacity='+ value*100 +')';
+      return;
+    }
+    // 特殊2：float  (兼容IE6~8)
+    if (attr === "float") {
+      curEle.style['cssFloat'] = value;
+      curEle.style['styleFloat'] = value;
+      return;
+    }
+    var reg = /^(width|height|top|bottom|left|right|((border|padding)(Top|Bottom|Left|Right)?))$/;
+    if(reg.test(attr)) {
+      if (!isNaN(value)) { // 判断是否是一个有效数字
+        // 如果是一个有效数字，证明传进来的value是没有单位的，则需要我们手工补默认单位px
+        value += 'px';
+      }
+    }
+    // 实在是匹配不上了就直接赋值
+    curEle.style[attr] = value;
+  }
+
+  // 批量设置元素的样式值
+  function setGroupCss (curEle, options) {
+    options = options || 0; // 如果为undefined则设置为0
+    if (Object.prototype.toString.call(options) !== '[object Object]') {
+      return;
+    }
+    // 这里for...in循环时遍历公有+私有
+    for (var key in options) {
+      // 则必须过滤只循环私有属性
+      if(options.hasOwnProperty(key)) {
+        setCss(curEle, key, options[key])
+      }
+    }
+  }
+
+
   return {
     listToArray: listToArray,
     jsonParse: jsonParse,
@@ -202,6 +327,14 @@ var utils = (function () {
     siblings: siblings,
     index: index,
     firstChild: firstChild,
-    lastChild: lastChild
+    prepend: prepend,
+    insertBefore: insertBefore,
+    lastChild: lastChild,
+    hasClass: hasClass,
+    addClass: addClass,
+    removeClass: removeClass,
+    getElementsByClassName: getElementsByClassName,
+    setCss: setCss,
+    setGroupCss: setGroupCss
   }
 })()

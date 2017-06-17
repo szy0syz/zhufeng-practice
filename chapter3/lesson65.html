@@ -2,9 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>getElementsByClassName</title>
 </head>
 <body>
-$END$
+<div id="box">
+    <div id="div1" class="s1 s2 s3"></div>
+    <div id="div2" class="s2 s3"></div>
+    <div id="div3" class="s1 s3"></div>
+    <div id="div4" class="s1 s2"></div>
+    <div id="div5" class="s3"></div>
+</div>
+
+<script type="text/javascript">
+  function hasClass(curEle, className) {
+    // 分析需求：
+    // 情况1 -> "size" === /^size +/ , 当判断的类名在字符串首位时，就是以某某开头后面可以跟一到多个空格
+    // 情况2 -> "center" === / +center +/ ，当判断的类名在字符串中间时，就是以一到多空格开头和结尾中间就是类名
+    // 情况3 -> "className" === / +border^/
+    // 从以上三种情况分析可得：/(^| +)className( +|&)/
+    // 别忘了再给className传入参数左右两边取空格
+    var reg = new RegExp('(^| +)?' + className + '( +|&)?')
+    return reg.test(curEle.className)
+  }
+
+
+  // 实现getElementsByClassName
+  function getElementsByClassName (className, container) {
+    // 如果没传container容器则默认设为document
+    if (!container) {
+      container = document;
+    }
+    // 如果没传className或者不是字符串则返回空数组
+    if(!className && (typeof className !== "string")) {
+      return [];
+    }
+    var res = [];
+    // 使用所有浏览器都兼容的getElementsByTagName方法加通配符获取所有节点
+    var elemtnts = container.getElementsByTagName('*');
+    // 使用正则分割传递进来的类名字符串成数组
+    var classAry = className.trim().split(/ +/g);
+    for (var i =0; i<elemtnts.length; i++) // 循环容器内的元素节点
+    { // 假设结果验证为true
+      var isValid = true;
+      var curEle = elemtnts[i];
+      for (var j=0, len=classAry.length; j<len; j++) {
+        // 判断当前元素节点是否有该类名，没有就直接中断内循环设置isValid为false
+        if(!hasClass(curEle, classAry[j])) {
+          isValid = false;
+          break;
+        }
+      }
+      if (isValid) { // 只有当验证通过才将元素加入结果数组
+        res.push(elemtnts[i]);
+      }
+    }
+    return res; // 返回结果数组
+  }
+
+console.log(getElementsByClassName("s1", box))
+console.log(getElementsByClassName("s3", box))
+console.log(getElementsByClassName("s1 s3", box))
+console.log(getElementsByClassName("s2 s3", box))
+</script>
 </body>
 </html>
