@@ -209,11 +209,11 @@ var utils = (function () {
   function removeClass(curEle, className) {
     // 首先去除参数字符串左右两边的多余空格，然后一定要用正则的split分割
     var classAry = className.trim().split(/ +/g);
-    classAry.forEach(function (item) {
-      if (hasClass(curEle, item)) { //如果存在则移除
+    classAry.forEach(function (curClaName) {
+      if (hasClass(curEle, curClaName)) { //如果存在则移除
         // 设置正则匹配以className开头或者一到多个空格开头或结尾
-        var reg = new RegExp("(^| +)" + item + "( +|&)", 'g')
-        curEle.className = curEle.className.replace(reg, " ")
+        var reg = new RegExp("(?:^| +)" + curClaName + "(?: +|$)", 'g');  // 修复正则，不需要的不捕获！
+        curEle.className = curEle.className.replace(reg, " ");
       }
     })
   }
@@ -320,7 +320,7 @@ var utils = (function () {
     var argThd = arguments[2];
     if (typeof argSec === 'string') {
       // 如果第二个参数为字符串且第三个参数没传就证明只是获取css属性的值
-      if (!argThd) {
+      if (typeof argThd === 'undefined') {
         return getComputedCss.call(curEle, argSec);
       }
       var argList = this.listToArray(arguments).splice(1);
