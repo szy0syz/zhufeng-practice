@@ -73,8 +73,8 @@
 <div id="box" class="box">
     <ul>
         <li class="selected">页卡一</li>
-        <li>页卡一</li>
-        <li>页卡一</li>
+        <li>页卡二</li>
+        <li>页卡三</li>
     </ul>
     <div class="selected">内容一</div>
     <div>内容二</div>
@@ -89,16 +89,43 @@ var box = document.getElementById('box'),
 function chageTab (n) {
   for (var i=0, len=oLis.length; i < len; i++) {
     utils.removeClass(oLis[i],'selected');
+    utils.removeClass(oDivs[i],'selected');
   }
   utils.addClass(oLis[n], 'selected');
+  utils.addClass(oDivs[n], 'selected');
 }
 
-for (var i=0, len=oLis.length; i < len; i++) {
-  oLis[i].onclick = function (eventTarget) {
-    var num = utils.index(eventTarget.target); // 获取点击的那个li到底在同辈中排行老几？
-    chageTab(num);
-  }
+//for (var i=0, len=oLis.length; i < len; i++) {
+//  oLis[i].onclick = function (eventTarget) {
+//    var num = utils.index(this); // 获取点击的那个li到底在同辈中排行老几？
+//    chageTab(num);
+//  }
+//}
 
+for (var i=0, len=oLis.length; i < len; i++) {
+  oLis[i].onclick = tabClickHandler;
+}
+
+function tabClickHandler () {
+  var self = this;
+  // 获取所点击元素li在同辈中排行老几！
+  var index = utils.index(self);
+  // 获取点击li的所有兄弟元素节点，然后循环删除selected样式类名
+  utils.siblings(self).forEach(function (cur) {
+    utils.removeClass(cur, 'selected');
+  });
+  // 给点击li添加选中样式类名
+  utils.addClass(self, 'selected');
+  // 获取与点击li在同辈排行序号相同的div元素
+  var curDiv = utils.nextAll(this.parentNode)[index];
+  // 循环这个div的所有兄弟元素并删除选中样式
+  utils.siblings(curDiv).forEach(function (cur) {
+    utils.removeClass(cur, 'selected');
+  });
+  // 给对应div添加选中样式
+  utils.addClass(curDiv, 'selected');
+  self = null;
+  index = null;
 }
 </script>
 </body>
