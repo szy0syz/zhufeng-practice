@@ -38,17 +38,13 @@
     // 获取所点击元素li在同辈中排行老几！
     var index = utils.index(self);
     // 获取点击li的所有兄弟元素节点，然后循环删除selected样式类名
-    utils.siblings(self).forEach(function (cur) {
-      utils.removeClass(cur, 'selected');
-    });
+    clearSiblingsClassName(self, 'selected')
     // 给点击li添加选中样式类名
     utils.addClass(self, 'selected');
     // 获取与点击li在同辈排行序号相同的div元素
     var curDiv = utils.nextAll(this.parentNode)[index];
     // 循环这个div的所有兄弟元素并删除选中样式
-    utils.siblings(curDiv).forEach(function (cur) {
-      utils.removeClass(cur, 'selected');
-    });
+    clearSiblingsClassName(curDiv, 'selected')
     // 给对应div添加选中样式
     utils.addClass(curDiv, 'selected');
     self = null;

@@ -209,7 +209,7 @@
         window.clearInterval(timer);
         return
       }
-      var curOpacity = utils.css(curImg, 'opacity');
+      var curOpacity = utils.getComputedCss(curImg, 'opacity');
       curOpacity += step;
       curImg.style.opacity = curOpacity;
       curImg.style.filter = 'alpha(opacity=' + curOpacity * 100 + ')'
