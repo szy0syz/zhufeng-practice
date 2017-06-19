@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson71</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute; /*让小伙固定死以body为父级参照物*/
+            top: 0;
+            left: 0;
+            height: 100px;
+            width: 100px;
+            border: none;
+            background-color: lightgreen;
+        }
+
+        .box1 {
+            position: absolute; /*让小伙固定死以body为父级参照物*/
+            top: 150px;
+            left: 100px;
+            height: 100px;
+            width: 100px;
+            border: 1px solid #000000;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"></div>
+<div class="box1" id="box1"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    var box = document.getElementById('box');
+    var maxDistance = (document.documentElement.clientWidth || document.body.clientWidth) - box.offsetWidth;
+    var duration = 2000; // 动画持续时间2000ms
+    var interval = 10;   // 动画每10ms执行一次
+    // 步长的意思是 每一次interval时间盒子要移动多少距离
+    var step = (maxDistance / duration) * 10;
+//    var timer = window.setInterval(function () {
+//        var curPos = utils.css(box, "left");
+//        console.log(curPos);
+//        if ((curPos + step) > maxDistance) {
+//            utils.css(box, "left", maxDistance);
+//            window.clearInterval(timer);
+//            return;
+//        }
+//        utils.css(box, "left", curPos + step);
+//    }, interval);
+</script>
+</body>
+</html>
