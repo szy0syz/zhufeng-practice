@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson73</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute; /*让小伙固定死以body为父级参照物*/
+            top: 0;
+            left: 0;
+            height: 100px;
+            width: 100px;
+            border: none;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    var box = document.getElementById('box');
+    var target = utils.win("clientWidth") - box.offsetWidth;
+    var timer = null, curPos= null;
+    var step = 4;
+    function move () {
+        window.clearTimeout(timer);
+        vcurPos = utils.css(box, 'left');
+        if (curPos+step >= target) {
+            utils.css(box,'left', target);
+            return;
+        }
+        utils.css(box,'left', curPos+step);
+        timer = window.setTimeout(move, 5)
+    }
+    timer = window.setTimeout(move, 5);
+</script>
+</body>
+</html>

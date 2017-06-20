@@ -36,21 +36,42 @@
 <script type="text/javascript" src="../utils.js"></script>
 <script type="text/javascript">
     var box = document.getElementById('box');
+    // 获取盒子最大移动距离，公式=当前浏览器一个屏幕的宽度-整个盒子的宽度(含边框)
     var maxDistance = (document.documentElement.clientWidth || document.body.clientWidth) - box.offsetWidth;
     var duration = 2000; // 动画持续时间2000ms
     var interval = 10;   // 动画每10ms执行一次
     // 步长的意思是 每一次interval时间盒子要移动多少距离
     var step = (maxDistance / duration) * 10;
+    var timer = window.setInterval(function () {
+        var curPos = utils.css(box, "left");
+        // 判断当前位置 + 移动步长是否大于等于最大移动位置
+        if ((curPos + step) >= maxDistance) {
+            utils.css(box, "left", maxDistance); // 直接蹦到最大距离完事了~
+            window.clearInterval(timer); // 清除定时器
+            return;
+        }
+        utils.css(box, "left", curPos + step);
+    }, interval);
+
+//    var target = utils.win("clientWidth") - box.offsetWidth;
+//    var interval = 10;
+//    var begin = utils.css(box, "left");
+//    var change = target-begin;
+//    var duration = 2000;
+//    var time = 0;
+//    function getPos (t, b, c, d) {
+//        // time*duration/change+begin
+//        return t*d/c+b;
+//    };
 //    var timer = window.setInterval(function () {
-//        var curPos = utils.css(box, "left");
-//        console.log(curPos);
-//        if ((curPos + step) > maxDistance) {
-//            utils.css(box, "left", maxDistance);
-//            window.clearInterval(timer);
+//        time += interval;
+//        var pos = getPos(time,begin,change,duration);
+//        if(pos >= target) {
+//            utils.css(box, "left", target);
 //            return;
 //        }
-//        utils.css(box, "left", curPos + step);
-//    }, interval);
+//        utils.css(box, "left", pos);
+//    }, interval)
 </script>
 </body>
 </html>

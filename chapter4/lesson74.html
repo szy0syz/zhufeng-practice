@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson74</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute; /*让小伙固定死以body为父级参照物*/
+            top: 0;
+            left: 0;
+            height: 100px;
+            width: 100px;
+            border: none;
+            background-color: lightgreen;
+        }
+
+        .op {
+            position: absolute;
+            top: 160px;
+
+            height: 60px;
+            width: 100%;
+            /*border:1px solid #000000;*/
+        }
+
+        .op > div {
+            position: relative;
+            height: 60px;
+            width: 160px;
+            line-height: 55px;
+            /*border:1px solid lightgreen;*/
+            margin-left: 300px;
+        }
+
+        .pp span {
+            display: inline-block;
+        }
+
+        .op input {
+            outline: none;
+            margin-right: 20px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-left: 12px;
+            padding-right: 12px;
+
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"></div>
+<div class="op" id="op">
+    <div>
+        <span><input id="goLeft" type="button" value="向  左"></span>
+        <span><input id="goRight" type="button" value="向  右"></span>
+    </div>
+    <script type="text/javascript" src="../utils.js"></script>
+    <script type="text/javascript">
+        var box = document.getElementById('box');
+        var timer = null;
+        var target = utils.win("clientWidth") - box.offsetWidth
+        var step = 5;
+        function clickHandler(e) {
+            e = e || window.event;
+            e.target = e.target || e.srcElement;
+            if (e.target.id === 'goLeft') {
+                // 如果我们点的是向左移动，则把target设置为0
+                target = 0;
+                move();
+            } else if (e.target.id === 'goRight') {
+                // 如果我们点的是向右移动，则把target设置为当前浏览器屏幕一屏大小减去盒子自身宽度
+                target = utils.win("clientWidth") - box.offsetWidth
+                move();
+            } else {
+                return null;
+            }
+        }
+        var op = document.getElementById('op');
+        op.addEventListener("click", clickHandler);
+        function move() {
+            // 其实这里可以不消传参数，但是我们人工设置了，引擎就不需要再作用域链上翻了！
+            _move(target, step, box);
+        }
+        // 为了不产生作用域嵌套，使栈空间开口大！只开辟一个move()的栈空间！
+        function _move(target, step, el) {
+            window.clearTimeout(timer);
+            var curPos = utils.css(el, 'left');
+            target = target || 0;
+            if (target === 0) {
+                if (curPos - step <= target) {
+                    utils.css(el, 'left', target);
+                    return;
+                }
+                utils.css(box, 'left', curPos - step);
+                timer = window.setTimeout(function () {
+                    move();
+                }, 5)
+            } else {
+                if (curPos + step >= target) {
+                    utils.css(el, 'left', target);
+                    return;
+                }
+                utils.css(box, 'left', curPos + step);
+                timer = window.setTimeout(function () {
+                    move();
+                }, 5)
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

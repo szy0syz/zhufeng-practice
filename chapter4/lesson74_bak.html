@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson74</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute; /*让小伙固定死以body为父级参照物*/
+            top: 0;
+            left: 0;
+            height: 100px;
+            width: 100px;
+            border: none;
+            background-color: lightgreen;
+        }
+
+        .op {
+            position: absolute;
+            top: 160px;
+
+            height: 60px;
+            width: 100%;
+            /*border:1px solid #000000;*/
+        }
+
+        .op > div {
+            position: relative;
+            height: 60px;
+            width: 160px;
+            line-height: 55px;
+            /*border:1px solid lightgreen;*/
+            margin-left: 300px;
+        }
+
+        .pp span {
+            display: inline-block;
+        }
+
+        .op input {
+            outline: none;
+            margin-right: 20px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-left: 12px;
+            padding-right: 12px;
+
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"></div>
+<div class="op" id="op">
+    <div>
+        <span><input id="goLeft" type="button" value="向  右"></span>
+        <span><input id="goRight" type="button" value="向  右"></span>
+    </div>
+    <script type="text/javascript" src="../utils.js"></script>
+    <script type="text/javascript">
+        var box = document.getElementById('box');
+        var timer = null;
+        var target = utils.win("clientWidth") - box.offsetWidth
+        function clickHandler(e) {
+            e = e || window.event;
+            e.target = e.target || e.srcElement;
+            if (e.target.id === 'goLeft') {
+                move(0, 5, box);
+            } else if (e.target.id === 'goRight') {
+                move(target, 5, box);
+            } else {
+                return null;
+            }
+        }
+        var op = document.getElementById('op');
+        op.addEventListener("click", clickHandler)
+        function move(target, step, el) {
+            window.clearTimeout(timer);
+            var curPos = utils.css(el, 'left');
+            target = target || 0;
+            console.log(curPos, target);
+            if (target === 0) {
+                if (curPos - step <= target) {
+                    utils.css(el, 'left', target);
+                    return;
+                }
+                utils.css(box, 'left', curPos - step);
+                timer = window.setTimeout(function () {
+                    move(target, step, box);
+                }, 5)
+            } else {
+                if (curPos + step >= target) {
+                    utils.css(el, 'left', target);
+                    return;
+                }
+                utils.css(box, 'left', curPos + step);
+                timer = window.setTimeout(function () {
+                    move(target, step, box);
+                }, 5)
+            }
+        }
+    </script>
+</div>
+</body>
+</html>
