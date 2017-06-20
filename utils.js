@@ -53,8 +53,8 @@ var utils = (function () {
       var first = document.documentElement[attr];
       var second = document.body[attr];
       // 排除css中给html或者body设置类似height:500%属性的情况
-      if (first > second) {
-        return second;
+      if (first !==0 && first > second)  {
+        return first;
       }
       return first || second;
     }

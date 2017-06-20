@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson77</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute; /*让小伙固定死以body为父级参照物*/
+            top: 0;
+            left: 0;
+            height: 100px;
+            width: 100px;
+            border: none;
+            background-color: lightgreen;
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"></div>
+
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript" src="../tween.js"></script>
+<script type="text/javascript">
+    //让盒子在规定的时间内两个方向运动
+    var box = document.getElementById('box');
+    var target = {
+        left: utils.win('clientWidth') - box.offsetWidth,
+        top: utils.win("clientHeight") - box.offsetHeight,
+        opacity: 0
+    }
+    moveAnimate(box, target, 3000, 20);
+</script>
+</body>
+</html>

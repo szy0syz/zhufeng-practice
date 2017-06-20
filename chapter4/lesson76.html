@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson76</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute; /*让小伙固定死以body为父级参照物*/
+            top: 0;
+            left: 0;
+            height: 100px;
+            width: 100px;
+            border: none;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"></div>
+
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    //让盒子在规定的时间内两个方向运动
+    var box = document.getElementById('box');
+    var duration = 1000, interval = 10, time = 0, timer = null;
+    // 最终左边位置距离为当前屏幕最大宽度 减去 整个盒子的宽度
+    var targetLeft = utils.win('clientWidth') - box.offsetWidth;
+    // 最终左边位置距离为当前屏幕最大宽度 减去 整个盒子的高度
+    var targetTop = utils.win("clientHeight") - box.offsetHeight;
+    var beginLeft = utils.css(box, 'left');
+    var beginTop = utils.css(box, 'top');
+    var changeLeft = targetLeft - beginLeft;
+    var changeTop = targetTop - beginTop;
+    function linear(t, b, c, d) {
+        // change*time/duration+begin
+        return c * t / d + b;
+    }
+    box.timer = window.setInterval(function () {
+        time += interval;
+        var curLeft = linear(time, beginLeft, changeLeft, duration);
+        var curTop = linear(time, beginTop, changeTop, duration);
+        if (time >= duration) {
+            utils.css(box, 'left', targetLeft);
+            utils.css(box, 'top', targetTop);
+            window.clearInterval(box.timer);
+            return;
+        }
+        utils.css(box, 'left', curLeft);
+        utils.css(box, 'top', curTop);
+    }, interval)
+</script>
+</body>
+</html>
