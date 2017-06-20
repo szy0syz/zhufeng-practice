@@ -33,9 +33,12 @@
     var target = {
         left: utils.win('clientWidth') - box.offsetWidth,
         top: utils.win("clientHeight") - box.offsetHeight,
-        opacity: 0
+        opacity: 0.5
     }
-    moveAnimate(box, target, 3000, 20);
+    moveAnimate(box, target, 1000, 20, function () {
+      utils.css(this, 'background', 'red');
+      console.log('finshed~~~')
+    });
 </script>
 </body>
 </html>

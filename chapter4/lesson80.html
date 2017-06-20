@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson80</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        ul, li{
+            list-style: none;
+        }
+        img {
+            display: block;
+            border: none;
+        }
+        a{
+            display: block;
+            color: #000;
+            text-decoration: none; /*去除a标签默认点击下划线*/
+        }
+        a:hover, a:active, a:visited, a:target{
+            display: block;
+            color: #000000;
+            text-decoration: none;
+        }
+        .banner {
+            margin: 0 auto;
+            width: 990px;
+            height: 400px;
+            /*这里不加定位，则图片竟然还会显示！*/
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner .inner {
+            position: absolute;
+            top:0;
+            left:0;
+            width: 3960px;
+            height: 400px;
+        }
+
+        .banner .inner img {
+            float: left;
+            width: 990px;
+            height: 400px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="banner">
+    <div class="inner">
+        <img src="./img/banner1.jpg" alt="banner1">
+        <img src="./img/banner2.jpg" alt="banner2">
+        <img src="./img/banner3.jpg" alt="banner3">
+        <img src="./img/banner4.jpg" alt="banner4">
+    </div>
+    <ul class="bannerTip">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <a class="bannerLeft" href="javascript:;"></a>
+    <a class="bannerright" href="javascript:;"></a>
+</div>
+</body>
+</html>
