@@ -44,22 +44,24 @@
         .banner .inner {
             position: absolute;
             top: 0;
-            left: 0px;
-            width: 3960px;
+            left: 0;
+            /*width: 3960px; js自动计算宽度*/
         }
 
         .banner .inner div {
             /*这里如果加了absolute的定位的话，offsetParnet都还是inner啊，奇怪*/
-            /*如果加了绝对定位，则4张图片全部都困在div自身宽高的盒子里，图片逐一被覆盖，显示的是最后一张图片*/
+            /*如果加了绝对定位，则4张图片全部都困在div自身宽高的盒子里，图片逐一被覆盖，显示的是最后一张图片，说明position可以影响浮动*/
             /*如果不加，定位还是默认，浮动在上级盒子里*/
             /*到时候逐一给div加位置，测试到底是怎么回事,还有拿4个盒子套着测试一下*/
             /*position: absolute;*/
             float: left;
             width: 990px;
             height: 400px;
+            background: url("./img/tb_default.gif") no-repeat center #e0e0e0;
         }
 
         .banner .inner img {
+            display: none;
             width: 100%;
             height: 100%;
         }
@@ -96,7 +98,7 @@
         .banner a {
             position: absolute;
             /*display: none;*/
-            top: 46.5%;
+            top: 42%;
             width: 30px;
             height: 45px;
             opacity: 0.4;
