@@ -34,25 +34,34 @@
         }
 
         .banner {
+            position: relative;
             margin: 0 auto;
             width: 990px;
             height: 400px;
-            position: relative;
             overflow: hidden;
         }
 
         .banner .inner {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            left: 0px;
+            width: 3960px;
         }
 
-        .banner .inner img {
+        .banner .inner div{
+            /*这里如果加了absolute的定位的话，offsetParnet都还是inner啊，奇怪*/
+            /*如果加了绝对定位，则4张图片全部都困在div自身宽高的盒子里，图片逐一被覆盖，显示的是最后一张图片*/
+            /*如果不加，定位还是默认，浮动在上级盒子里*/
+            /*到时候逐一给div加位置，测试到底是怎么回事,还有拿4个盒子套着测试一下*/
+            /*position: absolute;*/
             float: left;
             width: 990px;
             height: 400px;
+        }
+
+        .banner .inner img {
+            width: 100%;
+            height: 100%;
         }
 
         .bannerTip {
@@ -70,16 +79,20 @@
             background: lightblue;
             border-radius: 50%;
             cursor: pointer;
+            opacity:0.7;
+            filter: alpha(opacity=70);
         }
 
         .bannerTip li:hover {
             background: lightcoral;
+            opacity:1;
+            filter: alpha(opacity=1);
         }
 
-        .banner a{
+        .banner a {
             position: absolute;
             /*display: none;*/
-            top:46.5%;
+            top: 46.5%;
             width: 30px;
             height: 45px;
             opacity: 0.4;
@@ -91,26 +104,31 @@
             filter: alpha(opacity=100);
         }
 
-        .banner a.bannerLeft{
-            left:10px;
+        .banner a.bannerLeft {
+            left: 10px;
             background: url("./img/pre.png") no-repeat;
         }
 
-        .banner a.bannerRight{
+        .banner a.bannerRight {
             background: url("./img/pre.png") no-repeat;
             right: 10px;
             background-position: -45px 0;
         }
 
+        .liAct {
+            background: lightcoral;
+            opacity:1;
+            filter: alpha(opacity=1);
+        }
     </style>
 </head>
 <body>
-<div class="banner">
+<div class="banner" id="banner">
     <div class="inner">
-        <img src="./img/banner1.jpg" alt="banner1">
-        <img src="./img/banner2.jpg" alt="banner2">
-        <img src="./img/banner3.jpg" alt="banner3">
-        <img src="./img/banner4.jpg" alt="banner4">
+        <!--<div><img src="./img/banner1.jpg" alt="banner1"></div>-->
+        <!--<div><img src="./img/banner2.jpg" alt="banner2"></div>-->
+        <!--<div><img src="./img/banner3.jpg" alt="banner3"></div>-->
+        <!--<div><img src="./img/banner4.jpg" alt="banner4"></div>-->
     </div>
     <ul class="bannerTip">
         <li></li>
@@ -121,5 +139,11 @@
     <a class="bannerLeft" href="javascript:;"></a>
     <a class="bannerRight" href="javascript:;"></a>
 </div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript" src="../tween.js"></script>
+<script type="text/javascript" src="./js/banner.js"></script>
+<script type="text/javascript">
+
+</script>
 </body>
 </html>
