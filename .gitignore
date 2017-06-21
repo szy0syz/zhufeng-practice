@@ -58,3 +58,7 @@ typings/
 .env
 
 /.idea/workspace.xml
+
+#mac os
+.DS_Store
+.DS_Store?
