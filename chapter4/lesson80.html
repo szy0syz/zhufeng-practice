@@ -48,7 +48,7 @@
             width: 3960px;
         }
 
-        .banner .inner div{
+        .banner .inner div {
             /*这里如果加了absolute的定位的话，offsetParnet都还是inner啊，奇怪*/
             /*如果加了绝对定位，则4张图片全部都困在div自身宽高的盒子里，图片逐一被覆盖，显示的是最后一张图片*/
             /*如果不加，定位还是默认，浮动在上级盒子里*/
@@ -79,13 +79,17 @@
             background: lightblue;
             border-radius: 50%;
             cursor: pointer;
-            opacity:0.7;
+            opacity: 0.7;
             filter: alpha(opacity=70);
+        }
+
+        .banner .bannerTip li.bg {
+            background: red;
         }
 
         .bannerTip li:hover {
             background: lightcoral;
-            opacity:1;
+            opacity: 1;
             filter: alpha(opacity=1);
         }
 
@@ -114,12 +118,6 @@
             right: 10px;
             background-position: -45px 0;
         }
-
-        .liAct {
-            background: lightcoral;
-            opacity:1;
-            filter: alpha(opacity=1);
-        }
     </style>
 </head>
 <body>
@@ -131,10 +129,10 @@
         <!--<div><img src="./img/banner4.jpg" alt="banner4"></div>-->
     </div>
     <ul class="bannerTip">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
     </ul>
     <a class="bannerLeft" href="javascript:;"></a>
     <a class="bannerRight" href="javascript:;"></a>

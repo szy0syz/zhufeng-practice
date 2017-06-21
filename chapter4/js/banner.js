@@ -7,7 +7,7 @@
   var banner = document.getElementById("banner");
   // var inner = banner.firstChild; // 又掉坑里，要用element不要node，为了兼容用utils
   var inner = utils.firstChild(banner);
-  var ul = utils.children(banner, 'ul');
+  var ul = utils.children(banner, 'ul')[0];
   // test!!!
   // banner.firstElementChild.children[1].offsetParent,
   // test!!!
@@ -34,10 +34,12 @@
         sbLis  = '';
     for (var i = 0, len = data.length; i < len; i++) {
       sbImgs += '<div><img src="'+ data[i]["img"] +'" alt="'+ data[i]["desc"] +'"></div>';
-      i === 0 ? sbLis += '<li class="liAct"></li>' : sbLis += '<li></li>';
+      i === 0 ? sbLis += '<li class="bg"></li>' : sbLis += '<li></li>';
     }
     inner.innerHTML = sbImgs;
+    console.log(ul);
     ul.innerHTML = sbLis;
+    console.log(ul);
   }
 
   // 第三步：
