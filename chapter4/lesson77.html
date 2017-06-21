@@ -35,9 +35,8 @@
         top: utils.win("clientHeight") - box.offsetHeight,
         opacity: 0.5
     }
-    moveAnimate(box, target, 1000, 20, function () {
+    moveAnimate(box, target, 2000, 20, ["Circ", "easeInOut"] ,function () {
       utils.css(this, 'background', 'red');
-      console.log('finshed~~~')
     });
 </script>
 </body>
