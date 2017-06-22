@@ -206,6 +206,7 @@
     var time = 0,    // 动画播放进度条的时间
       begin = {},  // 元素起始值对象,根据传入el和target确定其有多少个维度
       change = {}; // 差距量值对象，也有多个维度
+    interval = interval || 10;
     // 初始化临时效果对象，默认为匀速直线运动
     var tmpEffect = myEffect.Linear;
     if (typeof  effect === 'number') {
