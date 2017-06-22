@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson86</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            /*font-family: "微软雅黑";*/
+            font-size: 14px;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .banner {
+            position: relative;
+            margin: 0 auto;
+            border: none;
+            height: 400px;
+            width: 990px;
+            /*关键的来了*/
+            overflow: hidden; /*哇哈哈，imgs堆叠在inner盒子里了*/
+        }
+
+        .banner .inner {
+            position: absolute;
+            border: none;
+            height: 100%;
+            width: 100%;
+        }
+
+        .banner .inner div {
+            height: 100%;
+            width: 100%;
+            background: url("./img/tb_default.gif") no-repeat center center #e1e1e1;
+        }
+
+        .banner .inner div img {
+            z-index: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        .banner .bannerTip {
+            position: absolute;
+            height: 18px;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9;
+        }
+
+        .banner .bannerTip li {
+            float: left;
+            height: 18px;
+            margin-left: 20px;
+            width: 18px;
+            background: lightblue;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .banner .bannerTip li:hover {
+            background: lightcoral;
+        }
+
+        .banner .bannerTip li.bg {
+            background: lightcoral;
+        }
+
+        .banner a {
+            position: absolute;
+            top: 50%;
+            height: 45px;
+            width: 30px;
+            margin-top: -22.5px; /*当前元素高的一半加负号*/
+            text-decoration: none;
+            display: none;
+            color: #000000;
+            background: url("./img/pre.png") no-repeat center center;
+            opacity: 0.2;
+            filter: alpha(opacity=20);
+        }
+
+        .banner a:hover, a:active, a:visited, a:target {
+            text-decoration: none;
+            display: block;
+            color: #000000;
+        }
+
+        .banner a:hover {
+            opacity: 0.7;
+            filter: alpha(opacity=70);
+        }
+
+        .banner .bannerLeft {
+            z-index: 9;
+            left: 0;
+            background-position: 0 0;
+        }
+
+        .banner .bannerRight {
+            z-index: 9;
+            right: 0;
+            background-position: -45px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="banner" id="banner">
+    <div class="inner">
+        <div><img src="./img/banner1.jpg" alt="1"></div>
+        <div><img src="./img/banner2.jpg" alt="2"></div>
+        <div><img src="./img/banner3.jpg" alt="3"></div>
+        <div><img src="./img/banner4.jpg" alt="4"></div>
+    </div>
+    <ul class="bannerTip" id="bannerTip">
+        <li class="bg"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <a class="bannerLeft" href="javascript:;"></a>
+    <a class="bannerRight" href="javascript:;"></a>
+</div>
+</body>
+</html>
