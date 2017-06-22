@@ -6,13 +6,14 @@
 
 ~function () {
   // 第零步：初始化
+  // 以后拿元素页面能加ID就加id，不要套路太深的取拿dom元素！
   var banner = document.getElementById("banner");
-  // var inner = banner.firstChild; // 又掉坑里，要用element不要node，为了兼容用utils
   var inner = utils.firstChild(banner);
-  var ul = utils.children(banner, 'ul')[0];
-  // test!!!
-  // banner.firstElementChild.children[1].offsetParent,
-  // test!!!
+  var ul = document.getElementById("bannerTip");
+  var lis = ul.getElementsByTagName("li");
+  var bleft = document.getElementById("bannerLeft");
+  var bright = document.getElementById("bannerRight");
+
   // 第一步：远程获取数据
   var data = null,
     count = 0; // 轮播图片的数量：ajax请求回来的数量+1(实现无缝图片衔接)
@@ -100,19 +101,68 @@
   //        也就是说，这个定时器的开始时间最好是懒加载完，也就是说把这个放在第一张图片整的加载完的动画回调函数里吧
   //        算了，还是用一下私有作用域下的公共变量吧！，反正是私有作用域下的，怕啥！
   var imgIndex = 0;
+  // autoTimer 轮播动画的开关
+  var autoTimer = window.setInterval(autoPlayImg, 3000);
 
   function autoPlayImg() {
     // 首先记得把定时器放在轮播容器的自定义属性上，也就是放在inner盒子的自定义属性上吧！
     // 这个无缝图片轮播应用到了欺骗眼睛的技术
-    inner.autoPlayTimer = window.setInterval(function () {
-      // imgIndex++;  // 如果图片索引放开头会有问题！我得找找看！
-      if (imgIndex >= count - 1) {
-        imgIndex = 0;
-        utils.css(inner, 'left', 0);
-      }
-      imgIndex++;
-      moveAnimate(inner, {left: (-imgIndex * 990)}, 1000, 5);
-    }, 2000);
+    // imgIndex++;  // 如果图片索引放开头会有问题！我得找找看！
+    if (imgIndex >= count - 1) {
+      imgIndex = 0;
+      utils.css(inner, 'left', 0);
+    }
+    imgIndex++;
+    moveAnimate(inner, {left: (-imgIndex * 990)}, 800, 10, changeTip);
+  }
+
+  // 第六步：实现焦点对齐
+  // 原理：也就是简单改变一下li的选中样式的序号，0，1，2，3，4，0，1，2，3，4，0，1......
+  // 步骤：使用图片轮播索引判断，如果轮播图索引大于li元素个数吗，大于就说明调到无缝衔接多加的那个图，那个图应该是0号图；如果没大于就将图片轮播索引赋值给tempIndex索引
+  // 原理：轮播图索引定位li的选中样式，如果轮播索引已经大于li数组可选中序数的样式则置0，否则就按轮播图索引设置li选中样式
+  function changeTip() {
+    var tempIndex = imgIndex > lis.length - 1 ? 0 : imgIndex;
+    for (var i = 0, len = lis.length; i < len; i++) {
+      var cur = lis[i];
+      i === tempIndex ? cur.className = "bg" : cur.className = "";
+    }
+  }
+
+  // 第七步：停止和开启自动轮播
+  banner.onmouseover = function stopAutoPlay() {
+    window.clearInterval(autoTimer);
+    bleft.style.display = "block";
+    bright.style.display = "block";
+  };
+  banner.onmouseout = function startAutoPlay() {
+    autoTimer = window.setInterval(autoPlayImg, 3000);
+    bleft.style.display = "none";
+    bright.style.display = "none";
+  };
+
+  // 第八步：单击焦点实现轮播图的切换
+  ul.onclick = function handlerLiClick(e) {
+    e = e || window.event;
+    e.target = e.target || e.srcElement;
+    if (e.target.nodeName === "LI") {
+      // 设置图片轮播索引为所点击li对应的那张
+      imgIndex = utils.index(e.target);
+      changeTip(); // 改变li选中样式到对应的序号上
+      moveAnimate(inner, {left: -imgIndex * 990}, 400, 10);
+    }
+  };
+
+  // 第九步：实现左右轮播图
+  // 向右滑动其实就是启动一次动画
+  bright.onclick = autoPlayImg;
+  bleft.onclick = function () {
+    if (imgIndex <= 0) { // 如果是第一张
+      imgIndex = count - 1; // 等于赋值包含多了一张轮播图的数量-1，也就是实际最后一张图
+      utils.css(inner, 'left', -imgIndex * 990);
+    }
+    imgIndex--; // 控制轮播索引减一
+    moveAnimate(inner, {left: -imgIndex * 990}, 800, 10);
+    changeTip();
   }
 
 }();
