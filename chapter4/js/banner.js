@@ -24,7 +24,7 @@
   // 兼听onreadystatechange事件
   xhr.onreadystatechange = function handlerXHR() {
     if (xhr.readyState === 4 && /^2\d\d$/.test(xhr.status)) {
-      data = utils.jsonParse(xhr.responseText);
+      var data = utils.jsonParse(xhr.responseText);
       bind(data);
       lis = ul.getElementsByTagName("li"); //数据绑定完再拿一次！
       count = data.length + 1;
@@ -76,7 +76,7 @@
           utils.css(container.getElementsByTagName('img')[0], 'opacity', 0); //异步初始化透明度0
           container.getElementsByTagName('img')[0].style.display = 'block'; //对，你显示了，但劳资给你设置透明度0，你小子还是不显示，哈哈。
           //完全在炫技，没有实际价值
-          moveAnimate(container.getElementsByTagName('img')[0], {opacity: 1}, 1000, 10); //执行轮播回调
+          moveAnimate(container.getElementsByTagName('img')[0], {opacity: 1}, 1000, 10);
         }
       } else { // 除了第一张以外，直接给url，直接显示，动画不加了，有没句柄在监测啊！
         curImg.src = curImg.getAttribute('rsrc');

@@ -37,13 +37,16 @@
         .banner .inner div {
             height: 100%;
             width: 100%;
+            z-index: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
             background: url("./img/tb_default.gif") no-repeat center center #e1e1e1;
         }
 
         .banner .inner div img {
-            z-index: 0;
-            opacity: 0;
-            filter: alpha(opacity=0);
+            /*z-index: 0;*/
+            /*opacity: 0;*/
+            /*filter: alpha(opacity=0);*/
         }
 
         .banner .bannerTip {
@@ -112,7 +115,7 @@
 </head>
 <body>
 <div class="banner" id="banner">
-    <div class="inner">
+    <div class="inner" id="inner">
         <div><img src="./img/banner1.jpg" alt="1"></div>
         <div><img src="./img/banner2.jpg" alt="2"></div>
         <div><img src="./img/banner3.jpg" alt="3"></div>
@@ -127,5 +130,8 @@
     <a class="bannerLeft" href="javascript:;"></a>
     <a class="bannerRight" href="javascript:;"></a>
 </div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript" src="../tween.js"></script>
+<script type="text/javascript" src="./js/bannerPlus.js"></script>
 </body>
 </html>
