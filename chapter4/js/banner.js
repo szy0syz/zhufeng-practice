@@ -8,9 +8,9 @@
   // 第零步：初始化
   // 以后拿元素页面能加ID就加id，不要套路太深的取拿dom元素！
   var banner = document.getElementById("banner");
-  var inner = utils.firstChild(banner);
+  var inner = document.getElementById('inner');
   var ul = document.getElementById("bannerTip");
-  var lis = ul.getElementsByTagName("li");
+  var lis = ul.getElementsByTagName("li"); // 这里可能拿不到，去data里再拿一次！
   var bleft = document.getElementById("bannerLeft");
   var bright = document.getElementById("bannerRight");
 
@@ -20,12 +20,13 @@
   // 重复记忆一遍xhr配置吧：先实例一个xhr对象
   var xhr = new XMLHttpRequest;
   // 配置xhr的open属性
-  xhr.open("get", "./json/data.json", true);
+  xhr.open("get", "./json/data.json"); // 为什么那么多坑！这里xhr异步的，false又被放弃了，说以现在的li还没有！
   // 兼听onreadystatechange事件
   xhr.onreadystatechange = function handlerXHR() {
     if (xhr.readyState === 4 && /^2\d\d$/.test(xhr.status)) {
       data = utils.jsonParse(xhr.responseText);
       bind(data);
+      lis = ul.getElementsByTagName("li"); //数据绑定完再拿一次！
       count = data.length + 1;
       setImgBoxWidth(inner, 990, count); // 为了实现图片无缝衔接，把第0张重复的排列的末尾，所以是length+1
       // 感觉这个延迟加载好图，而且还只延迟显示一张！
@@ -92,9 +93,6 @@
   var autoTimer = window.setInterval(autoPlayImg, 2000);
 
   function autoPlayImg() {
-    console.log("timer   " + autoTimer);
-    console.log("imgIndex   " + imgIndex);
-
     // 首先记得把定时器放在轮播容器的自定义属性上，也就是放在inner盒子的自定义属性上吧！
     // 这个无缝图片轮播应用到了欺骗眼睛的技术
     //imgIndex++;  // 如果图片索引放开头会有问题！我得找找看！
@@ -103,8 +101,8 @@
       utils.css(inner, 'left', 0);
     }
     imgIndex++;
-    changeTip();
     moveAnimate(inner, {left: (-imgIndex * 990)}, 500, 10);
+    changeTip();
   }
 
   // 第六步：实现焦点对齐
@@ -143,6 +141,20 @@
       moveAnimate(inner, {left: -imgIndex * 990}, 500, 10);
     }
   };
+  // // 这样子是拿不到
+  // ~function () {
+  //   console.log(lis);
+  //   for (var i=0; i<lis.length; i++) {
+  //     var cur = lis[i];
+  //     cur.index = i;
+  //     cur.onclick = function () {
+  //       imgIndex = this.index;
+  //       changeTip();
+  //       moveAnimate(inner, {left: -imgIndex*990},500,10);
+  //     }
+  //   }
+  // }();
+
 
   // 第九步：实现左右轮播图
   // 向右滑动其实就是启动一次动画
@@ -159,4 +171,8 @@
 
 }();
 
-// 为尼玛的点两次就动画出错！！
+// 为尼玛的点两次就动画出错！
+// 终于找到一天眉目了！
+// 症状：只要焦点离开当前窗口document或者连续多次点击左滑动或右滑动或者底下小圆点聚焦点快了，都会导致动画卡死！
+//      卡死是inner的left值会被锁定在当前数值，不管动画改动还是手动改ledt值后1ms又被改回锁定值！
+// 调试：最终调到动画库里，tween.js 中，每一个微粒动画执行前，即setInerval启动前，必须保证该元素只能同时执行一个同动画函数！

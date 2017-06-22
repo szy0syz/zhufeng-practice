@@ -203,12 +203,6 @@
    **/
   function move(el, target, duration, interval, effect, callback) {
     // 【1.判断边界  2.设置每一个维度的值】
-    var time = 0,    // 动画播放进度条的时间
-      begin = {},  // 元素起始值对象,根据传入el和target确定其有多少个维度
-      change = {}; // 差距量值对象，也有多个维度
-    interval = interval || 10;
-    // 初始化临时效果对象，默认为匀速直线运动
-    var tmpEffect = myEffect.Linear;
     if (typeof  effect === 'number') {
       switch (effect) {
         case 1:
@@ -233,6 +227,15 @@
     } else { // 实在没有就丢个null
       callback = null;
     }
+    // 有些时候，初始化变量还真不能放在最前面哦！
+    var time = 0,    // 动画播放进度条的时间
+      begin = {},  // 元素起始值对象,根据传入el和target确定其有多少个维度
+      change = {}; // 差距量值对象，也有多个维度
+    interval = interval || 10;
+    // 初始化临时效果对象，默认为匀速直线运动
+    var tmpEffect = myEffect.Linear;
+    //console.log("tween.js - timer:" + el.timer);
+    window.clearInterval(el.timer);
     // 计算出begin[xxx]和change[xxx]的各个维度值
     for (var key in target) {
       // 过滤出私有属性
