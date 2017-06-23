@@ -157,41 +157,14 @@
   ul.addEventListener('click', focusTurnHandler);
 
   // 7. 实现silder左右切换
-  // leftNav.onmouseover = function () {
-  //   window.clearInterval(autoTimer);
-  // };
-  // leftNav.onmouseout = function () {
-  //   window.clearInterval(autoTimer);
-  //   autoTimer = window.setInterval(autoPlay, interval);
-  // };
-  // rightNav.onmouseover = function () {
-  //   window.clearInterval(autoTimer);
-  // };
-  // rightNav.onmouseout = function () {
-  //   window.clearInterval(autoTimer);
-  //   autoTimer = window.setInterval(autoPlay, interval);
-  // };
-
-
-
   rightNav.addEventListener('click',autoPlay);
-  leftNav.addEventListener('click', function () {
+  function navTurnLeft () {
     if(imgIndex === 0) {
       imgIndex = lis.length;
     }
     imgIndex--;
-    autoPlay();
-  });
-
-  // rightNav.onclick = autoPlay;
-  // leftNav.onclick = function () {
-  //   if(imgIndex === 0) {
-  //     imgIndex = lis.length;
-  //   }
-  //   imgIndex--;
-  //   autoPlay();
-  // }
-
-
+    setBanner();
+  }
+  leftNav.addEventListener('click', navTurnLeft);
 
 }();
