@@ -67,16 +67,16 @@
 
   // 4. 实现轮播
   var imgIndex = 0,
-      autoTimer = null,
-      interval = 3000;
+    autoTimer = null,
+    interval = 3000;
 
   window.setTimeout(function () {
     autoTimer = window.setInterval(autoPlay, interval);
   }, 1500);
 
   function autoPlay() {
-    if (imgIndex === (lis.length-1)) { // 这里已经延迟了1.1秒，应该异步拿到了lis!
-      imgIndex = -1; // 因为后面还要加1
+    if (imgIndex === (lis.length - 1)) { // 这里已经延迟了1.1秒，应该异步拿到了lis!
+      imgIndex = -1; // 因为后面还要加1, -1+1=0, 正好是第一张！
     }
     imgIndex++;
     setBanner();
@@ -84,7 +84,7 @@
 
   //
   function setBanner() {
-    //1. 让imgIndex所指向的div的zIndex为1且第一个子元素display为block且透明度动画效果变为1，其它的div透明度变为0且zIndex为0且第一个子元素display为none
+    // 让imgIndex所指向的div的zIndex为1且第一个子元素display为block且透明度动画效果变为1，其它的div透明度变为0且zIndex为0且第一个子元素display为none
     var divs = inner.getElementsByTagName('div');
     for (var i = 0, len = divs.length; i < len; i++) {
       if (imgIndex === i) {
@@ -102,9 +102,18 @@
         });
         continue;
       } //好tm神奇，这个zindex房动画里最后一张循环到第一张时渐显效果竟然没有，其他时候有！！牛逼！！！无语！！！
-      utils.css(divs[i],'z-index',0);
+      utils.css(divs[i], 'z-index', 0);
     }
-
+    ///////////////////////////////////
+    // 实现焦点对齐 focusAlign
+    for (var k = 0, len0 = lis.length; k < len0; k++) {
+      if (k === imgIndex) {
+        utils.addClass(lis[k], 'bg');
+        utils.siblings(lis[k]).forEach(function (curLi) {
+          utils.removeClass(curLi,'bg');
+        })
+      }
+    }
   }
 
 }();
