@@ -85,7 +85,7 @@
     setBanner();
   }
 
-  //
+  //实际的图片渐显动画函数
   function setBanner() {
     // 让imgIndex所指向的div的zIndex为1且第一个子元素display为block且透明度动画效果变为1，其它的div透明度变为0且zIndex为0且第一个子元素display为none
     var divs = inner.getElementsByTagName('div');
@@ -95,7 +95,6 @@
         utils.children(divs[i])[0].style.display = 'block';
         //重点来了
         moveAnimate(divs[i], {opacity: 1}, 400, 10, function () {
-          console.log("img index:" + utils.index(this));
           //此时才是重点：等轮播到的图片透明度完毕变为1后才把原来透明度1的图片设置为0透明度
           // 我靠，img没得兄弟元素！我是踩坑王。这里this是包img的那个div
           utils.siblings(this).forEach(function (item) {
@@ -120,51 +119,42 @@
     }
   }
 
-  // 5. 鼠标进入显示左右silder按钮
-  // function silderOnHandler (ev) {
-  //   window.clearInterval(autoTimer);
-  //   leftNav.style.display = "block";
-  //   rightNav.style.display = "block";
-  //   console.log('鼠标来了');
-  // }
-  // banner.addEventListener('mouseover',silderOnHandler);
+  // 6. 鼠标进入显示左右silder按钮
   banner.onmouseover = function (ev) {
     window.clearInterval(autoTimer);
     leftNav.style.display = "block";
     rightNav.style.display = "block";
-    console.log('鼠标来了');
   };
   banner.onmouseout = function (ev) {
     autoTimer = window.setInterval(autoPlay, interval);
     leftNav.style.display = "none";
     rightNav.style.display = "none";
-    console.log('鼠标走了')
   };
 
-  // 6. 实现点击焦点切换
+  // 7. 实现点击焦点切换
   // 注意：这里li是异步加载，哥哥你根本绑定不上onclick事件的！要绑定就绑ul，dom骨架本身就有的元素！
-  function focusTurnHandler (ev) {
+  function focusTurnHandler(ev) {
     ev = ev || window.event;  // 为了兼容mozilla和ie核心的浏览器！
     ev.target = ev.target || ev.srcElement;
-    if(ev.target.nodeName === 'LI') {
+    if (ev.target.nodeName === 'LI') {
       // 获取所点击li在同辈元素中排行老几~
-      console.dir(ev.target);
-      console.log("你所点击的li在家中排行： 第" + utils.index(ev.target));
       imgIndex = utils.index(ev.target) - 1; // 设置轮播索引时为啥要减一呢？坑爹？因为了嘛
       autoPlay();
     }
   }
+
   ul.addEventListener('click', focusTurnHandler);
 
-  // 7. 实现silder左右切换
-  rightNav.addEventListener('click',autoPlay);
-  function navTurnLeft () {
-    if(imgIndex === 0) {
+  // 8. 实现silder左右切换
+  rightNav.addEventListener('click', autoPlay);
+  function navTurnLeft() {
+    if (imgIndex === 0) {
       imgIndex = lis.length;
     }
     imgIndex--;
     setBanner();
   }
+
   leftNav.addEventListener('click', navTurnLeft);
 
 }();

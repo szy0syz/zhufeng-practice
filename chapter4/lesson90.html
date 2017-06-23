@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>lesson86</title>
+    <title>lesson90</title>
     <style type="text/css">
         * {
             margin: 0;
@@ -117,12 +117,7 @@
 </head>
 <body>
 <div class="banner" id="banner">
-    <div class="inner" id="inner">
-        <div><img src="./img/banner1.jpg" alt="1"></div>
-        <div><img src="./img/banner2.jpg" alt="2"></div>
-        <div><img src="./img/banner3.jpg" alt="3"></div>
-        <div><img src="./img/banner4.jpg" alt="4"></div>
-    </div>
+    <div class="inner"></div>
     <ul class="bannerTip" id="bannerTip">
         <li class="bg"></li>
         <li></li>
@@ -134,6 +129,10 @@
 </div>
 <script type="text/javascript" src="../utils.js"></script>
 <script type="text/javascript" src="../tween.js"></script>
-<script type="text/javascript" src="./js/bannerPlus.js"></script>
+<script type="text/javascript" src="../slider-easeIn.js"></script>
+<script type="text/javascript">
+  var slider = new SliderEaseIn('banner', 3000, "./json/data.json");
+  slider.init();
+</script>
 </body>
 </html>
