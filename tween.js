@@ -235,7 +235,6 @@
     // 初始化临时效果对象，默认为匀速直线运动
     var tmpEffect = myEffect.Linear;
     //console.log("tween.js - timer:" + el.timer);
-    window.clearInterval(el.timer);
     // 计算出begin[xxx]和change[xxx]的各个维度值
     for (var key in target) {
       // 过滤出私有属性
@@ -244,12 +243,15 @@
         change[key] = target[key] - begin[key];
       }
     }
+    window.clearInterval(el.timer);
+    //console.log("0清除定时器:" + el.timer);
     el.timer = window.setInterval(function () {
       time += interval;
       // 如果动画时间已结束
       if (time >= duration) {
         // 清除定时器
         window.clearInterval(el.timer);
+        //console.log("1清除定时器:" + el.timer);
         // target对象格式正好符合css的批量修改style格式
         utils.css(el, target);
         // 动画完成时执行回调函数

@@ -119,11 +119,13 @@
 
   // 第七步：停止和开启自动轮播
   banner.onmouseover = function stopAutoPlay() {
+    console.log('鼠标进来了')
     window.clearInterval(autoTimer);
     bleft.style.display = "block";
     bright.style.display = "block";
   };
   banner.onmouseout = function startAutoPlay() {
+    console.log('鼠标出去了')
     window.clearInterval(autoTimer);
     autoTimer = window.setInterval(autoPlayImg, 2000);
     bleft.style.display = "none";
