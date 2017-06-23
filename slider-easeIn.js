@@ -26,9 +26,15 @@
     init: init,
     bind: bind,
     imgDelyLoad:imgDelyLoad,
-    getDataBind: getDataBind
+    getDataBind: getDataBind,
+    autoPlay: autoPlay,
+    setBanner:setBanner,
+    showNav: showNav,
+    focusAlign:focusAlign
+
   };
 
+  // 绑定数据
   function bind(data) {
     //console.dir(this);
     var sbImgs = '', // 我还是怀念C#中StringBuild类
@@ -41,7 +47,7 @@
     this.ul.innerHTML = sbLis;
   }
 
-  // 3. 图片延迟加载(小心异步，也放在取回数据时延迟加载)
+  // 图片延迟加载(小心异步，也放在取回数据时延迟加载)
   function imgDelyLoad() {
     var self = this;
     var tmpimg = null;
@@ -65,6 +71,7 @@
     }
   }
 
+  // 获取数据并绑定数据
   function getDataBind () {
     var self = this;
     var xhr = new XMLHttpRequest;
@@ -77,7 +84,7 @@
         }
         data = utils.jsonParse(data);
         self.bind(data);// 该绑定数据
-        lis = self.ul.getElementsByTagName('li');
+        self.lis = self.ul.getElementsByTagName('li');
         // 延迟加载图片
         self.imgDelyLoad();
       }
@@ -85,8 +92,93 @@
     xhr.send(null);
   }
 
+  // 4.实现轮播
+  function autoPlay() {
+    console.dir(this);
+    if (this.imgIndex >= (this.lis.length - 1)) {
+      this.imgIndex = -1; // 因为后面还要加1, -1+1=0, 正好是第一张！
+    }
+    this.imgIndex++;
+    // 确保动画执行前轮播指针指向必须在有效范围内！
+    this.imgIndex = this.imgIndex < 0 ? 0 : this.imgIndex;
+    this.setBanner();
+  }
+
+  //实际的图片渐显动画函数
+  function setBanner() {
+    // 让imgIndex所指向的div的zIndex为1且第一个子元素display为block且透明度动画效果变为1，其它的div透明度变为0且zIndex为0且第一个子元素display为none
+    var divs = this.inner.getElementsByTagName('div');
+    for (var i = 0, len = divs.length; i < len; i++) {
+      if (this.imgIndex === i) {
+        utils.css(divs[i], {zIndex: 1});
+        utils.children(divs[i])[0].style.display = 'block';
+        //重点来了
+        moveAnimate(divs[i], {opacity: 1}, 400, 10, function () {
+          //此时才是重点：等轮播到的图片透明度完毕变为1后才把原来透明度1的图片设置为0透明度
+          // 我靠，img没得兄弟元素！我是踩坑王。这里this是包img的那个div
+          utils.siblings(this).forEach(function (item) {
+            utils.children(item)[0].style.display = 'none';
+            utils.css(item, {opacity: 0});
+          })
+        });
+        continue;
+      } //好tm神奇，这个zindex放动画里最后一张循环到第一张时渐显效果竟然没有，其他时候有！！牛逼！！！无语！！！
+      utils.css(divs[i], 'z-index', 0);
+    }
+    ///////////////////////////////////
+    // 5.实现焦点对齐 focusAlign
+    for (var k = 0, len0 = this.lis.length; k < len0; k++) {
+      if (k === this.imgIndex) {
+        utils.addClass(this.lis[k], 'bg');
+        utils.siblings(this.lis[k]).forEach(function (curLi) {
+          utils.removeClass(curLi, 'bg');
+        });
+        break; // 不需要再去循环了
+      }
+    }
+  }
+
+  // 6. 鼠标进入显示左右nav按钮
+  function showNav() {
+    var self = this;
+    self.banner.onmouseover = function (ev) {
+      window.clearInterval(self.autoTimer);
+      self.leftNav.style.display = "block";
+      self.rightNav.style.display = "block";
+    };
+    this.banner.onmouseout = function (ev) {
+      self.autoTimer = window.setInterval(function () {self.autoPlay()}, self.interval);
+      self.leftNav.style.display = "none";
+      self.rightNav.style.display = "none";
+    };
+  }
+
+  // 7. 实现点击焦点切换
+  function focusAlign () {
+    var self = this;
+    this.ul.onclick = function (ev) {
+      ev = ev || window.event;  // 为了兼容mozilla和ie核心的浏览器！
+      ev.target = ev.target || ev.srcElement;
+      if (ev.target.nodeName === 'LI') {
+        // 获取所点击li在同辈元素中排行老几~
+        self.imgIndex = utils.index(ev.target) - 1; // 设置轮播索引时为啥要减一呢？坑爹？因为了嘛
+        self.autoPlay();
+      }
+    }
+  }
+
+
+  // 初始化
   function init () {
+    var self = this;
     this.getDataBind();
+    window.setTimeout(function () {
+      self.autoTimer = window.setInterval(function () {
+        self.autoPlay();
+      }, self.interval);
+    },400);
+    this.showNav();
+    this.focusAlign();
   }
 
   window.SliderEaseIn = Slider

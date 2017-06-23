@@ -142,7 +142,6 @@
       autoPlay();
     }
   }
-
   ul.addEventListener('click', focusTurnHandler);
 
   // 8. 实现silder左右切换
