@@ -65,20 +65,22 @@
     }
   }
 
-  // 4. 实现轮播
+  // 4.实现轮播
   var imgIndex = 0,
     autoTimer = null,
-    interval = 3000;
+    interval = 4000;
 
   window.setTimeout(function () {
     autoTimer = window.setInterval(autoPlay, interval);
-  }, 1500);
+  }, 800);
 
   function autoPlay() {
-    if (imgIndex === (lis.length - 1)) { // 这里已经延迟了1.1秒，应该异步拿到了lis!
+    if (imgIndex >= (lis.length - 1)) { // 这里已经延迟了800ms，应该异步拿到了lis!
       imgIndex = -1; // 因为后面还要加1, -1+1=0, 正好是第一张！
     }
     imgIndex++;
+    // 确保动画执行前轮播指针指向必须在有效范围内！
+    imgIndex = imgIndex < 0 ? 0 : imgIndex;
     setBanner();
   }
 
@@ -91,7 +93,7 @@
         utils.css(divs[i], {zIndex: 1});
         utils.children(divs[i])[0].style.display = 'block';
         //重点来了
-        moveAnimate(divs[i], {opacity: 1}, 1000, 10, function () {
+        moveAnimate(divs[i], {opacity: 1}, 400, 10, function () {
           console.log("img index:" + utils.index(this));
           //此时才是重点：等轮播到的图片透明度完毕变为1后才把原来透明度1的图片设置为0透明度
           // 我靠，img没得兄弟元素！我是踩坑王。这里this是包img的那个div
@@ -101,19 +103,41 @@
           })
         });
         continue;
-      } //好tm神奇，这个zindex房动画里最后一张循环到第一张时渐显效果竟然没有，其他时候有！！牛逼！！！无语！！！
+      } //好tm神奇，这个zindex放动画里最后一张循环到第一张时渐显效果竟然没有，其他时候有！！牛逼！！！无语！！！
       utils.css(divs[i], 'z-index', 0);
     }
     ///////////////////////////////////
-    // 实现焦点对齐 focusAlign
+    // 5.实现焦点对齐 focusAlign
     for (var k = 0, len0 = lis.length; k < len0; k++) {
       if (k === imgIndex) {
         utils.addClass(lis[k], 'bg');
         utils.siblings(lis[k]).forEach(function (curLi) {
-          utils.removeClass(curLi,'bg');
-        })
+          utils.removeClass(curLi, 'bg');
+        });
+        break; // 不需要再去循环了
       }
     }
   }
+
+  // 6. 实现点击焦点切换
+  // 注意：这里li是异步加载，哥哥你根本绑定不上onclick事件的！要绑定就绑ul，dom骨架本身就有的元素！
+  function focusTurnHandler (ev) {
+    ev = ev || window.event;  // 为了兼容mozilla和ie核心的浏览器！
+    ev.target = ev.target || ev.srcElement;
+    if(ev.target.nodeName === 'LI') {
+      // 获取所点击li在同辈元素中排行老几~
+      console.dir(ev.target);
+      console.log("你所点击的li在家中排行： 第" + utils.index(ev.target));
+      imgIndex = utils.index(ev.target)-1; // 设置轮播索引时为啥要减一呢？坑爹？因为了嘛
+      autoPlay();
+    }
+  }
+  ul.addEventListener('click', focusTurnHandler);
+
+
+  // 7. 实现silder左右切换
+
+
+
 
 }();

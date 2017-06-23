@@ -152,7 +152,7 @@ var utils = (function () {
 
   // 获取元素在同辈中的索引
   function index(curEle) {
-    return this.prevAll(curEle).length
+    return parseFloat(this.prevAll(curEle).length).toFixed();
   }
 
   // 获取元素的第一个子元素
