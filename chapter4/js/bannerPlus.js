@@ -38,29 +38,26 @@
       sbImgs += '<div><img src="" rsrc="' + data[i]["img"] + '" alt="' + data[i]["desc"] + '"></div>';
       i === 0 ? sbLis += '<li class="bg"></li>' : sbLis += '<li></li>'; // 为第一个li加上选中样式
     }
-    // 为了实现无缝轮播图，得再把第一张图复制一份排列在末尾
-    sbImgs += '<div><img src="" rsrc="' + data[0]["img"] + '" alt="' + data[0]["desc"] + '"></div>';
     inner.innerHTML = sbImgs;
     ul.innerHTML = sbLis;
   }
 
   // 3. 图片延迟加载(小心异步，也放在取回数据时延迟加载)
   function imgDelyLoad() {
-    var timg = null;
+    var tmpimg = null;
     var divs = inner.getElementsByTagName('div');
     for (var i = 0, len = utils.children(inner).length; i < len; i++) {
       if (i === 0) {
-        timg = new Image;
-        timg.src = utils.firstChild(divs[0]).getAttribute("rsrc");
-        timg.onload = function validImg() {
-          // 这里可是异步空间哦~~
+        tmpimg = new Image;
+        tmpimg.src = utils.firstChild(divs[0]).getAttribute("rsrc");
+        tmpimg.onload = function validImg() {
+          // 这里可是异步空间哦~~ 坑不到我的！
           var cur = inner.getElementsByTagName('img')[0];
           cur.src = cur.getAttribute("rsrc");
-          // 设置显示不设置img，设置div
-          cur.parentNode.style.display = 'block';
+          cur.style.display = 'block';
           utils.css(cur.parentNode, 'z-index', 1);
           // 这里要开始设置动画了，要统一才行
-          moveAnimate(cur.parentNode, {opacity: 1}, 2000, 10);
+          moveAnimate(cur.parentNode, {opacity: 1}, 1000, 10);
         }
       } else { // 这里要不要延迟500ms再去加载呢
         utils.firstChild(divs[i]).src = utils.firstChild(divs[i]).getAttribute("rsrc");
@@ -71,10 +68,11 @@
   // 4. 实现轮播
   var imgIndex = 0,
       autoTimer = null,
-      interval = 2000;
+      interval = 3000;
+
   window.setTimeout(function () {
     autoTimer = window.setInterval(autoPlay, interval);
-  }, 1100);
+  }, 1500);
 
   function autoPlay() {
     if (imgIndex === (lis.length-1)) { // 这里已经延迟了1.1秒，应该异步拿到了lis!
@@ -86,24 +84,25 @@
 
   //
   function setBanner() {
-    //1. 让imgIndex所指向的div透明度变为1，且zIndex为1，其它的div透明度变为0，zIndex为0；
+    //1. 让imgIndex所指向的div的zIndex为1且第一个子元素display为block且透明度动画效果变为1，其它的div透明度变为0且zIndex为0且第一个子元素display为none
     var divs = inner.getElementsByTagName('div');
     for (var i = 0, len = divs.length; i < len; i++) {
       if (imgIndex === i) {
         utils.css(divs[i], {zIndex: 1});
+        utils.children(divs[i])[0].style.display = 'block';
         //重点来了
-        moveAnimate(divs[i], {opacity: 1}, 300, 10, function () {
+        moveAnimate(divs[i], {opacity: 1}, 1000, 10, function () {
           console.log("img index:" + utils.index(this));
           //此时才是重点：等轮播到的图片透明度完毕变为1后才把原来透明度1的图片设置为0透明度
-          // 我靠，img没得兄弟元素！我真实踩坑王
+          // 我靠，img没得兄弟元素！我是踩坑王。这里this是包img的那个div
           utils.siblings(this).forEach(function (item) {
-            console.log(item)
+            utils.children(item)[0].style.display = 'none';
             utils.css(item, {opacity: 0});
           })
         });
         continue;
-      }
-      utils.css(divs[i],'zIndex',0);
+      } //好tm神奇，这个zindex房动画里最后一张循环到第一张时渐显效果竟然没有，其他时候有！！牛逼！！！无语！！！
+      utils.css(divs[i],'z-index',0);
     }
 
   }

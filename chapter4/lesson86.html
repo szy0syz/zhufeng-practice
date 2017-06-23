@@ -28,22 +28,27 @@
         }
 
         .banner .inner {
-            position: absolute;
             border: none;
             height: 100%;
             width: 100%;
+            background: url("./img/tb_default.gif") no-repeat center center #e1e1e1;
         }
 
         .banner .inner div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
             height: 100%;
             width: 100%;
             z-index: 0;
             opacity: 0;
             filter: alpha(opacity=0);
-            background: url("./img/tb_default.gif") no-repeat center center #e1e1e1;
+
         }
 
         .banner .inner div img {
+            display: none;
             /*z-index: 0;*/
             /*opacity: 0;*/
             /*filter: alpha(opacity=0);*/
