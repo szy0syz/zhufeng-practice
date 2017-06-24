@@ -30,8 +30,8 @@
     autoPlay: autoPlay,
     setBanner:setBanner,
     showNav: showNav,
-    focusAlign:focusAlign
-
+    focusAlign:focusAlign,
+    turnOn:turnOn
   };
 
   // 绑定数据
@@ -63,7 +63,7 @@
           cur.style.display = 'block';
           utils.css(cur.parentNode, 'z-index', 1);
           // 这里要开始设置动画了，要统一才行
-          moveAnimate(cur.parentNode, {opacity: 1}, 1000, 10);
+          moveAnimate(cur.parentNode, {opacity: 1}, 500, 10);  // 这里控制首图延迟加载的时间
         }
       } else { // 这里要不要延迟500ms再去加载呢,应该仿小米官网的做！
         utils.firstChild(divs[i]).src = utils.firstChild(divs[i]).getAttribute("data-src");
@@ -94,7 +94,6 @@
 
   // 4.实现轮播
   function autoPlay() {
-    console.dir(this);
     if (this.imgIndex >= (this.lis.length - 1)) {
       this.imgIndex = -1; // 因为后面还要加1, -1+1=0, 正好是第一张！
     }
@@ -167,6 +166,23 @@
     }
   }
 
+  // 8. 实现silder左右切换
+  function turnOn () {
+    var self = this;
+    //this.rightNav.addEventListener('click', this.autoPlay);
+    // 原来是上面那样执行，但这样this就会变成锚点a标签，必须想办法将this类实例对象带入，
+    //    则开辟一个私有作用域且嵌套在turnOn作用域中，则被嵌套的私有作用域就可以通过作用域链找到self指针
+    this.rightNav.addEventListener('click', function () {
+      self.autoPlay();
+    });
+    this.leftNav.addEventListener('click', function () {
+      if (self.imgIndex === 0) {
+        self.imgIndex = self.lis.length;
+      }
+      self.imgIndex--;
+      self.setBanner();
+    });
+  }
 
   // 初始化
   function init () {
@@ -175,10 +191,15 @@
     window.setTimeout(function () {
       self.autoTimer = window.setInterval(function () {
         self.autoPlay();
+        //提升体验：修改div.inner的背景图，不要让用户看到默认占位图两次！
+        var fisrtSliderImg = self.inner.getElementsByTagName('img')[0].src;
+        // 以后可以升级的我类库了！！！这里要升级！
+        utils.css(self.inner, 'backgroundImage', 'url(' + fisrtSliderImg + ')');
       }, self.interval);
-    },400);
+    },550);
     this.showNav();
     this.focusAlign();
+    this.turnOn();
   }
 
   window.SliderEaseIn = Slider
