@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>lesson90</title>
+    <title>lesson91</title>
     <style type="text/css">
         * {
             margin: 0;
@@ -117,22 +117,48 @@
 </head>
 <body>
 <div class="banner" id="banner">
-    <div class="inner"></div>
+    <div class="inner" id="inner"></div>
+    <div id="div1">
+        <ul>
+            <li>ss01</li>
+            <li>ss02</li>
+        </ul>
+    </div>
     <ul class="bannerTip" id="bannerTip">
-        <li class="bg"></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li class="bg">s01</li>
+        <li>s02</li>
+        <li>s03</li>
+        <li>s04</li>
     </ul>
-    <a class="bannerLeft" href="javascript:;"></a>
+    <a class="bannerLeft" href="javascript:;">
+        <div id="div00">
+            <ul>
+                <li>1</li>
+            </ul>
+        </div>
+    </a>
     <a class="bannerRight" href="javascript:;"></a>
 </div>
 <script type="text/javascript" src="../utils.js"></script>
-<script type="text/javascript" src="../tween.js"></script>
-<script type="text/javascript" src="../slider-easeIn.js"></script>
+<script type="text/javascript" src="../jquery-1.12.4.js"></script>
 <script type="text/javascript">
-  var slider = new SliderEaseIn('banner', 3000, "./json/data.json");
-  slider.init();
+    ////////////基本选择器/////////////
+    $('#inner') //id选择器
+    $('.bannerTip') //样式类名选择器
+    $('ul') //节点名称选择器
+    $('#inner,ul,li') //组合选择器：关系是逻辑或
+    /////////////////////////////////
+    ////////////层次选择器/////////////
+    $('#banner li') // 子子孙孙选择器
+    $('#banner>div') //儿子选择器
+    $('#inner+') //第一个弟弟选择器：$('#inner+div')->找第一个弟弟且这个弟弟必须是div标签元素
+    $('#inner~') //所有弟弟们选择器：$('#inner~a')->找所有弟弟们中标签是a标签的元素们
+    /////////////////////////////////
+    ////////////基本过滤选择器/////////////
+    $('#inner~:not(a)') //不包含过滤器：inner的所有弟弟元素中不是a标签的元素
+    $('#inner~:eq(2)') // 索引过滤器：通过索引获取对应的jQuery对象，注意返回结果是jQuery对象，和get(2)返回的原生对象不同！
+    $('#inner~:gt(1)') // 索引大于1的对象，不包含1
+    $('#banner div:has(li)') // banner容器中其后台元素div中有li的div元素，注意返回的是div，has就是过滤div的
 </script>
 </body>
 </html>
