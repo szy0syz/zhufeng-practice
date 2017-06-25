@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson91</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            /*font-family: "微软雅黑";*/
+            font-size: 14px;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .banner {
+            position: relative;
+            margin: 0 auto;
+            border: none;
+            height: 400px;
+            width: 990px;
+            /*关键的来了*/
+            overflow: hidden; /*哇哈哈，imgs堆叠在inner盒子里了*/
+        }
+
+        .banner .inner {
+            border: none;
+            height: 100%;
+            width: 100%;
+            background: url("./img/tb_default.gif") no-repeat center center #e1e1e1;
+        }
+
+        .banner .inner div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            height: 100%;
+            width: 100%;
+            z-index: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+
+        }
+
+        .banner .inner div img {
+            display: none;
+        }
+
+        .banner .bannerTip {
+            position: absolute;
+            height: 18px;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9;
+        }
+
+        .banner .bannerTip li {
+            float: left;
+            height: 18px;
+            margin-left: 20px;
+            width: 18px;
+            background: lightblue;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .banner .bannerTip li:hover {
+            background: lightcoral;
+        }
+
+        .banner .bannerTip li.bg {
+            background: lightcoral;
+        }
+
+        .banner a {
+            position: absolute;
+            top: 50%;
+            height: 45px;
+            width: 30px;
+            margin-top: -22.5px; /*当前元素高的一半加负号*/
+            text-decoration: none;
+            display: none;
+            color: #000000;
+            background: url("./img/pre.png") no-repeat center center;
+            opacity: 0.2;
+            filter: alpha(opacity=20);
+        }
+
+        .banner a:hover, a:active, a:visited, a:target {
+            text-decoration: none;
+            display: block;
+            color: #000000;
+        }
+
+        .banner a:hover {
+            opacity: 0.7;
+            filter: alpha(opacity=70);
+        }
+
+        .banner .bannerLeft {
+            z-index: 9;
+            left: 0;
+            background-position: 0 0;
+        }
+
+        .banner .bannerRight {
+            z-index: 9;
+            right: 0;
+            background-position: -45px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="banner" id="banner">
+    <div class="inner" id="inner"></div>
+    <div id="div1">
+        <ul>
+            <li>ss01</li>
+            <li>ss02</li>
+        </ul>
+    </div>
+    <ul class="bannerTip" id="bannerTip">
+        <li class="bg">s01</li>
+        <li>s02</li>
+        <li>s03</li>
+        <li>s04</li>
+    </ul>
+    <a class="bannerLeft" href="javascript:;">
+        <div id="div00">
+            <ul>
+                <li>1</li>
+            </ul>
+        </div>
+    </a>
+    <a class="bannerRight" href="javascript:;"></a>
+</div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript" src="../jquery-1.12.4.js"></script>
+<script type="text/javascript">
+    ////////////基本选择器/////////////
+    $('#inner') //id选择器
+    $('.bannerTip') //样式类名选择器
+    $('ul') //节点名称选择器
+    $('#inner,ul,li') //组合选择器：关系是逻辑或
+    /////////////////////////////////
+    ////////////层次选择器/////////////
+    $('#banner li') // 子子孙孙选择器
+    $('#banner>div') //儿子选择器
+    $('#inner+') //第一个弟弟选择器：$('#inner+div')->找第一个弟弟且这个弟弟必须是div标签元素
+    $('#inner~') //所有弟弟们选择器：$('#inner~a')->找所有弟弟们中标签是a标签的元素们
+    /////////////////////////////////
+    ////////////基本过滤选择器/////////////
+    $('#inner~:not(a)') //不包含过滤器：inner的所有弟弟元素中不是a标签的元素
+    $('#inner~:eq(2)') // 索引过滤器：通过索引获取对应的jQuery对象，注意返回结果是jQuery对象，和get(2)返回的原生对象不同！
+    $('#inner~:gt(1)') // 索引大于1的对象，不包含1
+    $('#banner div:has(li)') // banner容器中其后台元素div中有li的div元素，注意返回的是div，has就是过滤div的
+</script>
+</body>
+</html>
