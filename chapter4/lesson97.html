@@ -4,11 +4,30 @@
     <meta charset="UTF-8">
     <title>lesson97</title>
     <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
+        ul, li {
+            list-style: none;
+        }
+
+        .menu {
+            position: absolute;
+            width: 200px;
+            margin: 30px auto;
+            left: 50%;
+            border: 1px solid #000000;
+        }
+
+        .menuList {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-<div class="menu">
+<div class="menu" id="box">
     <ul>
         <li>
             <h2 class="menuList" style="display: block">普通衬衫</h2>
@@ -20,7 +39,7 @@
             </ul>
         </li>
         <li>
-            <h2 class="menuList">文艺衬衫</h2>
+            <h2 class="menuList" style="display: block">文艺衬衫</h2>
             <ul>
                 <li>AF衬衫</li>
                 <li>LN衬衫</li>
@@ -29,7 +48,7 @@
             </ul>
         </li>
         <li>
-            <h2 class="menuList">二逼衬衫</h2>
+            <h2 class="menuList" style="display: block">二逼衬衫</h2>
             <ul>
                 <li>透明衬衫</li>
                 <li>无色衬衫</li>
@@ -39,5 +58,15 @@
         </li>
     </ul>
 </div>
+<script type="text/javascript" src="../jquery-1.12.4.js"></script>
+<script type="text/javascript">
+  //  $(document).ready(function () {
+  //    console.log("1")
+  //  })
+  $(function () {
+    $(".menuList+").hidden(0);
+
+  })
+</script>
 </body>
 </html>
