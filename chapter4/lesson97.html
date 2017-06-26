@@ -17,7 +17,7 @@
             position: absolute;
             width: 200px;
             margin: 30px auto;
-            left: 50%;
+            left: 45%;
             border: 1px solid #000000;
         }
 
@@ -64,8 +64,16 @@
   //    console.log("1")
   //  })
   $(function () {
-    $(".menuList+").hidden(0);
-
+    $(".menuList~").hide(); //默认隐藏所有ul
+    $(".menuList").on('click', function () { //为每个h2元素添加点击事件
+      $(this) // 注意这里this就是$(".menuList")jQuery类数据对象中0,1,2,3...属性名所代表的原生JS对象！
+        .next() // 拿到当前点击h2元素的下一个弟弟jQuery对象
+        .slideToggle() // 添加效果：滑动显示隐藏
+        .parent() // 同时找到ul的父元素，刚好同父亲~
+        .siblings() // 获取li元素的兄弟元素
+        .children("ul") // 获取这些兄弟元素的子元素中的ul元素
+        .slideUp(); // 批量给这些ul元素添加收起动画
+    }) // 说实话，链式编程真厉害！！
   })
 </script>
 </body>
