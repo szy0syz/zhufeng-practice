@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>lesson 98</title>
     <style type="text/css">
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
 
-        .banner{
+        .banner {
             position: relative; /*让我的子子孙孙定位向劳资看齐！哈哈哈哈~~*/
             width: 990px;
             height: 400px;
@@ -18,23 +18,23 @@
             margin: 1px auto;
         }
 
-        .banner img{
+        .banner img {
             display: block;
             border: none;
         }
 
-        .banner ul,li{
+        .banner ul, li {
             list-style: none;
         }
 
-        .banner .inner{
+        .banner .inner {
             width: 990px;
             height: 400px;
             background: url("./img/tb_default.gif") center center #4e4e4e;
-            overflow: none;
+            overflow: hidden;
         }
 
-        .banner .inner div{
+        .banner .inner div {
             position: absolute;
             float: left; /*根据浮动规则，最后一张图浮动到了最上面*/
             top: 0;
@@ -44,7 +44,7 @@
 
         }
 
-        .banner .bannerTip{
+        .banner .bannerTip {
             position: absolute;
             width: 144px;
             height: 18px;
@@ -62,13 +62,13 @@
             height: 18px;
             border-radius: 50%;
             opacity: 0.5;
-            filter: alpha(filter=50);
+            filter: alpha(opacity=50);
         }
 
-        .banner .bannerTip li:hover{
+        .banner .bannerTip li:hover {
             background: lightcoral;
             opacity: 1;
-            filter: alpha(filter=100);
+            filter: alpha(opacity=100);
         }
 
         .banner a {
@@ -80,7 +80,7 @@
             margin-top: -22.5px; /*为了居中*/
             background: url("./img/pre.png");
             opacity: 0.4;
-            filter: alpha(filter=40);
+            filter: alpha(opacity=40);
             /*清除a标签默认样式*/
             color: #000000;
             display: none;
@@ -88,15 +88,15 @@
         }
 
         /*分别清除a标签四个伪类（四种状态下的默认样式），这里是同级，应该用逗号*/
-        .banner a:hover,a:target,a:visited,a:active{
+        .banner a:hover, a:target, a:visited, a:active {
             color: #000000;
             display: block;
             text-decoration: none;
         }
 
-        .banner a:hover{
+        .banner a:hover {
             opacity: 0.8;
-            filter: alpha(filter=80);
+            filter: alpha(opacity=80);
         }
 
         .banner .bannerLeft {
@@ -108,26 +108,25 @@
             right: 0;
             background-position: -45px 0;
         }
-
     </style>
 </head>
 <body>
 
-    <div id="banner" class="banner">
-        <div class="inner">
-            <div><img src="./img/banner1.jpg" alt="b1"></div>
-            <div><img src="./img/banner2.jpg" alt="b2"></div>
-            <div><img src="./img/banner3.jpg" alt="b3"></div>
-            <div><img src="./img/banner4.jpg" alt="b4"></div>
-        </div>
-        <ul class="bannerTip">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-        <a href="javascript:;" class="bannerLeft"></a>
-        <a href="javascript:;" class="bannerRight"></a>
+<div id="banner" class="banner">
+    <div class="inner">
+        <div><img src="./img/banner1.jpg" alt="b1"></div>
+        <div><img src="./img/banner2.jpg" alt="b2"></div>
+        <div><img src="./img/banner3.jpg" alt="b3"></div>
+        <div><img src="./img/banner4.jpg" alt="b4"></div>
     </div>
+    <ul class="bannerTip">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <a href="javascript:;" class="bannerLeft"></a>
+    <a href="javascript:;" class="bannerRight"></a>
+</div>
 </body>
 </html>
