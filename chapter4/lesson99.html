@@ -19,7 +19,7 @@
         }
 
         .banner img {
-            display: none;
+            display: block;
             border: none;
         }
 
@@ -37,11 +37,14 @@
         .banner .inner div {
             position: absolute;
             z-index: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
             float: left; /*根据浮动规则，最后一张图浮动到了最上面*/
             top: 0;
             left: 0;
             height: 100%;
             width: 100%;
+            display: block;
 
         }
 
@@ -184,12 +187,11 @@
 
   //第3步：实现图片延迟加载
   function imgDelyLoad() {
-    $(".inner>:first").css('zIndex', 1).siblings().css('zIndex', 0);
     $(".inner img").each(function () {
-      var $this =  $(this);
+      var $this = $(this);
       $this.attr("src", $this.attr("rsrc"));
     });
-    $(".inner img:first").fadeIn(600).siblings().css("display", "block");
+    $(".inner>:first").css({zIndex: 1}).animate({opacity: 1}, 600);
   }
 
 </script>
