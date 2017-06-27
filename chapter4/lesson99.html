@@ -30,7 +30,7 @@
         .banner .inner{
             width: 990px;
             height: 400px;
-            background: url("./img/tb_default.gif") center center #4e4e4e;
+            background: url("./img/tb_default.gif") no-repeat center center #4e4e4e;
             overflow: none;
         }
 
@@ -130,9 +130,22 @@
     </div>
     <script src="../jquery-1.12.4.js" type="text/javascript"></script>
     <script type="text/javascript">
-        
+        var $banner = $("#banner"),
+            $inner = $banner.children().eq(0),
+            $bannerTip = $banner.children().eq(1),
+            $bannerLeft = $banner.children().eq(2),
+            $bannerRight = $banner.children().eq(3),
+            $innerDivs = $(".inner div"),
+            $innerImgs = $(".inner img"),
+            $bannerTipLis = $(".bannerTip li");
 
-
+        // 证明了jQuery获取的对象已不存在DOM机制！
+        // $(function () {
+        //     console.dir($innerImgs);
+        //     $inner.html("");
+        //     console.dir($innerImgs);
+        //     console.dir($(".inner img"));
+        // })
     </script>
 </body>
 </html>
