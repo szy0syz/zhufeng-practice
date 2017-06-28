@@ -170,6 +170,7 @@
     success: function (data) {
       bind(data);
       imgDelyLoad();
+      //addSlideNav();
     }
   });
 
@@ -180,7 +181,7 @@
     $.each(data, function (i) {
       strDivs += '<div><img src="" rsrc="' + this.img + '" alt="' + this.desc + '"></div>';
       i === 0 ? strUl += '<li class="bg"></li>' : strUl += '<li></li>'; // 为第一个li加上选中样式
-    })
+    });
     $inner.html(strDivs);
     $bannerTip.html(strUl);
   }
@@ -194,6 +195,80 @@
     $(".inner>:first").css({zIndex: 1}).animate({opacity: 1}, 600);
   }
 
+  var interval = 3000, step = 0, autoTimer = null;
+  window.setTimeout(function () {
+    autoTimer = window.setInterval(autoPlay, interval);
+  }, 800);
+  //第4步：实现图片延时加载动画
+  function autoPlay() {
+    if (step >= ($inner.children().length - 1)) {
+      step = -1;
+    }
+    step++;
+    setBanner();
+    // 实现焦点对齐
+    $bannerTip.children().eq(step).addClass('bg').siblings().removeClass('bg');
+  }
+  function setBanner() {
+    if (step === 0) {
+      $inner.children('div:last').css("zIndex", 0);
+      $inner.children('div').eq(step).css("zIndex", 1).animate({opacity: 1}, 500, function () {
+        $(this).siblings().css({zIndex: 0, opacity: 0});
+      });
+      return;
+    }
+    $inner.children('div').eq(step).css("zIndex", 1).animate({opacity: 1}, 500, function () {
+      $(this).siblings().css({zIndex: 0, opacity: 0});
+    })
+  }
+
+  //第5步：绑定焦点定位
+  $banner.children().eq(1).on("click", focusNavHandler);
+  // 我感觉我的大脑没救了，这么奇葩的实现。
+  function focusNavHandler(jev) {
+    step = $(jev.originalEvent.target).index() - 1;
+    autoPlay();
+  }
+
+  //第6步：显示隐藏左右导航和开始与结束动画
+  $banner.on('mouseover', function (ev) {
+    console.log("动画停止了")
+    $(".banner a").css("display", "block");
+    window.clearInterval(autoTimer);
+    ev.stopPropagation();
+    return false;
+  });
+
+  $banner.on('mouseout', function (ev) {
+    console.log("动画开始了")
+    $(".banner a").css("display", "none");
+    autoTimer = window.setInterval(autoPlay, interval);
+    ev.stopPropagation();
+    return false;
+  });
+
+  //第7步：实现左右切换(哎，异步执行，拿不到娃娃啊)
+  function addSlideNav() {
+    $('.bannerLeft').on('click', function (ev) {
+        if (step === 0) {
+          step = $('.inner div').length - 1;
+        }
+        step--;
+        setBanner();
+    }).mouseover(function () {
+      window.clearInterval(autoTimer);
+    }).mouseout(function () {
+      autoTimer = window.setInterval(autoPlay, interval);
+    });
+
+    $('.bannerRight').on('click', function (ev) {
+      autoPlay();
+    }).mouseover(function () {
+      window.clearInterval(autoTimer);
+    }).mouseout(function () {
+      autoTimer = window.setInterval(autoPlay, interval);
+    });
+  }
 </script>
 </body>
 </html>

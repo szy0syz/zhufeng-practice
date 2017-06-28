@@ -1,0 +1,248 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lesson 98</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .banner {
+            position: relative; /*让我的子子孙孙定位向劳资看齐！哈哈哈哈~~*/
+            width: 990px;
+            height: 400px;
+            color: #4e4e4e;
+            margin: 1px auto;
+        }
+
+        .banner img {
+            display: block;
+            border: none;
+        }
+
+        .banner ul, li {
+            list-style: none;
+        }
+
+        .banner .inner {
+            width: 990px;
+            height: 400px;
+            background: url("./img/tb_default.gif") no-repeat center center lightgray;
+            overflow: hidden;
+        }
+
+        .banner .inner div {
+            position: absolute;
+            z-index: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            float: left; /*根据浮动规则，最后一张图浮动到了最上面*/
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            display: block;
+
+        }
+
+        .banner .bannerTip {
+            position: absolute;
+            z-index: 9;
+            width: 144px;
+            height: 18px;
+            left: 50%;
+            margin-left: -72px;
+            bottom: 20px;
+
+        }
+
+        .banner .bannerTip li {
+            float: left;
+            background: lightblue;
+            margin-left: 18px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+
+        .banner .bannerTip li:hover {
+            background: lightcoral;
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
+
+        .banner .bannerTip li.bg {
+            background: lightcoral;
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
+
+        .banner a {
+            position: absolute;
+            z-index: 9;
+            width: 30px;
+            height: 45px;
+            top: 50%;
+            margin-top: -22.5px; /*为了居中*/
+            background: url("./img/pre.png");
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+            /*清除a标签默认样式*/
+            color: #000000;
+            display: none;
+            text-decoration: none;
+        }
+
+        /*分别清除a标签四个伪类（四种状态下的默认样式），这里是同级，应该用逗号*/
+        .banner a:hover, a:target, a:visited, a:active {
+            color: #000000;
+            display: block;
+            text-decoration: none;
+        }
+
+        .banner a:hover {
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+        }
+
+        .banner .bannerLeft {
+            left: 0;
+            background-position: 0 0;
+        }
+
+        .banner .bannerRight {
+            right: 0;
+            background-position: -45px 0;
+        }
+
+    </style>
+</head>
+<body>
+<div id="banner" class="banner">
+    <div class="inner">
+        <!--<div><img src="./img/banner1.jpg" alt="b1"></div>-->
+        <!--<div><img src="./img/banner2.jpg" alt="b2"></div>-->
+        <!--<div><img src="./img/banner3.jpg" alt="b3"></div>-->
+        <!--<div><img src="./img/banner4.jpg" alt="b4"></div>-->
+    </div>
+    <ul class="bannerTip">
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+    </ul>
+    <a href="javascript:;" class="bannerLeft"></a>
+    <a href="javascript:;" class="bannerRight"></a>
+</div>
+<script src="../jquery-1.12.4.js" type="text/javascript"></script>
+<script type="text/javascript">
+  // 第0步：初始化全局变量
+  var $banner = $("#banner"),
+    $inner = $banner.children().eq(0),
+    $bannerTip = $banner.children().eq(1),
+    $bannerLeft = $banner.children().eq(2),
+    $bannerRight = $banner.children().eq(3);
+  //    $innerDivs = $(".inner div"),
+  //    $innerImgs = $(".inner img"),
+  //    $bannerTipLis = $(".bannerTip li");
+  //  var $innerDivs = null,
+  //    $innerImgs = null,
+  //    $bannerTipLis = null;
+  // 证明了jQuery获取的对象已不存在DOM机制！
+  // $(function () {
+  //     console.dir($innerImgs);
+  //     $inner.html("");
+  //     console.dir($innerImgs);
+  //     console.dir($(".inner img"));
+  // })
+
+  //第1步：远程取数
+  $.ajax({
+    url: "./json/data.json",
+    cache: false,
+    dataType: 'json',
+    async: true,
+    success: function (data) {
+      bind(data);
+      imgDelyLoad();
+    }
+  });
+
+  //第2步：数据绑定
+  function bind(data) {
+    var strDivs = '';
+    var strUl = '';
+    $.each(data, function (i) {
+      strDivs += '<div><img src="" rsrc="' + this.img + '" alt="' + this.desc + '"></div>';
+      i === 0 ? strUl += '<li class="bg"></li>' : strUl += '<li></li>'; // 为第一个li加上选中样式
+    });
+    $inner.html(strDivs);
+    $bannerTip.html(strUl);
+  }
+
+  //第3步：实现图片延迟加载
+  function imgDelyLoad() {
+    $(".inner img").each(function () {
+      var $this = $(this);
+      $this.attr("src", $this.attr("rsrc"));
+    });
+    $(".inner>:first").css({zIndex: 1}).animate({opacity: 1}, 600);
+  }
+
+  var interval = 3000, step = 0, autoTimer = null;
+  window.setTimeout(function () {
+    autoTimer = window.setInterval(autoPlay, interval);
+  }, 800);
+  //第4步：实现图片延时加载动画
+  function autoPlay() {
+    if (step >= ($inner.children().length - 1)) {
+      step = -1;
+    }
+    step++;
+    setBanner();
+    // 实现焦点对齐
+    $bannerTip.children().eq(step).addClass('bg').siblings().removeClass('bg');
+  }
+  function setBanner() {
+    if (step === 0) {
+      $inner.children('div:last').css("zIndex", 0);
+      $inner.children('div').eq(step).css("zIndex", 1).animate({opacity: 1}, 500, function () {
+        $(this).siblings().css({zIndex: 0, opacity: 0});
+      });
+      return;
+    }
+    $inner.children('div').eq(step).css("zIndex", 1).animate({opacity: 1}, 500, function () {
+      $(this).siblings().css({zIndex: 0, opacity: 0});
+    })
+  }
+
+  //第5步：绑定焦点定位
+  $banner.children().eq(1).on("click", focusNavHandler);
+  // 我感觉我的大脑没救了，这么奇葩的实现。
+  function focusNavHandler(jev) {
+    step = $(jev.originalEvent.target).index() - 1;
+    autoPlay();
+  }
+
+  //第6步：显示隐藏左右导航和开始与结束动画
+  $banner.on('mouseover', function (ev) {
+    $(".banner a").css("display", "block");
+    window.clearInterval(autoTimer);
+    ev.stopPropagation();
+    return false;
+  });
+
+  $banner.on('mouseout', function (ev) {
+    $(".banner a").css("display", "none");
+    autoTimer = window.setInterval(autoPlay, interval);
+    ev.stopPropagation();
+    return false;
+  });
+</script>
+</body>
+</html>
