@@ -199,7 +199,7 @@
         // 4. 实现轮播
         var interval = 2000, step = 0, autoTimer = null;
         autoTimer = window.setInterval(autoPlay, interval);
-        function autoPlay () {
+        function autoPlay() {
             step++;
             if (step >= $innerDivs.length) {
                 step = 0;
@@ -208,15 +208,13 @@
             $bannerLis.eq(step).addClass('bg').siblings().removeClass('bg');
             //切换轮播图
             $innerDivs.eq(step).finish().fadeIn(600).siblings().finish().fadeOut(600);
-
         }
 
         //5. 实现焦点切换
         $bannerLis.click(function () {
             var step = $(this).prop("index") - 1;
-            autoPlay ();
+            autoPlay();
         });
-
 
         // 6. 实现开始和结束动画与slideNav的显示隐藏
         $banner.on("mouseover", function () {
@@ -242,11 +240,9 @@
             step -= 2;
             autoPlay();
         });
-
         $bannerRight.on("click", function () {
             autoPlay();
         });
-
     </script>
 </body>
 
