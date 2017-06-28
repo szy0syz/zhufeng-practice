@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>lesson 98</title>
+    <title>lesson 100</title>
     <style type="text/css">
         * {
             margin: 0;
@@ -39,9 +39,6 @@
 
         .banner .inner div {
             position: absolute;
-            z-index: 0;
-            opacity: 1;
-            filter: alpha(opacity=1);
             float: left;
             /*根据浮动规则，最后一张图浮动到了最上面*/
             top: 0;
@@ -136,10 +133,19 @@
         <a href="javascript:;" class="bannerLeft"></a>
         <a href="javascript:;" class="bannerRight"></a>
     </div>
+
+    <div id="banner1" class="banner">
+        <div class="inner"></div>
+        <ul class="bannerTip">
+        </ul>
+        <a href="javascript:;" class="bannerLeft"></a>
+        <a href="javascript:;" class="bannerRight"></a>
+    </div>
     <script src="../jquery-1.12.4.js" type="text/javascript"></script>
     <script src="../slider-jq.js" type="text/javascript"></script>
     <script type="text/javascript">
         $("#banner").slider("./json/data.json", 3000);
+        $("#banner1").slider("./json/data1.json", 1000);
     </script>
 </body>
 
