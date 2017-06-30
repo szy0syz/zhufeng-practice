@@ -11,23 +11,35 @@
 
         .box {
             position: relative;
-            width: 1000px;
-            height: 100px;
-            margin: 5px auto;
-            border: 1px solid #000000;
+            width: 598px; /*图片140*4=560 左右边框2*4 margin-right:10*3 = 598 + 最后一个无用的margin-right=608 */
+            height: 98px; /*上下边框2 图片75 margin-top:10 margin-bottom:10 = 98*/
+            margin: 50px auto;
+            border: 1px dashed darkgray;
         }
 
         .box .content {
             position: absolute;
-
+            /*width: 100%;*/ /*千万别设100%，自适应，弟弟可以超过哥哥*/
+            /*height: 100%;*/
+            margin-right: -20px; /*哇哈哈~负边距应用了，成功放大了content元素！*/
+            overflow: hidden;
         }
 
-        .box img {
+        .box img { /* 140*75 */
             float: left;
+            margin: 10px 10px 10px 0;
+            border: 1px solid red;
         }
 
         .mask {
-
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 522px; /*原始图片为520*280，但我上下和左右分别加了边框，所以各加2*/
+            height: 282px;
+            border: 1px solid lightgray;
+            background: no-repeat center center;
         }
     </style>
 </head>
@@ -35,12 +47,44 @@
 <div id="box" class="box">
     <div id="content" class="content">
         <img src="./imgs/i01s.jpg" bigsrc="./imgs/i01.jpg" alt="1">
-        <img src="./imgs/i02s.jpg" bigsrc="./imgs/i01.jpg" alt="2">
-        <img src="./imgs/i03s.jpg" bigsrc="./imgs/i01.jpg" alt="3">
-        <img src="./imgs/i04s.jpg" bigsrc="./imgs/i01.jpg" alt="4">
+        <img src="./imgs/i02s.jpg" bigsrc="./imgs/i02.jpg" alt="2">
+        <img src="./imgs/i03s.jpg" bigsrc="./imgs/i03.jpg" alt="3">
+        <img src="./imgs/i04s.jpg" bigsrc="./imgs/i04.jpg" alt="4">
     </div>
-    <div class="mask"></div>
+    <div class="mask" id="mask"></div>
 </div>
+<script src="../jquery-1.12.4.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function () {
+    var boxOffet = $('#box').offset(),
+        $imgs = $('img'),
+        $mask = $('#mask');
 
+    $imgs.mouseenter(function (e) {
+      $mask
+        .css("background-image", 'url("' + this.getAttribute("bigsrc") + '")')
+        .finish()
+        .fadeIn(400)
+        .css({ //这里不能拿img的offset设置啊，因为mask是根据box定位，所以拿box的offset绝对距离即可！
+          left: e.clientX - boxOffet.left + 10,
+          top: e.clientY - boxOffet.top + 10
+        });
+    });
+
+    $imgs.mouseleave(function (e) {
+      $mask
+        .finish()
+        .fadeOut(200);
+    });
+
+    $imgs.mousemove(function (e) {
+      $mask
+        .css({
+          left: e.clientX - boxOffet.left + 10,
+          top: e.clientY - boxOffet.top + 10
+        });
+    });
+  })
+</script>
 </body>
 </html>
