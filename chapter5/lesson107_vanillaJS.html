@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson107_VanillaJS</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: relative;
+            width: 598px; /*图片140*4=560 左右边框2*4 margin-right:10*3 = 598 + 最后一个无用的margin-right=608 */
+            height: 98px; /*上下边框2 图片75 margin-top:10 margin-bottom:10 = 98*/
+            margin: 50px auto;
+            border: 1px dashed darkgray;
+        }
+
+        .container .box {
+            position: absolute;
+            /*width: 100%;*/ /*千万别设100%，自适应，弟弟可以超过哥哥*/
+            /*height: 100%;*/
+            margin-right: -20px; /*哇哈哈~负边距应用了，成功放大了content元素！*/
+            overflow: hidden;
+        }
+
+        .box img { /* 140*75 */
+            float: left;
+            margin: 10px 10px 10px 0;
+            border: 1px solid red;
+        }
+
+        .mask {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 522px; /*原始图片为520*280，但我上下和左右分别加了边框，所以各加2*/
+            height: 282px;
+            border: 1px solid lightgray;
+            background: no-repeat center center;
+        }
+    </style>
+</head>
+<body>
+<div id="container" class="container">
+    <div id="box" class="box">
+        <img src="./imgs/i01s.jpg" bigsrc="./imgs/i01.jpg" alt="1">
+        <img src="./imgs/i02s.jpg" bigsrc="./imgs/i02.jpg" alt="2">
+        <img src="./imgs/i03s.jpg" bigsrc="./imgs/i03.jpg" alt="3">
+        <img src="./imgs/i04s.jpg" bigsrc="./imgs/i04.jpg" alt="4">
+    </div>
+    <div class="mask" id="mask"></div>
+</div>
+<script type="text/javascript">
+  var cta = document.getElementById('container'),
+    box = document.getElementById('box'),
+    mask = document.getElementById('mask'),
+    imgList = box.getElementsByTagName('img');
+  // box距离body的距离，中间包了个container，手工算吧。
+  // 算了都是根据container定位，不许算两道了，没意思。
+  var ctaOffsetLeft = cta.offsetLeft,
+    ctaOffsetTop = cta.offsetTop;
+
+  function handleMouseEnter(e) {
+    e = e || window.event;
+    e.target = e.target || e.srcElement;
+    mask.style.backgroundImage = 'url("' + this.getAttribute("bigsrc") + '")';
+    mask.style.display = 'block';
+    mask.style.left = e.clientX - ctaOffsetLeft + 10 + 'px';
+    mask.style.top = e.clientY - ctaOffsetTop + 10 + 'px';
+  }
+
+  function handleMousemove(e) {
+    e = e || window.event;
+    e.target = e.target || e.srcElement;
+    mask.style.left = e.clientX - ctaOffsetLeft + 10 + 'px';
+    mask.style.top = e.clientY - ctaOffsetTop + 10 + 'px';
+  }
+
+  function handleMouseLeave() {
+    mask.style.display = 'none';
+  }
+
+  for (var i = 0, len = imgList.length; i < len; i++) {
+    // 其实这里可以用捕获来优化，直接绑定在box上即可，第二版本再优化。
+    imgList[i].addEventListener('mouseenter', handleMouseEnter, false);
+    imgList[i].addEventListener('mousemove', handleMousemove, false);
+    imgList[i].addEventListener('mouseleave', handleMouseLeave, false);
+  }
+</script>
+</body>
+</html>
