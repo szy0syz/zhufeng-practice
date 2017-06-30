@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>lesson108_VanillaJS</title>
     <style type="text/css">
-        *{
-            margin:0;
+        * {
+            margin: 0;
             padding: 0;
         }
-        .container{
+
+        .container {
             position: relative;
             height: 402px;
             width: 402px;
@@ -16,10 +17,11 @@
             border: 2px dashed red;
             background: lightgray;
         }
-        .container .box{
+
+        .container .box {
             display: none;
             position: absolute;
-            background: lightblue;
+            background: green;
             height: 100px;
             width: 100px;
             top: 410px;
@@ -28,15 +30,97 @@
     </style>
 </head>
 <body>
-<!--故意把box放在容器里，增加难度，为了理解时间的传播机制。-->
+<!--挖坑第一步：故意把box放在容器里，增加难度，为了理解时间的传播机制。-->
 <div id="container" class="container">
     <div class="box" id="box"></div>
 </div>
 <script type="text/javascript">
-    var cta = document.getElementById("#container"),
-        box = document.getElementById("#box");
+  var cta = document.getElementById("container"),
+    box = document.getElementById("box");
+  //挖坑第二步，使用mouseover和mouseout事件触发行为
+  //    cta.addEventListener('mouseover', function (e) {
+  //      e = e || window.event;
+  //      e.target = e.target || e.srcElement;
+  //      box.style.display = 'block';
+  //      box.style.left = e.clientX - cta.offsetLeft + 6 + 'px';
+  //      box.style.top = e.clientY - cta.offsetTop + 10 + 'px';
+  //    }, false);
+  //
+  //    cta.addEventListener('mousemove', function (e) {
+  //      e = e || window.event;
+  //      e.target = e.target || e.srcElement;
+  //      box.style.left = e.clientX - cta.offsetLeft + 6 + 'px';
+  //      box.style.top = e.clientY - cta.offsetTop + 10 + 'px';
+  //    }, false);
+  //
+  //    cta.addEventListener('mouseout', function () {
+  //      box.style.display = 'none';
+  //    }, false);
 
+  // 为什么我没遇到周老师讲的坑呢，奇怪啊，各种办法都试了。
+  // 我明白了，原来他用的是事件函数里用的是"this"，如果那就复杂了。
+  // 如果你this是container还好，如果是box那就冒泡了。
+  //  cta.onmouseover = function (e) {
+  //    e = e || window.event;
+  //    e.target = e.target || e.srcElement;
+  //    box.style.display = 'block';
+  //    box.style.left = e.clientX - cta.offsetLeft + 6 + 'px';
+  //    box.style.top = e.clientY - cta.offsetTop + 10 + 'px';
+  //  };
+  //
+  //  cta.onmousemove = function (e) {
+  //    e = e || window.event;
+  //    e.target = e.target || e.srcElement;
+  //    box.style.left = e.clientX - cta.offsetLeft + 6 + 'px';
+  //    box.style.top = e.clientY - cta.offsetTop + 10 + 'px';
+  //  };
+  //
+  //  cta.onmouseout = function (e) {
+  //    box.style.display = 'none';
+  //  }
 
+  // 我承认，我试了三遍，硬是没把坑试出来，是不是我基础太好了啊~~
+  //  cta.onmouseover = function (e) {
+  //    e = e || window.event;
+  //    e.target = e.target || e.srcElement;
+  //    box.style.display = 'block';
+  //    box.style.left = e.clientX - this.offsetLeft + 6 + 'px';
+  //    box.style.top = e.clientY - this.offsetTop + 10 + 'px';
+  //  };// 这尼玛永远也是container啊，不会出来周老师的坑嘛，哎，找个坑跳也那么麻烦，罢了。
+  //
+  //  cta.onmousemove = function (e) {
+  //    console.dir(this);
+  //    e = e || window.event;
+  //    e.target = e.target || e.srcElement;
+  //    box.style.left = e.clientX - this.offsetLeft + 6 + 'px';
+  //    box.style.top = e.clientY - this.offsetTop + 10 + 'px';
+  //  };
+  //
+  //  cta.onmouseout = function (e) {
+  //    box.style.display = 'none';
+  //  }
+
+  // 第四遍，使用mouseenter和mouseleave代替，应为这两货在MDN文档中严重标明不支持冒泡机制！欧耶~
+  cta.onmouseover = function (e) {
+    e = e || window.event;
+    e.target = e.target || e.srcElement;
+    box.style.display = 'block';
+    box.style.left = e.clientX - this.offsetLeft + 6 + 'px';
+    box.style.top = e.clientY - this.offsetTop + 10 + 'px';
+  };// 这尼玛永远也是container啊，不会出来周老师的坑嘛，哎，找个坑跳也那么麻烦，罢了。
+
+  cta.onmousemove = function (e) {
+    console.dir(this);
+    e = e || window.event;
+    e.target = e.target || e.srcElement;
+    box.style.left = e.clientX - this.offsetLeft + 6 + 'px';
+    box.style.top = e.clientY - this.offsetTop + 10 + 'px';
+  };
+
+  cta.onmouseout = function (e) {
+    box.style.display = 'none';
+  }
+  // 我输了，试了四遍，硬是没找到坑跳进去啊。
 </script>
 </body>
 </html>
