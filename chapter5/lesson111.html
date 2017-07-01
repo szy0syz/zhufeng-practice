@@ -23,8 +23,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            height: 303.75px;
-            width: 303.75px;;
+            height: 300px;
+            width: 300px;;
             display: block;
             border: 1px solid #aaa;
             background: #fede4f;
@@ -62,27 +62,44 @@
     mark = document.getElementById('mark'),
     imgDetail = document.getElementById('imgDetail');
 
+
+  function setPoistion(e) {
+    // 展示盒子 450px * 450px
+    // 放大镜   300px * 300px
+    // 明细盒子 540px * 540px
+    var left = e.clientX - box.offsetLeft - (mark.offsetWidth/2);
+    var top = e.clientY - box.offsetTop - (mark.offsetTop/2);
+    mark.style.left = left + 'px';
+    mark.style.top = top + 'px';
+
+  }
+
   function handleMouseEnter(e) {
     e = e || window.event;
     e.target = e.target || e.srcElement;
-    console.dir(e.target)
     if (e.target.id === 'box') {
       imgDetail.style.display = 'block';
     }
-
+    setPoistion(e);
   }
 
   function handleMouseLeave(e) {
     e = e || window.event;
     e.target = e.target || e.srcElement;
-    console.dir(e.target)
     if (e.target.id === 'box') {
       imgDetail.style.display = 'none';
     }
   }
 
+  function handleMouseMove(e) {
+    e = e || window.event;
+    e.target = e.target || e.srcElement;
+    setPoistion(e);
+  }
+
   box.addEventListener('mouseenter', handleMouseEnter);
   box.addEventListener('mouseleave', handleMouseLeave);
+  box.addEventListener('mousemove', handleMouseMove);
 </script>
 </body>
 </html>
