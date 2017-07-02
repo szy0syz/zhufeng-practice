@@ -311,6 +311,11 @@ var utils = (function () {
     }
   }
 
+  //
+  function toggleClass(curEle, className) {
+    hasClass(curEle, className) ? removeClass(curEle,className) : addClass(curEle,className);
+  }
+
   //$("#box").css("width")
   //$("#box").css("width", 200)
   //$("#box").css({width: 200, height: 100})
@@ -355,6 +360,7 @@ var utils = (function () {
     hasClass: hasClass,
     addClass: addClass,
     removeClass: removeClass,
+    toggleClass: toggleClass,
     getElementsByClassName: getElementsByClassName,
     // setCss: setCss,
     // setGroupCss: setGroupCss,

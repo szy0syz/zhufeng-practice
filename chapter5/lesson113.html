@@ -8,6 +8,8 @@
             margin: 0;
             padding: 0;
             font-size: 14px;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         ul, li {
@@ -74,7 +76,38 @@
 <div class="box" id="box">
     <ul>
         <li>
-            <em class="open"></em><span>第一级第一个</span>
+            <em></em><span>第一级第一个</span>
+            <ul class="levelTwo">
+                <li><span>第二级第一个</span></li>
+                <li>
+                    <em></em><span>第二级第二个</span>
+                    <ul class="levelThree">
+                        <li><span>第三级第一个</span></li>
+                        <li><span>第三级第二个</span></li>
+                        <li>
+                            <em></em><span>第三级第三个</span>
+                            <ul class="levelFour">
+                                <li><span>第四级第一个</span></li>
+                                <li><span>第四级第二个</span></li>
+                                <li><span>第四级第三个</span></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <em></em><span>第二级第三个</span>
+                    <ul class="levelThree">
+                        <li><span>第三级第一个</span></li>
+                        <li><span>第三级第二个</span></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
+        <li>
+            <em></em><span>第一级第一个</span>
             <ul class="levelTwo">
                 <li><span>第二级第一个</span></li>
                 <li>
@@ -123,18 +156,30 @@
     e = e || window.event;
     e.traget = e.target || e.srcElement;
 
-    var tagName = e.target.tagName.toLocaleLowerCase(),
-      siblingsUlList = utils.children(e.traget.parentNode, 'ul');
+    var tagName = e.target.tagName.toLocaleLowerCase(), //获取当前点击元素的tagName
+      siblingsUlList = utils.children(e.traget.parentNode, 'ul'), // 获取当前点击元素的兄弟元素中ul元素列表
+      prevEle = utils.prev(e.target); // 获取当前事件源的哥哥元素
 
+    // 判断是否真的有兄弟ul元素且点击元素时em或者span
     if (siblingsUlList.length > 0 && (tagName === 'em' || tagName === 'span')) {
-      // 展开内容
+      // 确定当前点击操作时显示内容还是隐藏内容
+      var isHide = tagName === 'span' ? utils.hasClass(prevEle, 'open') : utils.hasClass(e.target, 'open');
+
+      // 遍历循环每一个兄弟ul元素并操作
       for (var i = 0, len = siblingsUlList.length; i < len; i++) {
-        siblingsUlList[i].style.display = "block";
+        // 这里显示和隐藏都只操作兄弟ul元素！
+        isHide ? siblingsUlList[i].style.display = "none" : siblingsUlList[i].style.display = "block";
       }
-      //
+
+      // 先判断该元素是否为span，如果是就把它哥哥元素的open样式命名进行toggle
+      if (tagName === 'span') {
+        utils.toggleClass(prevEle, 'open');
+      } else { // 如果不是就说明点的是em元素，就直接把本身样式类名open进行toggle开关
+        utils.toggleClass(e.target, 'open');
+      }
     }
   }
-
+  // 因为有事件冒泡传播，所以为box绑定点击事件，可以让它的子子孙孙元素点击事件传递给box上~~
   box.addEventListener('click', handleSpanClick, false);
 </script>
 </body>
