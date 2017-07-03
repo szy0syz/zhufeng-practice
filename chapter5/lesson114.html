@@ -141,6 +141,35 @@
 </div>
 <script type="text/javascript" src="../jquery-1.12.4.js"></script>
 <script type="text/javascript">
+  var $box = $('#box');
+  // 循环em兄弟span加可点击的样式
+  $box.find('span').each(function (i, v) {
+    var $item = $(v);
+    $item.prev().is('em') ? $item.css('cursor', 'pointer') : null;
+  });
+  
+  function handleBoxClick(je) {
+    var $target = $(je.currentTarget),
+      $siblingsUls = $target.parent().children('ul'),
+      tagName = je.target.nodeName.toLowerCase();
+    if ($siblingsUls.length > 0 && (tagName === 'span' || tagName === 'em')) {
+      var isHide = tagName === 'span' ? $target.parent().hasClass('open') : $target.hasClass('open');
+      $siblingsUls.each(function (item) {
+        if (isHide) {
+          // 隐藏
+          $siblingsUls.slideToggle(); //jQuery: -> defaultSpeed:400ms
+          $siblingsUls.find('ul').hide(400); // 这里只能隐藏，不能用toggle
+          $siblingsUls.find('em').removeClass('open'); // 这里只能删除，不能用toggleClass
+        } else {
+          // 显示
+          $siblingsUls.slideToggle();
+        }
+        tagName === 'em' ? $target.toggleClass('open') : $target.prev().toggleClass('open');
+      })
+    }
+  }
+  // 将点击时间的行为函数委托给box容器下的em和span元素
+  $box.delegate('em, span', 'click', handleBoxClick);
 
 </script>
 </body>

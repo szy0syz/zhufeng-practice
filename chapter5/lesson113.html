@@ -144,10 +144,12 @@
   var box = document.getElementById('box'),
     spanList = box.getElementsByTagName('span');
 
+  // 第一步：循环容器中所有span标签
   for (var i = 0, len = spanList.length; i < len; i++) {
     var curSpan = spanList[i],
-      prevEle = utils.prev(curSpan);
+      prevEle = utils.prev(curSpan); // 获取该span标签的哥哥元素
     if (prevEle && prevEle.tagName.toLocaleLowerCase() === 'em') {
+      // 如果哥哥元素是em的话，说明这个span下还有ul内容，则设置该span样式cursor = "pointer"
       curSpan.style.cursor = "pointer";
     }
   }
