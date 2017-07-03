@@ -49,9 +49,26 @@
     this["prevTop"] = parseFloat(window.getComputedStyle(this)['top']) || 0;
     this["prevX"] = parseFloat(e.clientX);
     this["prevY"] = parseFloat(e.clientY);
+    // 为了解决鼠标焦点丢失问题，在IE和FF中我们使用setCapture和releaseCaptrue。而其它浏览器则我们直接将鼠标move和鼠标up事件绑定在document对象上，妥妥的，不丢失！
     // 当鼠标在box按下时，给box绑定mousemove和mouseup事件
-    box.addEventListener('mousemove', move, false);
-    box.addEventListener('mouseup', up, false);
+    // 如果当前环境兼容setCapture就启动
+    if (this.setCapture) {
+      this.setCapture();
+      this.addEventListener('mousemove', move, false);
+      this.addEventListener('mouseup', up, false);
+    } else {
+      var self = this;
+      // 匿名函数参数必须有e，事件会传递进来
+      this["MOVE"] = function (e) {
+        move.call(self, e);
+      };
+      this["UP"] = function (e) {
+        up.call(self, e);
+      };
+      document.onmousemove = this["MOVE"];
+      document.onmouseup = this["UP"];
+    }
+
   }
 
   function move(e) {
@@ -71,8 +88,15 @@
 
   function up(e) {
     e = e || window.event;
-    box.removeEventListener('mousemove', move);
-    box.removeEventListener('mouseup', up);
+    if (this.releaseCapture) {
+      this.releaseCapture();
+      this.removeEventListener('mousemove', move);
+      this.removeEventListener('mouseup', up);
+    } else {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    }
+
   }
 
   box.addEventListener('mousedown', down, false);
