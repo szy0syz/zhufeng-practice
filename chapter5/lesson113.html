@@ -172,18 +172,15 @@
         //升级业务逻辑。显示时值操作兄弟ul们显示，但隐藏式不仅把兄弟ul们隐藏，还要把子子孙孙ul们都隐藏
         if (isHide) {
           siblingsUlList[i].style.display = "none";
-          var nodes = siblingsUlList[i].childNodes; // 这里不能这样做，得用document.getElementsByTagName
-          for (var j = 0, len1 = nodes.length; j < len1; j++) {
-            // 我靠，text没有tagName属性！！！靠！！
-            // 业务逻辑：过滤出元素节点且是ul标签的才进行隐藏，其它元素没必要嘛
-            if (nodes[j].nodeType === 1 && nodes[j].tagName.toLowerCase() === 'ul') {
-              nodes[j].style.display = 'none';
-            }
-            if (nodes[j].nodeType === 1 && nodes[j].tagName.toLowerCase() === 'em') {
-              utils.removeClass(nodes[j],'open');
-            }
+          var u = siblingsUlList[i].getElementsByTagName('ul'); // 获取这个ul底下的所有ul
+          var ems = siblingsUlList[i].getElementsByTagName('em'); // 获取这个ul底下的所有em
+          for (var iu=0;iu<u.length;iu++) {
+            u[iu].style.display = 'none'; // ul的话就直接应酬
           }
-        } else {
+          for (var ie=0;ie<ems.length;ie++) {
+            utils.removeClass(ems[ie], 'open'); // em的话就直接删除open样式类名
+          }
+        } else { // 否者显示
           siblingsUlList[i].style.display = "block";
         }
       }
