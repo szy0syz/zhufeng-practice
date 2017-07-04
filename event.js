@@ -82,11 +82,17 @@ function on(curEle, type, fn) {
   }
   ary.push(fn);
   //curEle.addEventListener(type, run, false);//执行on的时候随带给当前元素绑定一个点击行为，点击时执行run方法，run方法中this是当前元素curEle，并且浏览器给run传递了一个MouseEvent事件对象
-  bind(curEle, type, fn); //使用已经实现兼容且处理过重复和this问题的绑定方法
+  bind(curEle, type, run); //使用已经实现兼容且处理过重复和this问题的绑定方法
 }
 //在自己的事件池中吧某一个方法移除
 function off(curEle, type, fn) {
-
+  var ary = curEle["myEvent" + type];
+  for (var i=0, len=ary.length; i< len; i++) {
+    if (ary[i] === fn) {
+      ary.splice(i,1);
+      break;// 完全不需要执行行为，仅仅是删除事件池中的事件而已。
+    }
+  }
 }
 
 // 只给当前元素的点击行为绑定一个方法润，当触发某行为时执行的也就是run方法，我们在run方法中根据自己存储的方法新顺序分别执行所这些方法即可
@@ -111,5 +117,4 @@ function run(e) {
   for (var i = 0, len = ary.length; i < len; i++) {
     ary[i].call(this, e); // 执行时记得修改this和传递mouseEvent对象~
   }
-
 }
