@@ -31,10 +31,10 @@ Function.prototype.myBind = function myBind(context) {
 
 
 /**使用兼容方式为元素绑定行为事件
-* @curEle: 当前元素
-* @type: 行为类型
-* @fn: 回调函数
-* */
+ * @curEle: 当前元素
+ * @type: 行为类型
+ * @fn: 回调函数
+ * */
 function bind(curEle, type, fn) {
   if ("addEventListener" in document) {
     curEle.addEventListener(type, fn, false);
@@ -69,4 +69,47 @@ function unbind(curEle, type, fn) {
       }
     }
   }
+}
+
+//创建事件池，并且把需要给当前元素绑定的方法依次的增加到事件池中
+function on(curEle, type, fn) {
+  //判断当前元素的某行为事件池是否存在，不存在就赋空数组
+  !curEle["myEvent" + type] ? curEle["myEvent" + type] = [] : null;
+  var ary = curEle["myEvent" + type];
+  for (var i = 0, len = ary.length; i < len; i++) {
+    var cur = ary[i];
+    if (cur === fn) return;
+  }
+  ary.push(fn);
+  //curEle.addEventListener(type, run, false);//执行on的时候随带给当前元素绑定一个点击行为，点击时执行run方法，run方法中this是当前元素curEle，并且浏览器给run传递了一个MouseEvent事件对象
+  bind(curEle, type, fn); //使用已经实现兼容且处理过重复和this问题的绑定方法
+}
+//在自己的事件池中吧某一个方法移除
+function off(curEle, type, fn) {
+
+}
+
+// 只给当前元素的点击行为绑定一个方法润，当触发某行为时执行的也就是run方法，我们在run方法中根据自己存储的方法新顺序分别执行所这些方法即可
+function run(e) {
+  e = e || window.event;
+  var flag = !!e.target; // 判断当前浏览器是否是IE6~8，false为IE6~8
+  if (!flag) {
+    // 处理IE兼容问题
+    e.target = e.target || e.srcElement;
+    e.pageX = e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft);
+    e.pageY = e.clientY + (document.documentElement.scrollTop || document.body.scrollTop);
+    e.preventDefault = function () {
+      e.returnValue = false;
+    };
+    e.stopPropagation = function () {
+      e.cancelBubble = true;
+    }
+  }
+
+  // 获取自己事件池中绑定的那些方法，并且让这些方法依次执行
+  var ary = this["myEvent" + e.type];
+  for (var i = 0, len = ary.length; i < len; i++) {
+    ary[i].call(this, e); // 执行时记得修改this和传递mouseEvent对象~
+  }
+
 }

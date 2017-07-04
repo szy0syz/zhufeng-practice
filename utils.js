@@ -28,8 +28,8 @@ var utils = (function () {
   function offset(curElement) {
     var totalLfet = 0, totalTop = 0, parant = curElement.offsetParent
     // 先算自己的
-    totalLfet += curElement.offsetLeft
-    totalTop += curElement.offsetTop
+    totalLfet += curElement.offsetLeft;
+    totalTop += curElement.offsetTop;
 
     while (parant) {
       // 判断是不是IE8
