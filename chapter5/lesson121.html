@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lesson121</title>
+</head>
+<body>
+    <script type="text/javascript" src="zyEvent.js"></script>
+    <script type="text/gavascript">
+        // 标准浏览器和IE6~8浏览器之间关于dom2级事件机制的一些重要区别：
+        // 1.this问题：标准浏览器中给一个元素的某一个行为绑定方法，当行为触发执行对应方法时，方法中的this就是当前元素；而在IE6~8，此方法执行时方法中的this却是window。
+        // 2.重复问题：标准浏览器中不能给同一元素的同一行为绑定多个相同的方法；但在IE6~8中query可以绑定；
+        // 3.顺序问题：标准浏览器绑定行为时，是按照顺序依次把方法添加打到事件池中，在下一次添加时，首先看现有事件池中是否已有这个方法，如果重复就不再添加，并且当行为在触发时，会到事件池中按照添加的顺序依次执行方法；而在IE6~8中，所绑定的方法并不按顺序执行，是无序的。
+
+
+
+
+    </script>
+</body>
+</html>
