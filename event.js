@@ -16,6 +16,7 @@ Function.prototype.myBind = function myBind(context) {
 // function hi (one,two) {
 //   console.log(this.hello + ', ' + one + ' ' + two + '.')
 // }
+// var o = { hello: 'hello' };
 // hi.myBind(o,'jerry')('shi'); //直接执行
 // var fn1 = hi.myBind(o,'jerry'); //赋值堆地址等待执行
 // fn1('shi');
