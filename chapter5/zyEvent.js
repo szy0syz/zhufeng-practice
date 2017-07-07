@@ -50,7 +50,7 @@ function bind(curEle, type, fn) {
   // var tmpFn = function (e) {
   //   fn.call(curEle, e);
   // };
-    var tmpFn = fn.myBind(curEle);
+  var tmpFn = fn.myBind(curEle);
   // 将这个包装对象的原始对象也存入自定义属性，为了辨认！
   // 我靠，我才发现这里是给函数这个对象添加自定义属性，对于JS这门语言我也是醉了~
   tmpFn.proto = fn;
@@ -67,43 +67,40 @@ function unbind(curEle, type, fn) {
   // 以下为IE6~8
   var ary = curEle['zyBind' + type];
   if (ary) {
-      for (var i = 0; i < ary.length; i++) {
-          if (ary[i].proto === fn) {
-              // 删除IE绑定
-              curEle.detach("on" + type, curEle.proto);
-              // 删除当前元素事件池数组上的该方法
-              ary.splice(i, 1);
-              return; // 删除完成直接退出整个函数
-          }
+    for (var i = 0; i < ary.length; i++) {
+      if (ary[i].proto === fn) {
+        // 删除IE绑定
+        curEle.detach("on" + type, curEle.proto);
+        // 删除当前元素事件池数组上的该方法
+        ary.splice(i, 1);
+        return; // 删除完成直接退出整个函数
       }
+    }
   }
 }
 
-function on (curEle, type, fn) {
+function on(curEle, type, fn) {
   // zyBind 和 zyEvent是两个数组~
   // 这里如果事件池不存在undefined，ary就是undefined，
   // 意思就是ary没拿到内存地址，赋值个空数组给undefined也没意思
   //curEle['zyEvent' + type] ? null : curEle['zyEvent' + type] = [];
-  if (!curEle['zyEvent' + type]) curEle['zyEvent' + type] = [];
+  !curEle["zyEvent" + type] ? curEle["zyEvent" + type] = [] : null;
   var ary = curEle['zyEvent' + type];
-  for (var i=0, len=ary.length; i<len; i++) {
-    if (ary[i] === fn) {
-      // 如果事件池数组中已经绑定该方法就直接返回
-      return;
-    }
+  for (var i = 0, len = ary.length; i < len; i++) {
+    if (ary[i] === fn) return;
   }
   // 检查通过后将方法存在事件池数组中
   ary.push(fn);
   // 注意：因为bind方法里我们处理了重复问题，所以可以重复绑定run方法，没事
-  bind(curEle, 'click', run);
+  bind(curEle, type, run);
 }
 
-function off (curEle, type, fn) {
+function off(curEle, type, fn) {
   // off就简单了，只需要操作一下事件池数组就行了
   var ary = curEle['zyEvent' + type];
   if (ary) {
-    for (var i=0; i< ary.length; i++) {
-      if(ary[i] === fn) {
+    for (var i = 0; i < ary.length; i++) {
+      if (ary[i] === fn) {
         ary.splice(i, 1);
         // ary[i] = null;
         return;
@@ -117,20 +114,33 @@ function off (curEle, type, fn) {
 function run(e) {
   // 在bind方法里，会将行为触发全部绑定到run上，run如要做的就是拿到元素和事件类型
   e = e || window.event;
-  e.target = e.target || e.srcElement;
-  var type = e.type,
-      ary = this['zyEvent' + type];
-  //ary = e.target['zyEvent' + type];
+  var flag = !!e.target;
+  if (!flag) { // 判断兼容并处理
+    e.target = e.target || e.srcElement;
+    e.pageX = e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft);
+    e.pageY = e.clientY + (document.documentElement.scrollHeight || document.body.scrollTop);
+    e.preventDefault = function () {
+      e.returnValue = false;
+    };
+    e.stopPropagation = function () {
+      e.cancelBubble = true;
+    }
+  }
+  var type = e.type, ary = this['zyEvent' + type];
+  // ary = e.target['zyEvent' + type];
   if (ary) {
-      // for (var i = 0; i < ary.length; i++) { 不能这样设置len了，因为要删除数组，用这方式会数组塌陷！
-      for (var i = 0, len = ary.length; i < len; i++) {
-          if(typeof(ary[i]) === "function") {
-              ary[i].call(this, e); // 传入当前元素this和Event对象
-          } else {
-              // 如果不是函数直接删除当前项
-              ary.splice(i, 1);
-              i--;
-          }
-      }
+    for (var i = 0; i < ary.length; i++) {
+      ary[i].call(this, e);
+    }
+    // for (var i = 0; i < ary.length; i++) { 不能这样设置len了，因为要删除数组，用这方式会数组塌陷！
+    // for (var i = 0; i < ary.length; i++) {
+    //   if (typeof(ary[i]) === "function") {
+    //     ary[i].call(this, e); // 传入当前元素this和Event对象
+    //   } else {
+    //     // 如果不是函数直接删除当前项
+    //     ary.splice(i, 1);
+    //     i--;
+    //   }
+    // }
   }
 }

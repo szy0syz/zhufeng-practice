@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson123</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #box {
+            position: absolute;
+            left: 200px;
+            top: 200px;
+            width: 120px;
+            height: 120px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script type="text/javascript" src="zyEvent.js"></script>
+<!--<script type="text/javascript" src="../event.js"></script>-->
+<script type="text/javascript">
+  var box = document.getElementById('box');
+
+  function down(e) {
+    // 记录当鼠标按下时的初始状态
+    this['prevX'] = parseFloat(e.clientX);
+    this['prevY'] = parseFloat(e.clientY);
+    this['prevLeft'] = parseFloat(window.getComputedStyle(this)['left']);
+    this['prevTop'] = parseFloat(window.getComputedStyle(this)['top']);
+    // 处理鼠标过快丢失焦点问题
+    // 首先检测是否在ie和火狐环境
+    if (this.setCapture) {
+      this.setCapture();
+      on(box, 'mousemove', move);
+      on(box, 'mouseup', up);
+    } else { // 如果是chrome环境就把move和up绑定在document上！
+      // 保存this，为了传递
+      var _this = this;
+      // 将
+      this['dMove'] = function (e) {
+        move.call(_this, e);
+      };
+      this['dUp'] = function (e) {
+        up.call(_this, e);
+      };
+      on(document, 'mousemove', this['dMove']);
+      on(document, 'mouseup', this['dUp']);
+    }
+  }
+
+  function move(e) {
+    var left = this['prevLeft'] + (parseFloat(e.clientX) - this['prevX']);
+    var top = this['prevTop'] + (parseFloat(e.clientY) - this['prevY']);
+    // 设置边界极值
+    // 获得公式：html/body的内容宽/高 - 整个盒子的宽/高
+    var minL = 0, maxL = (document.documentElement.clientWidth || document.body.clientWidth) - this.offsetWidth;
+    var minT = 0, maxT = (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight;
+    // 处理边界问题
+    box.style.left = left < minL ? minL : (left > maxL ? maxL : left) + 'px';
+    box.style.top = top < minT ? minT : (top > maxT ? maxT : top) + 'px';
+  }
+
+  function up(e) {
+    //判断是否在IE和火狐
+    if (this.releaseCapture) {
+      this.releaseCapture();
+      off(box, 'mousemove', move);
+      off(box, 'mouseup', up);
+    } else {
+      off(document, 'mousemove', this['dMove']);
+      off(document, 'mouseup', this['dUp']);
+    }
+  }
+
+  on(box, 'mousedown', down);
+</script>
+</body>
+</html>

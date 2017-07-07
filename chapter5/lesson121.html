@@ -27,6 +27,10 @@
 
   var box = document.getElementById('box');
 
+  function fn(e) {
+    console.log(1);
+  }
+
   function fn1 (e) {
     console.log('绑定成功');
     console.dir(e);
@@ -41,8 +45,9 @@
     console.log('解绑成功');
   }
 
-  bind(box, 'click', fn1);
+  //bind(box, 'click', fn1);
   on(box, 'click', fn2);
+  on(box, 'click', fn);
 </script>
 </body>
 </html>
