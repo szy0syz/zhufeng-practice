@@ -39,7 +39,7 @@ function bind(curEle, type, fn) {
   // 以下为IE6~8
   // 取出当前元素事件池数组
   // 判断事件池是否存在，不存在赋值空数组
-  var ary = curEle['myEvent' + type];
+  var ary = curEle['zyBind' + type];
   ary = ary ? null : [];
   // for循环检测该方法是否已经存在事件池中
   for (var i = 0, len = ary.length; i < len; i++) {
@@ -54,10 +54,11 @@ function bind(curEle, type, fn) {
     fn.call(curEle, e);
   };
   // 将这个包装对象的原始对象也存入自定义属性，为了辨认！
+  // 我靠，我才发现这里是给函数这个对象添加自定义属性，对于JS这门语言我也是醉了~
   tmpFn.proto = fn;
+  // 将包装对象存入元素事件池数组
+  ary.push(tmpFn);
   curEle.attachEvent("on" + type, tmpFn);
-  ///////////////////////////////////////
-  //到目前为止，解决了this问题和重复问题，还差顺序问题
 }
 
 function unbind(curEle, type, fn) {
@@ -66,7 +67,7 @@ function unbind(curEle, type, fn) {
     return;
   }
   // 以下为IE6~8
-  var ary = curEle['myEvent' + type];
+  var ary = curEle['zyBind' + type];
   for (var i = 0, len = ary.length; i < len; i++) {
     if (ary[i].proto === fn) {
       // 删除绑定
@@ -75,10 +76,41 @@ function unbind(curEle, type, fn) {
   }
 }
 
+function on (curEle, type, fn) {
+  // zyBind 和 zyEvent是两个数组~
+  var ary = curEle['zyEvent' + type];
+  // ary不存在初始化空数组
+  ary = ary ? null : [];
+  for (var i=0, len=ary.length; i<len; i++) {
+    if (ary[i] === fn) {
+      // 如果事件池数组中已经绑定该方法就直接返回
+      return;
+    }
+  }
+  
+}
+
+function off (curEle, type, fn) {
+
+}
+
 // run方法将会绑定到元素有触发的所有行为上，
 //   通过run方法获取该元素自定义属性对应的行为事件池池的数组，然后逐一执行。
 function run(e) {
-  
+  // 在bind方法里，会将行为触发全部绑定到run上，run如要做的就是拿到元素和事件类型
+  e = e || window.event;
+  e.target = e.target || e.srcElement;
+  var type = e.type, ary = this['zyEvent' + type];
+  // for (var i = 0; i < ary.length; i++) { 不能这样设置len了，因为要删除数组，用这方式会数组塌陷！
+  for (var i = 0, len = ary.length; i < len; i++) {
+    if(typeof(ary[i]) === "function") {
+      ary[i].call(this, e); // 传入当前元素this和Event对象
+    } else {
+      // 如果不是函数直接删除当前项
+      ary.splice(i, 1);
+      i--;
+    }
+  }
 }
 
 // }();
