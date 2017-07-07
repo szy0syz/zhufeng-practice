@@ -35,10 +35,14 @@
     console.log('解绑成功');
   }
 
+  function fn2 (e) {
+    console.log('绑定：鼠标在box元素里按下了');
+    off(box, 'click', fn2);
+    console.log('解绑成功');
+  }
+
   bind(box, 'click', fn1);
-
-
-
+  on(box, 'click', fn2);
 </script>
 </body>
 </html>
