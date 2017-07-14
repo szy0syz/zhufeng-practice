@@ -129,18 +129,15 @@ function run(e) {
   var type = e.type, ary = this['zyEvent' + type];
   // ary = e.target['zyEvent' + type];
   if (ary) {
-    for (var i = 0; i < ary.length; i++) {
-      ary[i].call(this, e);
-    }
     // for (var i = 0; i < ary.length; i++) { 不能这样设置len了，因为要删除数组，用这方式会数组塌陷！
-    // for (var i = 0; i < ary.length; i++) {
-    //   if (typeof(ary[i]) === "function") {
-    //     ary[i].call(this, e); // 传入当前元素this和Event对象
-    //   } else {
-    //     // 如果不是函数直接删除当前项
-    //     ary.splice(i, 1);
-    //     i--;
-    //   }
-    // }
+    for (var i = 0; i < ary.length; i++) {
+      if (typeof(ary[i]) === "function") {
+        ary[i].call(this, e); // 传入当前元素this和Event对象
+      } else {
+        // 如果不是函数直接删除当前项
+        ary.splice(i, 1);
+        i--;
+      }
+    }
   }
 }
