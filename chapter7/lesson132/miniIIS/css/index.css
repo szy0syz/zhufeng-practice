@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0
+}
+
+.box {
+    border: 1px solid #000;
+    background: darkgray;
+}
+
+.box image {
+    height: 100%;
+    width: 100%;
+}
