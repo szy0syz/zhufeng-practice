@@ -17,7 +17,7 @@ function createXHR() {
   var i, len;
   for (i = 0, len = ary.length; i < len; i++) {
     try {
-      xhr = ary[i];
+      xhr = ary[i](); // 直接返回执行结果
       // 如果能运行到下面说明刚好能兼容
       // 既然能兼容就直接修改这个函数堆内存指向数组中兼容的函数
       createXHR = ary[i];
