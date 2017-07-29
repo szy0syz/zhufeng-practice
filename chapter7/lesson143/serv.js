@@ -14,7 +14,9 @@ const serv = http.createServer((req, res) => {
     result = null,
     customerID = null,
     isRoute = false,
-    tmp = null;
+    tmp = null,
+    updated = false,
+    cb = null;
 
   // 将读取文件转换成数组对象放公共区域
   con = fs.readFileSync(jsonPath, 'UTF-8');
@@ -27,7 +29,7 @@ const serv = http.createServer((req, res) => {
     for (let i = 0; i < tmp.length; i++) {
       query[tmp[i].split('=')[0]] = tmp[i].split('=')[1];
     }
-    customerID = query.id;
+    customerID = query.id.toString();
   }
 
   // 如果路由匹配 /getList
@@ -70,6 +72,31 @@ const serv = http.createServer((req, res) => {
     res.writeHead(200, {'content-type': 'application/json;charset=utf-8;'});
     res.end(JSON.stringify(result));
   }
+
+  if (pathname === '/del') {
+    isRoute = true;
+    // 循环数据
+    for (let i = 0; i < con.length; i++) {
+      if (con[i].id.toString() === customerID) {
+        // 把指定客户从数组中删除，等会要写入
+        con.splice(i, 1);
+        updated = true;
+        break;
+      }
+    }
+    if (updated) {
+      // 如果有更新，就把con数组转换成JSON字符串后再写入文件
+      fs.writeFileSync(jsonPath, JSON.stringify(con));
+    }
+    result = {
+      code: 0,
+      msg: '删除成功'
+    };
+    res.writeHead(200, {'content-type': 'application/json;charset=utf-8;'});
+    res.end(JSON.stringify(result));
+  }
+
+  // 关于更新数据库就放在外面统一更新
 
 
   // 只有路由不匹配时才读本地文件
