@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    font-size: 14px;
+    /*隐藏横向滚动条*/
+    overflow-x: hidden;
+}
+
+ul, li {
+    list-style: none;
+}
+
+a, a:hover, a:visited, a:target, a:active {
+    text-decoration: none;
+    color: #000;
+}
+
+input {
+    display: inline-block;
+    outline: none;
+}
+
+.box_add {
+    width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid green;
+}
+
+.box_add div{
+    margin: 10px auto;
+    height: 32px;
+}
+
+.box_add div span{
+    display: inline-block;
+    width: 50px;
+}
+
+.box_add div input{
+    padding: 0 10px;
+    width: 400px;
+    height: 30px;
+    border: 1px solid #dddddd;
+}
+
+#cstName, #cstAge {
+    width: 200px;
+}
+
+.box_add .submit{
+    width: 200px;
+    margin: 20px auto 0;
+    text-align: center;
+    background: green;
+    color: #fff;
+    height: 35px;
+    line-height: 35px;
+    cursor: pointer;
+}
