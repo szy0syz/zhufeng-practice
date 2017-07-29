@@ -24,9 +24,10 @@ const serv = http.createServer((req, res) => {
   if (query.length > 0) {
     tmp = query.split('&');
     query = {};
-    for (let i=0;i<tmp.length;i++) {
+    for (let i = 0; i < tmp.length; i++) {
       query[tmp[i].split('=')[0]] = tmp[i].split('=')[1];
     }
+    customerID = query.id;
   }
 
   // 如果路由匹配 /getList
@@ -43,7 +44,7 @@ const serv = http.createServer((req, res) => {
         code: 0,
         msg: 'ok',
         data: con
-      }
+      };
     }
     res.writeHead(200, {'content-type': 'application/json;charset=utf-8;'});
     res.end(JSON.stringify(result));
@@ -52,6 +53,22 @@ const serv = http.createServer((req, res) => {
   // 如果路由匹配 /getInfo
   if (pathname === '/getInfo') {
     isRoute = true;
+    result = {
+      code: 1,
+      msg: '没有此客户信息',
+      data: null
+    };
+    for (let i = 0; i < con.length; i++) {
+      if (con[i].id.toString() === customerID) {
+        result = {
+          code: 0,
+          msg: 'ok',
+          data: con[i]
+        };
+      }
+    }
+    res.writeHead(200, {'content-type': 'application/json;charset=utf-8;'});
+    res.end(JSON.stringify(result));
   }
 
 
