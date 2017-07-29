@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    font-size: 14px;
+    /*隐藏横向滚动条*/
+    overflow-x: hidden;
+}
+
+ul, li {
+    list-style: none;
+}
+
+a, a:hover, a:visited, a:target, a:active {
+    text-decoration: none;
+    color: #000;
+}
+
+
+/*index css start*/
+
+.box {
+    width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid green;
+}
+
+.box #add {
+    font-size: 18px;
+    color: green;
+}
+
+.box #add:hover {
+    text-decoration: underline;
+    color: lime;
+}
+
+.box .head {
+    height: 35px;
+    line-height: 35px;
+    background: green;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.w50{
+    width: 50px;
+}
+
+.w150{
+    width: 150px;
+}
+
+.w200{
+    width: 200px;
+}
+
+.box .head span, .box .list li span {
+    float: left;
+    text-align: center;
+    font-size: 15px;
+}
+
+.box .list li {
+    height: 35px;
+    line-height: 35px;
+}
+
+.box .list li:nth-child(even) {
+    background: #eee;
+}
+
+.box .list li:hover {
+    background: lightgoldenrodyellow;
+}
+
+.control a{
+     display: inline-block;
+     margin: 0 5px;
+ }
+
+.control a:hover{
+    text-decoration: underline;
+    color: lime;
+}
