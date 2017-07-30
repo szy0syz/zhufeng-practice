@@ -1,8 +1,8 @@
 const submit = function submit() {
   const cstName = document.getElementById('cstName'),
-    cstAge = document.getElementById('cstName'),
-    cstPhone = document.getElementById('cstName'),
-    cstAddr = document.getElementById('cstName');
+    cstAge = document.getElementById('cstAge'),
+    cstPhone = document.getElementById('cstPhone'),
+    cstAddr = document.getElementById('cstAddr');
 
   let obj = {
     name: cstName.value,

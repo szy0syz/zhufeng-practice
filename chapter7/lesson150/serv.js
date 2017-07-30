@@ -16,7 +16,7 @@ const serv = http.createServer((req, res) => {
     isRoute = false,
     tmp = null,
     updated = false,
-    cb = null;
+    method = null;
 
   // 将读取文件转换成数组对象放公共区域
   con = fs.readFileSync(jsonPath, 'UTF-8');
@@ -33,6 +33,7 @@ const serv = http.createServer((req, res) => {
       customerID = query.id.toString();
     }
   }
+  method = req.method; // upper
 
   // 如果路由匹配 /getList
   if (pathname === '/getList') {
@@ -98,7 +99,47 @@ const serv = http.createServer((req, res) => {
     res.end(JSON.stringify(result));
   }
 
-  // 关于更新数据库就放在外面统一更新
+  if (pathname === '/addCst' && method === 'POST') {
+    isRoute = true;
+    let str = '';
+    result = {
+      code: 1,
+      msg: '添加失败'
+    };
+    req.on('data', function (chunk) {
+      str += chunk;
+    });
+
+    req.on('end', function () {
+      res.writeHead(200, {'content-type': 'application/json;charset=utf-8;'});
+      try {
+        // 1. 获取数组中id的最大值
+        let o = JSON.parse(str);
+        o.id = con.reduce((prev, cur) => {
+          if (cur && cur.id > 0) {
+            return cur.id;
+          }
+          return 0;
+        }, 0) + 1;
+        // 2. con数组push最后一个对象
+        con.push(o);
+        fs.writeFileSync(jsonPath, JSON.stringify(con));
+        result = {
+          code: 0,
+          msg: '添加成功',
+          data: JSON.stringify(str)
+        };
+        res.end(JSON.stringify(result));
+      } catch (e) {
+        console.error(e);
+        res.end(JSON.stringify(result));
+      }
+
+
+    });
+
+    // 这里不急着响应，而是把响应放在接收完data后再做出响应
+  }
 
 
   // 只有路由不匹配时才读本地文件
