@@ -104,7 +104,7 @@ const serv = http.createServer((req, res) => {
   // 只有路由不匹配时才读本地文件
   if (!isRoute) {
     try {
-      res.end(fs.readFileSync(req.url.slice(1)))
+      res.end(fs.readFileSync(pathname.slice(1)))
     } catch (e) {
       console.log(e.message);
       res.end('404')

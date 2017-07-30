@@ -14,7 +14,7 @@ let op = (function () {
         <span class="w50" >${curData.age}</span>
         <span class="w200">${curData.phone}</span>
         <span class="w200">${curData.addr}</span>
-        <span class="w150 control"><a href="/add?id=${curData.id}">修改</a> | <a href="#">删除</a></span>
+        <span class="w150 control"><a href="/add.html?id=${curData.id}">修改</a> | <a href="#">删除</a></span>
         </li>
       `;
     }
