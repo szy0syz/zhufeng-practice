@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>lesson 152 - JSONP原理</title>
+</head>
+<body>
+
+<script type="text/javascript">
+  // 1. 在当前页面定义自定义JSONP回调函数名称并使用
+  function szyCB(data) {
+    // 3. 声明定义函数的堆内存，当jsonp返回时，函数自然会被执行
+    console.log(data);
+  }
+</script>
+<!-- 2. 在script的src属性里写入目标jsonp服务端地址，并在最后加上自定义函数名称-->
+<script charset="utf-8" src="http://matchweb.sports.qq.com/kbs/calendar?columnId=100000&callback=szyCB"
+        type="text/javascript"></script>
+</body>
+</html>
