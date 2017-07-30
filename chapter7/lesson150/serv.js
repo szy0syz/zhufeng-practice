@@ -106,10 +106,12 @@ const serv = http.createServer((req, res) => {
       code: 1,
       msg: '添加失败'
     };
+
+    // 利用node的基于事件驱动完成接收POST请求data的值
     req.on('data', function (chunk) {
       str += chunk;
     });
-
+    // 同样是异步基于事件驱动模型。哎，以前刚看node时，看到这个完全搞不懂，现在是秒懂~
     req.on('end', function () {
       res.writeHead(200, {'content-type': 'application/json;charset=utf-8;'});
       try {
@@ -134,10 +136,7 @@ const serv = http.createServer((req, res) => {
         console.error(e);
         res.end(JSON.stringify(result));
       }
-
-
     });
-
     // 这里不急着响应，而是把响应放在接收完data后再做出响应
   }
 
