@@ -29,7 +29,9 @@ const serv = http.createServer((req, res) => {
     for (let i = 0; i < tmp.length; i++) {
       query[tmp[i].split('=')[0]] = tmp[i].split('=')[1];
     }
-    customerID = query.id.toString();
+    if (query.id) {
+      customerID = query.id.toString();
+    }
   }
 
   // 如果路由匹配 /getList
