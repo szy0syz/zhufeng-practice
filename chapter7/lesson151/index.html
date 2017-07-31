@@ -68,7 +68,10 @@
 <script type="text/javascript" charset="utf-8" src="../../jquery-1.12.4.js"></script>
 <script type="text/javascript">
     // https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=%E7%BD%97%E6%8A%80&json=1&p=3&sid=1448_21113_22158&cb=jQuery110202786627879335579_1501472866722&_=1501472866726
-
+    // https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=
+    $('#searchInp').on('focus keyup', function (e) {
+      var wd = $(e.target).val();
+    })
 </script>
 </body>
 </html>
