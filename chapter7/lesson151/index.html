@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>baidu</title>
@@ -58,20 +58,61 @@
 <body>
 <div class="box">
     <input type="text" id="searchInp">
-    <ul>
+    <ul id="list">
         <!--<li>云农股份简介</li>-->
         <!--<li>云农股份公司</li>-->
-        <!--<li>云农股份官网</li>-->
-        <!--<li>云农股份仓库</li>-->
     </ul>
 </div>
 <script type="text/javascript" charset="utf-8" src="../../jquery-1.12.4.js"></script>
 <script type="text/javascript">
-    // https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=%E7%BD%97%E6%8A%80&json=1&p=3&sid=1448_21113_22158&cb=jQuery110202786627879335579_1501472866722&_=1501472866726
-    // https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=
-    $('#searchInp').on('focus keyup', function (e) {
-      var wd = $(e.target).val();
-    })
+  // https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=
+  let $list = $('#list'),
+    $searchInp = $('#searchInp');
+
+  const bind = function bind(data) {
+    let str = '';
+    $.each(data, function (index, item) {
+      str += `<li>${item}</li>`
+    });
+    $list.html(str);
+  };
+
+  $searchInp.on('focus keyup', function (e) {
+    let wd = $(e.target).val();
+    // 如果wd长度大于0
+    if (wd.length > 0) {
+      $.ajax({
+        url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + wd,
+        type: "GET",
+        dataType: 'jsonp',
+        jsonp: 'cb',
+        success: function (data) {
+          console.log(data);
+          bind(data.s);
+        }
+      });
+      $list.stop().slideDown(100);
+      return
+    }
+    $('#list').stop().slideUp(100);
+  });
+
+  $(document).on('click', function (e) {
+    // 如果点的是list里的li标签
+    if (e.target.tagName === 'LI' && e.target.parentNode.id === 'list') {
+      $searchInp.val(e.target.firstChild.nodeValue);
+      $('#list').stop().slideUp(100);
+      return
+    }
+
+    if (e.target.id === 'searchInp') {
+      // 这里不消发送jsonp了，因为searchInp已经有获得焦点函数
+      // 这里直接返回即可，因为不能重复
+      return
+    }
+    // 如果是点击以上除外就隐藏list
+    $list.stop().slideUp(100);
+  })
 </script>
 </body>
 </html>
