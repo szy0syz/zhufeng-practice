@@ -81,6 +81,7 @@ const serv = http.createServer(function (req, res) {
   }
 
   // 啥也没找到就404
+  res.writeHead(404);
   res.end('404');
 });
 
