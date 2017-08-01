@@ -7,7 +7,7 @@ html, body {
     width: 100%;
 }
 
-ul, li{
+ul, li {
     list-style: none;
 }
 
@@ -20,6 +20,7 @@ input {
     border: 1px solid green;
     margin: 10px auto;
     padding: 10px;
+    text-align: center;
 }
 
 .box .head {
@@ -41,7 +42,7 @@ input {
     height: 300px;
 }
 
-.box .content li{
+.box .content li {
     cursor: pointer;
 }
 
@@ -49,17 +50,48 @@ input {
     background: #eeeeee;
 }
 
-.box .content li:hover span{
+.box .content li:hover span {
     background: #DBEEBD;
 }
 
-.box .page{
+.box .page {
     display: inline-block;
-    margin-top: 6px;
+    margin-top: 10px;
     height: 22px;
     line-height: 22px;
+    font-size: 13px;
 }
 
-.box .page span, .box .page ul, .box .page input, .box .page li{
+.box .page span, .box .page ul, .box .page input, .box .page li {
     float: left;
+    border: 1px solid green;
+    margin-left: 4px;
+    padding: 0 2px;
+    cursor: pointer;
+}
+
+.box .page ul {
+    border: none;
+}
+
+.box .page input {
+    height: 20px;
+    width: 30px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.box .page li {
+    width: 16px;
+}
+
+.box .page li.bg {
+    background: #ff6600;
+    color: #ffffff;
+}
+
+.box .page li:hover,.box .page span:hover  {
+    background: green;
+    color: #ffffff;
 }
