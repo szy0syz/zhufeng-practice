@@ -34,7 +34,7 @@ input {
     float: left;
     width: 200px;
     height: 100%;
-    line-height: 35px;
+    line-height: 30px;
     text-align: center;
 }
 
@@ -44,6 +44,7 @@ input {
 
 .box .content li {
     cursor: pointer;
+    height: 30px;
 }
 
 .box .content li:nth-child(even) span {
@@ -60,6 +61,8 @@ input {
     height: 22px;
     line-height: 22px;
     font-size: 13px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .box .page span, .box .page ul, .box .page input, .box .page li {
@@ -91,7 +94,7 @@ input {
     color: #ffffff;
 }
 
-.box .page li:hover,.box .page span:hover  {
+.box .page li:hover, .box .page span:hover {
     background: green;
     color: #ffffff;
 }
