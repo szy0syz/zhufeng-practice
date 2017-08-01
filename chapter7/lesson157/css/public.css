@@ -45,10 +45,21 @@ input {
     cursor: pointer;
 }
 
-.box .content li:nth-child(even) {
+.box .content li:nth-child(even) span {
     background: #eeeeee;
 }
 
-.box .content li:hover{
-    background: #33bb00;
+.box .content li:hover span{
+    background: #DBEEBD;
+}
+
+.box .page{
+    display: inline-block;
+    margin-top: 6px;
+    height: 22px;
+    line-height: 22px;
+}
+
+.box .page span, .box .page ul, .box .page input, .box .page li{
+    float: left;
 }
