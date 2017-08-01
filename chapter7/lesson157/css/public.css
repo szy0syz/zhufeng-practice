@@ -14,3 +14,41 @@ ul, li{
 input {
     outline: none;
 }
+
+.box {
+    width: 800px;
+    border: 1px solid green;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.box .head {
+    height: 35px;
+    background: green;
+    color: #ffffff;
+}
+
+.box .head span, .box .content span {
+    font-size: 15px;
+    float: left;
+    width: 200px;
+    height: 100%;
+    line-height: 35px;
+    text-align: center;
+}
+
+.box .content {
+    height: 300px;
+}
+
+.box .content li{
+    cursor: pointer;
+}
+
+.box .content li:nth-child(even) {
+    background: #eeeeee;
+}
+
+.box .content li:hover{
+    background: #33bb00;
+}
