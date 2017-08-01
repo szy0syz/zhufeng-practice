@@ -17,8 +17,10 @@ const serv = http.createServer(function (req, res) {
   const urlObj = url.parse(req.url);
   const pathname = urlObj.pathname;
   query = urlObj['query'];
+  
   let i = 0,
     result = null;
+  
   // -> 处理静态资源的请求
   const reg = /.(HTML|JS|CSS|ICO)/i; // 小正则捕获后缀名，不区分大小写。
   if (reg.test(pathname)) {
@@ -52,7 +54,7 @@ const serv = http.createServer(function (req, res) {
     res.end(JSON.stringify({
       code: 0,
       msg: 'ok',
-      total: Math.ceil(data.length / 3),
+      total: Math.ceil(data.length / 3), // 浮点数向上取整
       data: ary
     }));
 
