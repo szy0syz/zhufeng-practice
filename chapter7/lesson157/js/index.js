@@ -23,7 +23,35 @@ let op = (function () {
     
     // 如果点的是那四个伪装按钮span
     if (tagName === 'SPAN') {
-      console.log('span');
+      switch (value) {
+        case 'FIRST': {
+          n = 1;
+          break;
+        }
+        case 'PREV': {
+          if (n === 1) {
+            // 如果是第一页了，就不再发ajax请求直接返回
+            return;
+          }
+          n--;
+          break;
+        }
+        case 'NEXT': {
+          if (n === total) {
+            return;
+          }
+          n++;
+          break;
+        }
+        case 'LAST': {
+          n = total;
+          break;
+        }
+        default: {
+          n = 1;
+        }
+      }
+      
     }
     
     // 如果点的是那几个页面按键
@@ -38,11 +66,9 @@ let op = (function () {
       } else {
         n = value;
       }
-  
-      sendAJAX();
     }
-    
-    
+  
+    sendAJAX();
     
   };
   
