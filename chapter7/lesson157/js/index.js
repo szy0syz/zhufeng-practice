@@ -14,7 +14,7 @@ let op = (function () {
     e = e || window.event;
     const target = e.target || e.srcElement;
     const tagName = target.tagName.toUpperCase();
-    let value = target.firstChild.nodeValue;
+    let value = target.innerHTML;
     
     // 如果点的是那个input就直接返回，啥也不做
     if (tagName === 'INPUT') {
@@ -67,9 +67,9 @@ let op = (function () {
         n = value;
       }
     }
-  
-    sendAJAX();
     
+    // 最后发送ajax请求，如果有特殊情况已经提前返回！
+    sendAJAX();
   };
   
   const bindHTML = function bindHTML(data) {
@@ -103,6 +103,26 @@ let op = (function () {
     
   };
   
+  const pageInpHandle = function pageInpHandle(e) {
+    e = e || window.event;
+    const target = e.target || e.srcElement;
+    if (e.code === 'Enter') {
+      let val = this.value;
+      if (isNaN(val)) {
+        this.value = 1;
+      }
+      val = Math.round(parseFloat(val));
+      if (val > total) {
+        n = total;
+      } else if (val < 1) {
+        n = 1;
+      } else {
+        n = val;
+      }
+      sendAJAX();
+    }
+  };
+  
   const bindEvent = function bindEvent() {
     // 这里的page对象是dom对象，是有映射关系的哦！！！
     page.addEventListener('click', pageClickHandle);
@@ -117,6 +137,7 @@ let op = (function () {
           jsonData = data['data'];
           bindHTML(data['data']);
           bindEvent();
+          pageInp.addEventListener('keyup', pageInpHandle);
         }
       }
     })
