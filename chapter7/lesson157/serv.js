@@ -35,15 +35,17 @@ const serv = http.createServer(function (req, res) {
     }
     return
   }
-
-  query = query.queryURLParams();
+  
+  if (query) {
+    query = query.length > 0 ? query.queryURLParams() : {};
+  }
 
   // 处理API接口文档规定的数据请求
   let data = JSON.parse(fs.readFileSync('./json/students.json', 'utf-8'));
   if (pathname === '/getList') {
     const n = query['n'];
     let ary = [];
-    for (i = (n - 1) * 3; i <= n * 3 - 1; i++) {
+    for (i = (n - 1) * 10; i <= n * 10 - 1; i++) {
       // 如果已经到了数组最后一个，直接跳出了，因为之前每次都push，不怕得。
       if (i > data.length - 1) {
         break;
@@ -54,7 +56,7 @@ const serv = http.createServer(function (req, res) {
     res.end(JSON.stringify({
       code: 0,
       msg: 'ok',
-      total: Math.ceil(data.length / 3), // 浮点数向上取整
+      total: Math.ceil(data.length / 10), // 浮点数向上取整
       data: ary
     }));
 
