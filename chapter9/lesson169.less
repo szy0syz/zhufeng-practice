@@ -1,0 +1,48 @@
+@shadow-color: #888888;
+@rcolor: red;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+// iscolor是less的内置函数用于判断后返回true或false，when也是逻辑判断
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  box-shadow: @style @c;
+}
+
+.box-transform(@scale: 1) when (isnumber(@scale)) {
+  transform: scale(@scale);
+}
+
+.box-transition(@property: all, @duration, @funtion: linear, @delay: .1s) {
+  // 这里@arguments功能和JS保持一致
+  transition: @arguments;
+}
+
+.container {
+  width: 200px;
+  height: 200px;
+  border: 1px solid @rcolor;
+  margin: 200px auto;
+  .box-shadow(10px 10px 5px, @shadow-color);
+
+  //当 鼠标在container容器上时, 这里&相当于面向对象中的this关键字
+  &:hover {
+    .box-transition(@duration: .2s);
+    .box-transform(ok);
+  }
+
+  // 这里在container的花括号内写的类编译后编程它的子样式, 相当于.container.box
+  .box {
+    height: 160px;
+    width: 160px;
+    margin: 20px auto;
+    border: 1px dashed #008000;
+
+    &:hover {
+      background: #dedede;
+    }
+  }
+}
