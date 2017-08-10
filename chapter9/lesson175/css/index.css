@@ -4,7 +4,7 @@
     display: none;
 }
 
-w960 {
+.w960 {
     width: 960px;
 }
 
@@ -16,19 +16,19 @@ w960 {
     top: 0;
     left: 0;
     display: block;
-    background: url("/chapter9/lesson175/static/nav-b.png") repeat-x;
+    background: url("../static/nav-b.png") repeat-x;
 }
 
 .logo {
     /*因为a是行内元素，也就是文字元素是没有边框大小尺寸的，所以我们得先把它转换成块级元素*/
-    display: inline-block;
+    display: block;
     width: 270px;
     height: 51px;
-    position: relative;
+    position: absolute;
     z-index: 2;
     top: 19px;
-    /*left: 50px;*/
-    /*margin-left: -480px;*/
+    left: 50%;
+    margin-left: -480px;
 }
 
 .nav-main {
