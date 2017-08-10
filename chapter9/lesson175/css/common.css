@@ -53,9 +53,19 @@ img {
     border: none;
 }
 
+.clearfix {
+    zoom: 1;
+}
+
 .clear:after {
     display: block;
     height: 0;
     content: "";
     clear: both;
+}
+
+.warp {
+    display: block;
+    position: relative;
+    min-width: 100%;
 }
