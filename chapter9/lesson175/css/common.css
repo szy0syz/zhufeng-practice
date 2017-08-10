@@ -64,8 +64,3 @@ img {
     clear: both;
 }
 
-.warp {
-    display: block;
-    position: relative;
-    min-width: 100%;
-}

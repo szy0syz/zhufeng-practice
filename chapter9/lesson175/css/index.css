@@ -1,5 +1,11 @@
 @charset "utf-8";
 
+.warp {
+    display: block;
+    position: relative;
+    min-width: 100%;
+}
+
 .warp h1{
     display: none;
 }
