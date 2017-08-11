@@ -39,7 +39,7 @@ input {
     outline: none;
 }
 
-ul, li {
+ol, ul {
     list-style: none;
 }
 
@@ -64,3 +64,10 @@ img {
     clear: both;
 }
 
+
+h1, h2, h3, h4, h5, h6, p, em, i, b, em {
+    font-size: 100%;
+    word-wrap: break-word;
+    font-weight: normal;
+    font-style: normal;
+}

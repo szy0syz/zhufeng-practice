@@ -6,7 +6,7 @@
     min-width: 100%;
 }
 
-.warp h1{
+.warp h1 {
     display: none;
 }
 
@@ -39,11 +39,11 @@
 
 .nav-main {
     /*这里设置宽度是为了设置一个原始页面宽度，内容全部排布在这个页面里。*/
-    float: right;
     height: 100%;
+    width: 960px;
     margin: 0 auto;
     position: relative;
-    /*top: -50px;*/
+    display: block;
 }
 
 .nav-main a {
@@ -52,18 +52,21 @@
     font-size: 18px;
     color: #f4f4f4;
     overflow: hidden;
-    filter:alpha(opacity=20);
+    filter: alpha(opacity=20);
     opacity: 0.8;
+    float: right;
+    /*加定位给i做准备*/
+    position: relative;
 }
 
 .nav-main a em {
     height: 88px;
     line-height: 88px;
     position: relative;
-    top:0;
+    top: 0;
     left: 0;
     z-index: 2;
-    cursor:pointer;
+    cursor: pointer;
     text-align: center;
     white-space: nowrap;
 }
@@ -76,11 +79,58 @@
     left: 0;
 }
 
+.nav-main a:hover em, .nav-main a.cur {
+    color: #ffffff;
+}
+
+.nav-main a i.nav-hover {
+    display: block;
+    animation-name: navhover;
+    -webkit-animation: navhover 0.2s linear 0s 1 normal;
+    -moz-animation: navhover 0.2s linear 0s 1 normal;
+    animation: navhover 0.2s linear 0s 1 normal;
+    background: rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+@-webkit-keyframes navhover {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(0, 1);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: scale(1, 1);
+    }
+}
+
+@-moz-keyframes navhover {
+    from {
+        opacity: 0;
+        -moz-transform: scale(0, 1);
+    }
+    to {
+        opacity: 1;
+        -moz-transform: scale(1, 1);
+    }
+}
+
+@keyframes navhover {
+    from {
+        opacity: 0;
+        transform: scale(0, 1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1, 1);
+    }
+}
+
 .slide {
     height: 490px;
 }
 
 #bgstyleb {
-     background: #193d85;
+    background: #193d85;
     padding-top: 89px;
- }
+}
