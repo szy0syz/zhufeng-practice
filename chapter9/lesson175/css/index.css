@@ -81,6 +81,8 @@
 
 .nav-main a:hover em, .nav-main a.cur {
     color: #ffffff;
+    opacity: 1;
+    filter: alpha(opacity=100);
 }
 
 .nav-main a i.nav-hover {
