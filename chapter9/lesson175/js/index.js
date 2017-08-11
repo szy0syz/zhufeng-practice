@@ -7,8 +7,10 @@ var navHoverHandle = function navHoverHandle(e) {
   e. target = e. target || e.srcElement;
   if (e.type === 'mouseenter') {
     utils.addClass(utils.children(e.target, 'i')[0], 'nav-hover');
+    e.target.style.opacity = 1;
   } else {
     utils.removeClass(utils.children(e.target, 'i')[0], 'nav-hover');
+    e.target.style.opacity = 0.8;
   }
 };
 
