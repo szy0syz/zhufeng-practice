@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>买东西</title>
+    <style type="text/css" rel="stylesheet">
+
+        html {
+            font-size: 100px;
+            overflow-x: hidden;
+        }
+
+        #box {
+            width: 7.20rem;
+            height: 3.22rem;
+            background: url("jd.jpg");
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="box" id="box"></div>
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        ~function () {
+            var oContainer = document.getElementById('container'),
+              oBox = document.getElementById('box');
+
+            console.log(oBox, oContainer);
+        }()
+    </script>
+</body>
+</html>
