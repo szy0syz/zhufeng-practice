@@ -59,6 +59,12 @@
     position: relative;
 }
 
+/*常年亮着首页*/
+.nav-main:last-child {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
 .nav-main a em {
     height: 88px;
     line-height: 88px;
