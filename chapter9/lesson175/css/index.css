@@ -52,8 +52,8 @@
     font-size: 18px;
     color: #f4f4f4;
     overflow: hidden;
-    filter: alpha(opacity=20);
     opacity: 0.8;
+    filter: alpha(opacity=20);
     float: right;
     /*加定位给i做准备*/
     position: relative;
