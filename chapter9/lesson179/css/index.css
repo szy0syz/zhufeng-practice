@@ -20,7 +20,7 @@ html, body, .main, .swiper-container, .swiper-slide {
     background-size: cover;
 }
 
-.page1 img {
+.page1 img, .page2 img {
     position: absolute;
 }
 
@@ -54,9 +54,33 @@ html, body, .main, .swiper-container, .swiper-slide {
     z-index: 9;
 }
 
-
-
 .page2 {
     background: url("../img/bg2.jpg") no-repeat;
     background-size: cover;
+}
+
+/*因为页面二中三列文字样式大小一样，故统一写*/
+.page2 img {
+    top: 2.5rem;
+    width: .61rem;
+    height: 6.38rem;
+}
+
+.page2 img:nth-child(1) {
+    top:0;
+    left: 0;
+    width: 3.4rem;
+    height: 1.74rem;
+}
+
+.page2 img:nth-child(2) {
+    left: 1.48rem;
+}
+
+.page2 img:nth-child(3) {
+    left: 3.2rem;
+}
+
+.page2 img:nth-child(4) {
+    left: 4.7rem;
 }
