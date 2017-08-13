@@ -11,10 +11,50 @@ html, body, .main, .swiper-container, .swiper-slide {
     overflow: hidden;
 }
 
+.main {
+    position: relative;
+}
+
 .page1 {
     background: url("../img/bg1.jpg") no-repeat;
     background-size: cover;
 }
+
+.page1 img {
+    position: absolute;
+}
+
+/*那个2015年*/
+.page1 img:nth-child(4) {
+    left: 2rem;
+    top: 0.28rem;
+    width: .96rem;
+    height: 2.32rem;
+}
+
+.page1 img:nth-child(3) {
+    right: 0;
+    top: 0.28rem;
+    width: 3.7rem;
+    height: 6rem;
+}
+
+.page1 img:nth-child(2) {
+    left: .5rem;
+    bottom: .8rem;
+    width: 5.5rem;
+    height: 5.12rem;
+}
+
+.page1 img:nth-child(1) {
+    left: -1.6rem;
+    bottom: 0;
+    width: 7.86rem;
+    height: 5.88rem;
+    z-index: 9;
+}
+
+
 
 .page2 {
     background: url("../img/bg2.jpg") no-repeat;
