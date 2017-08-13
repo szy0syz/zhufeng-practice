@@ -84,3 +84,44 @@ html, body, .main, .swiper-container, .swiper-slide {
 .page2 img:nth-child(4) {
     left: 4.7rem;
 }
+
+#page1 img:nth-child(4) {
+     -webkit-animation: bounceInLeft 1s linear 0s 1 both;
+     animation: bounceInLeft 1s linear 0s 1 both;
+ }
+
+#page1 img:nth-child(3) {
+    -webkit-animation: bounceInRight 1s linear .2s 1 both;
+    animation: bounceInRight 1s linear .2s 1 both;
+}
+
+#page1 img:nth-child(2) {
+    -webkit-animation: fadeInUp .9s linear .4s 1 both;
+    animation: fadeInUp .9s linear .4s 1 both;
+}
+
+#page1 img:nth-child(1) {
+    -webkit-animation: fadeInUp .8s linear .6s 1 both;
+    animation: fadeInUp .8s linear .6s 1 both;
+}
+
+
+#page2 img:nth-child(1) {
+    -webkit-animation: bounceInLeft 1s linear 0s 1 both;
+    animation: bounceInLeft 1s linear 0s 1 both;
+}
+
+#page2 img:nth-child(2) {
+    -webkit-animation: zoomIn 1s linear .2s 1 both;
+    animation: zoomIn 1s linear .2s 1 both;
+}
+
+#page2 img:nth-child(3) {
+    -webkit-animation: zoomIn .9s linear .4s 1 both;
+    animation: zoomIn .9s linear .4s 1 both;
+}
+
+#page2 img:nth-child(4) {
+    -webkit-animation: zoomIn .8s linear .6s 1 both;
+    animation: zoomIn .8s linear .6s 1 both;
+}
