@@ -31,7 +31,7 @@ html, body, .main, .swiper-container, .swiper-slide {
     position: absolute;
     top: .2rem;
     right: .2rem;
-    z-index: 10;
+    z-index: 99;
     width: .6rem;
     height: .6rem;
     background: url("../audioFile/music.svg") no-repeat;

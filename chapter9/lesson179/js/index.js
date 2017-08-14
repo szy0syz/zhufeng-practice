@@ -53,3 +53,33 @@ new Swiper('.swiper-container', {
     }
   }
 });
+
+!function (){
+  var audioBox = document.querySelector('.audio'),
+    myAudio = audioBox.getElementsByTagName('audio')[0];
+    
+  // 延迟一秒钟加载
+  window.setTimeout(function () {
+    myAudio.play(); // 播放起来，但我不知道加载完了没？
+    
+    // 当这个额音频加载完毕且播放时触发这个事件
+    myAudio.addEventListener("canplay", function () {
+      audioBox.style.display = 'block';
+      audioBox.className += ' audioMove';
+    }, false); // 不冒泡
+  }, 800);
+  
+  audioBox.addEventListener('click', function () {
+    // 这个paused是状态，如果audio元素处于暂停状态就显示并播放它
+    if (myAudio.paused) {
+      myAudio.play();
+      // 对了 还得让它转起来~~
+      audioBox.className = 'audio audioMove';
+      return
+    }
+    myAudio.pause();
+    // 小伙别转了~
+    audioBox.className = 'audio';
+  });
+    
+}();
