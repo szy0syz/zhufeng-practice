@@ -69,6 +69,24 @@ html, body, .main, .swiper-container, .swiper-slide {
     }
 }
 
+/*arrow*/
+.arrow {
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: .2rem;
+    margin-left: -.24rem;
+    width: .48rem;
+    height: .36rem;
+    z-index: 99;
+    background: url("../img/web-swipe-tip.png") no-repeat;
+    background-size: 100% 100%;
+
+    opacity: 1;
+    -webkit-animation: bounce 1s linear 0s infinite both;
+    animation: bounce 1s linear 0s infinite both;
+}
+
 /*那个2015年*/
 .page1 img:nth-child(4) {
     left: 2rem;
