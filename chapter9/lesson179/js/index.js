@@ -1,7 +1,7 @@
 ~function () {
   var desW = 640, // 设计原始稿宽度
     winW = document.documentElement.clientWidth,
-    main = document.getElementById('#main'),
+    main = document.getElementById('main'),
     ratio = winW / desW;
   
   if (winW > desW) {
@@ -16,7 +16,6 @@ new Swiper('.swiper-container', {
   direction: 'vertical',
   loop: true,
   onSlideChangeEnd: function (swiper) {
-    console.dir(swiper);
     var oSlides = swiper.slides, // 类数据，存的是那些滑动的容器，额外加了两个：一前一后。对了，这里是dom原生带映射的对象哦~~
       index = swiper.activeIndex,
       len = oSlides.length;
@@ -44,7 +43,6 @@ new Swiper('.swiper-container', {
       default:
         targetId += index;
     }
-    console.log(index, targetId);
     
     for (var i = 0; i < len; i++) {
       if (i === index) {
@@ -52,7 +50,6 @@ new Swiper('.swiper-container', {
       } else {
         oSlides[i].id = '';
       }
-      
     }
   }
 });
