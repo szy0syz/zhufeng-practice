@@ -25,6 +25,50 @@ html, body, .main, .swiper-container, .swiper-slide {
     opacity: 0;
 }
 
+/*audio*/
+.audio {
+    display: none;
+    position: absolute;
+    top: .2rem;
+    right: .2rem;
+    z-index: 10;
+    width: .6rem;
+    height: .6rem;
+    background: url("../audioFile/music.svg") no-repeat;
+    background-size: 100% 100%;
+}
+
+.audio .audioMp3 {
+    display: none;
+}
+
+.audioMove {
+    -webkit-animation: audioMove 1s linear 0s infinite both;
+    animation: audioMove 1s linear 0s infinite both;
+}
+
+@-webkit-keyframes audioMove {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes audioMove {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
 /*那个2015年*/
 .page1 img:nth-child(4) {
     left: 2rem;
@@ -68,7 +112,7 @@ html, body, .main, .swiper-container, .swiper-slide {
 }
 
 .page2 img:nth-child(1) {
-    top:0;
+    top: 0;
     left: 0;
     width: 3.4rem;
     height: 1.74rem;
@@ -87,9 +131,9 @@ html, body, .main, .swiper-container, .swiper-slide {
 }
 
 #page1 img:nth-child(4) {
-     -webkit-animation: bounceInLeft 1s linear 0s 1 both;
-     animation: bounceInLeft 1s linear 0s 1 both;
- }
+    -webkit-animation: bounceInLeft 1s linear 0s 1 both;
+    animation: bounceInLeft 1s linear 0s 1 both;
+}
 
 #page1 img:nth-child(3) {
     -webkit-animation: bounceInRight 1s linear .2s 1 both;
@@ -105,7 +149,6 @@ html, body, .main, .swiper-container, .swiper-slide {
     -webkit-animation: fadeInUp .8s linear .6s 1 both;
     animation: fadeInUp .8s linear .6s 1 both;
 }
-
 
 #page2 img:nth-child(1) {
     -webkit-animation: bounceInLeft 1s linear 0s 1 both;
