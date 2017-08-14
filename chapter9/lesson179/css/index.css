@@ -22,6 +22,7 @@ html, body, .main, .swiper-container, .swiper-slide {
 
 .page1 img, .page2 img {
     position: absolute;
+    opacity: 0;
 }
 
 /*那个2015年*/
