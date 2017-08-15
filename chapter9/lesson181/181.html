@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson181</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            height: 100px;
+            width: 100px;
+            background: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box"></div>
+
+<script type="text/javascript">
+  var box = document.querySelector('.box');
+
+  function on(el, type, fn) {
+    el.addEventListener(type, fn, false);
+  }
+
+  //  on(box, 'click', function (e) {
+  //    console.log('click');
+  //    console.dir(e);
+  //    this.style.background = 'red';
+  //  });
+
+  on(box, 'touchstart', function (e) {
+    this['strX'] = e.touches[0].clientX;
+    this['strY'] = e.touches[0].clientY;
+    this['isMove'] = false;
+  });
+
+  on(box, 'touchmove', function (e) {
+    var point = e.touches[0];
+    if (Math.abs(this['strX'] - point.clientX) > 30 || Math.abs(this['strY'] - point.clientY) > 30) {
+      this['isMove'] = true;
+    }
+  });
+
+  on(box, 'touchend', function (e) {
+    if (this['isMove']) {
+      this.style.background = 'red';
+    } else {
+      this.style.background = 'yellow';
+    }
+  })
+</script>
+</body>
+</html>
