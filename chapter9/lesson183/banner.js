@@ -1,3 +1,10 @@
+// REM
+!function () {
+  //设置rem=当前屏幕宽度除以设计稿宽度640*100+'px'
+  document.documentElement.style.fontSize = document.documentElement.clientWidth / 640 * 100 + 'px';
+}();
+
+
 var bannerRender = (function (){
   //先获取当前屏幕宽度
   var winW = document.documentElement.clientWidth;
