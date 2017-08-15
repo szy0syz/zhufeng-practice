@@ -1,9 +1,46 @@
+/************common**************/
 * {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
 }
 
 li, ol {
     list-style: none;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    font-size: 100px;
+}
+/************common**************/
+
+.banner {
+    width: 100%;
+    height: 1.82rem;
+    position: relative;
+}
+
+.banner .wrapper {
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.banner .wrapper .slide {
+    float: left;
+    height: 100%;
+    width: 100%;
+    background: #eeeeee;
+}
+
+.banner .wrapper img {
+    height: 100%;
+    width: 100%;
+    display: none;
 }
