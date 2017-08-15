@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson182</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            height: 100px;
+            width: 100px;
+            background: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box"></div>
+<script type="text/javascript" charset="utf-8" src="../../zepto-1.2.0.js"></script>
+<script type="text/javascript">
+  $('.box').singleTap(function (ev) {
+    // 这里this是原生dom对象，所以要转换！
+    // 这里animate函数和自己写的动画库类似：第一个参数为目标状态，然后是持续时间，然后是动画方程，然后是回调函数！
+    $(this).animate({
+      rotate: '360deg'
+    }, 1000, 'linear', function () {
+      // 这里重新设置角度为0度，第二次点才又可以转起来
+      this.style.webkitTransform = 'rotate(0deg)';
+    }).on('touchstart', function () {
+      // 一样的，原生dom
+      this.style.background = 'red';
+    }).on('touchend', function () {
+      // 用Zepto的css方法又如何,还可以用链式编程,还把原生touch事件都监听
+      $(this).css('background', 'darkgreen');
+    });
+  })
+</script>
+</body>
+</html>
