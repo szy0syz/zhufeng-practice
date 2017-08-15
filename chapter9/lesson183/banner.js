@@ -4,6 +4,11 @@
   document.documentElement.style.fontSize = document.documentElement.clientWidth / 640 * 100 + 'px';
 }();
 
+// -> 页面中乳沟自己使用了touch move等原生事件，需要把浏览器默认的行为阻止
+$(document).on('touchmove touchstart touchend', function (ev) {
+  // ev.preventDefault();
+  //[Intervention] Unable to preventDefault inside passive event listener due to target being treated as passive. See https://www.chromestatus.com/features/5093566007214080
+});
 
 var bannerRender = (function () {
   //先获取当前屏幕宽度
@@ -15,7 +20,9 @@ var bannerRender = (function () {
     $wrapper = $banner.children('.wrapper'),
     $slideList = $wrapper.children('.slide'),
     $imgList = $wrapper.children('img');
-  var step = 1; // 设置出事轮播时的第几个图
+  var step = 1, // 设置出事轮播时的第几个图
+    count = 0,
+    swipeTimer = null;
 
   var lazyImg = function lazyImg() {
     var $cur = $slideList.eq(step),
@@ -89,7 +96,7 @@ var bannerRender = (function () {
 
   };
 
-  var dragEnd = function dragEnd() {
+  var dragEnd = function dragEnd(ev) {
     // end中要怎么过呢，首先要计算是否大于一半宽度，大于就下一张，否者就还是原来这张
     var isMove = $wrapper.attr('isMove'),
       dir = $wrapper.attr('dir'),
@@ -105,18 +112,33 @@ var bannerRender = (function () {
       } //小于的时候step不变, 用过渡动画
       $wrapper[0].style.webkitTransitionDuration = '.2s';
       $wrapper.css('left', -step * winW);
+      lazyImg();
+
+      // 当动画运动过程中，设置一个定时器：动画运动完成后判断当前是否运动到边界，如果到边界了，就立马让其回到自己本该在的位置
+      window.clearTimeout(swipeTimer);
+      swipeTimer = window.setTimeout(function () {
+        if (step === 0) {
+          $wrapper[0].style.webkitTransitionDuration = '0s';
+          $wrapper.css('left', -(count - 2) * winW);
+          step = count - 2;
+        }
+        if (step >= count -1) {
+          $wrapper[0].style.webkitTransitionDuration = '0s';
+          $wrapper.css('left', -winW);
+          step = 1;
+        }
+      }, 201)
     }
   };
 
   return {
     init: function () {
-      var len = $slideList.length;
+      count = $slideList.length;
       // init css style
-      $wrapper.css('width', len * winW);
+      $wrapper.css('width', count * winW);
       $slideList.css('width', winW); // 内置循环赋值
-      minL = -(len - 1) * winW;
+      minL = -(count - 1) * winW;
       lazyImg();
-      len = null;
 
       // swipe bind
       $banner
