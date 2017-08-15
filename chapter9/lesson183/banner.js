@@ -82,6 +82,7 @@ var bannerRender = (function () {
       var curL = strL + changeX;
       // 边界判断
       curL = curL > maxL ? maxL : (curL < minL ? minL : curL);
+      $wrapper[0].style.webkitTransitionDuration = '0s';
       // 设定容器滑动
       $wrapper.css('left', curL);
     }
@@ -89,7 +90,22 @@ var bannerRender = (function () {
   };
 
   var dragEnd = function dragEnd() {
+    // end中要怎么过呢，首先要计算是否大于一半宽度，大于就下一张，否者就还是原来这张
+    var isMove = $wrapper.attr('isMove'),
+      dir = $wrapper.attr('dir'),
+      changeX = Math.abs(parseFloat($wrapper.attr('changeX')));
 
+    if (isMove && /(left|right)/i.test(dir)) {
+      if (changeX >= winW / 2) {
+        if (dir === 'left') {
+          step++;
+        } else {
+         step--;
+        }
+      } //小于的时候step不变, 用过渡动画
+      $wrapper[0].style.webkitTransitionDuration = '.2s';
+      $wrapper.css('left', -step * winW);
+    }
   };
 
   return {
