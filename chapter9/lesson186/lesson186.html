@@ -26,13 +26,18 @@
         }
 
         .box {
-            position: relative;
+            /*position: relative;*/
             width: 100%;
             margin: .02rem .04rem;
         }
 
         .box .head {
-            height: .25rem;
+            /*position: fixed;*/
+            /*left: 0;*/
+            /*top: 0;*/
+            height: .35rem;
+            line-height: .35rem;
+            width: 100%;
             background: linear-gradient(#fff, #333);
         }
 
@@ -40,6 +45,11 @@
             float: left;
             width: 25%;
             text-align: center;
+        }
+
+        .content {
+            position: relative;
+            overflow: hidden;
         }
 
         .content .row {
@@ -63,32 +73,172 @@
         <span>性别</span>
         <span>年龄</span>
     </h1>
-    <div class="content">
-        <!--<div class="row">-->
-            <!--<span>101</span>-->
-            <!--<span>阿大</span>-->
-            <!--<span>男</span>-->
-            <!--<span>29</span>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<span>102</span>-->
-            <!--<span>阿二</span>-->
-            <!--<span>女</span>-->
-            <!--<span>21</span>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<span>103</span>-->
-            <!--<span>阿三</span>-->
-            <!--<span>男</span>-->
-            <!--<span>16</span>-->
-        <!--</div>-->
+    <div id="content" class="content">
+        <div id="wrapper">
+            <div class="row">
+                <span>101</span>
+                <span>阿大</span>
+                <span>男</span>
+                <span>29</span>
+            </div>
+            <div class="row">
+                <span>102</span>
+                <span>阿二</span>
+                <span>女</span>
+                <span>21</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>101</span>
+                <span>阿大</span>
+                <span>男</span>
+                <span>29</span>
+            </div>
+            <div class="row">
+                <span>102</span>
+                <span>阿二</span>
+                <span>女</span>
+                <span>21</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>101</span>
+                <span>阿大</span>
+                <span>男</span>
+                <span>29</span>
+            </div>
+            <div class="row">
+                <span>102</span>
+                <span>阿二</span>
+                <span>女</span>
+                <span>21</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>101</span>
+                <span>阿大</span>
+                <span>男</span>
+                <span>29</span>
+            </div>
+            <div class="row">
+                <span>102</span>
+                <span>阿二</span>
+                <span>女</span>
+                <span>21</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>101</span>
+                <span>阿大</span>
+                <span>男</span>
+                <span>29</span>
+            </div>
+            <div class="row">
+                <span>102</span>
+                <span>阿二</span>
+                <span>女</span>
+                <span>21</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>101</span>
+                <span>阿大</span>
+                <span>男</span>
+                <span>29</span>
+            </div>
+            <div class="row">
+                <span>102</span>
+                <span>阿二</span>
+                <span>女</span>
+                <span>21</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>101</span>
+                <span>阿大</span>
+                <span>男</span>
+                <span>29</span>
+            </div>
+            <div class="row">
+                <span>102</span>
+                <span>阿二</span>
+                <span>女</span>
+                <span>21</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+            <div class="row">
+                <span>101</span>
+                <span>阿大</span>
+                <span>男</span>
+                <span>29</span>
+            </div>
+            <div class="row">
+                <span>102</span>
+                <span>阿二</span>
+                <span>女</span>
+                <span>21</span>
+            </div>
+            <div class="row">
+                <span>103</span>
+                <span>阿三</span>
+                <span>男</span>
+                <span>16</span>
+            </div>
+        </div>
     </div>
 </div>
 
 <script type="text/javascript" src="../../zepto-1.2.0.js"></script>
-// 第0步：引入ejs文件
-<script type="text/javascript" src="../../ejs.js"></script>
-// 第1步：便携模板文件
+<!--第0步：引入ejs文件-->
+<!--<script type="text/javascript" src="../../ejs.js"></script>-->
+<!--// 第1步：便携模板文件-->
 <script charset="utf-8" type="text/template" id="tt">
     <%$.each(matchData, function(index, item) {%>
     <div class="row">
@@ -99,24 +249,60 @@
     </div>
     <%})%>
 </script>
+<script type="text/javascript" src="../../iscroll.js"></script>
 <script type="text/javascript">
   // REM
   document.documentElement.style.fontSize = document.documentElement.clientWidth / 320 * 100 + 'px';
 
   function cb(data) {
-    // 第3步：获取模板脚本文件的html()字符串
-    var temp = $('#tt').html();
-    // 第4步：使用ejs的render方法转换模板
-    var res = ejs.render(temp, {matchData: data});
-    // 第5步：将模板编译后的html代码放入元素容器内
-    $('.content').html(res);
+//    // 第3步：获取模板脚本文件的html()字符串
+//    var temp = $('#tt').html();
+//    // 第4步：使用ejs的render方法转换模板
+//    var res = ejs.render(temp, {matchData: data});
+//    // 第5步：将模板编译后的html代码放入元素容器内
+//    $('.content').html(res);
   }
 
-  $.ajax({
-    url: 'students.json',
-    dataType: 'json',
-    success: cb
-  });
+  //  $.ajax({
+  //    url: 'students.json',
+  //    dataType: 'json',
+  //    success: cb
+  //  });
+
+  ~function () {
+    var $content = $('.content');
+
+    // iscroll 计算content区域的高度
+    // 实现竖向局部滚动，我们首先需要把最外层的高度设定好
+    $content.css('height', document.documentElement.clientHeight - $('.head')[0].offsetHeight);
+
+
+    /*
+    * var 实例=new IScroll(selector, {options})
+    * [settings]
+    * scrollbars: true  显示滚动条，默认是不显示的(开启后，iscroll会默认的向.content容器添加一个div，"iScrollVerticalScrollbarDIV"， 这个div控制滚动条，它的样式是position: absolute;)
+    *   所以如果只想滚动条在当前容器中，需要给当前滚动条的父级容器添加上下文定位即position: relative; 父容器还需要加溢出隐藏；
+    * mouseWheel: true  支持鼠标滚动
+    * bounce: false  禁止运动到边界后反弹
+    * click: true   反之滑动过程中的误操作，默认是把click禁止的，如果需要点击事件触发则开启
+    *
+    * [methods]
+    *  refresh()：当滚动区域的内容发生改变时让当前实例刷新，这样滚动区域的相关值都会跟着重新计算
+    *  scrollTo(x,y,time)：滚动到具体的坐标位置
+    *  scrollToElement(dom_element)：滚动到具体的某个dom元素
+    * */
+
+    var myScroll = new IScroll('#content', {
+      scrollbars: true,
+      mouseWheel: true,
+      bounce: false,
+      click: true
+    });
+
+    myScroll.refresh();
+    myScroll.scrollTo(0, -250, 400);
+
+  }()
 </script>
 </body>
 </html>
