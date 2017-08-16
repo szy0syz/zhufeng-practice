@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson186 - EJS</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 100px;
+            width: 100%;
+        }
+
+        body {
+            font-size: .15rem;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: .18rem;
+        }
+
+        .box {
+            position: relative;
+            width: 100%;
+            margin: .02rem .04rem;
+        }
+
+        .box .head {
+            height: .25rem;
+            background: linear-gradient(#fff, #333);
+        }
+
+        .box .head span, .content span {
+            float: left;
+            width: 25%;
+            text-align: center;
+        }
+
+        .content .row {
+            height: .35rem;
+        }
+
+        .content .row:nth-child(odd) {
+            background: #dddddd;
+        }
+
+        .content .row span {
+            line-height: .35rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1 class="head"><span>编号</span>
+        <span>姓名</span>
+        <span>性别</span>
+        <span>年龄</span>
+    </h1>
+    <div class="content">
+        <!--<div class="row">-->
+            <!--<span>101</span>-->
+            <!--<span>阿大</span>-->
+            <!--<span>男</span>-->
+            <!--<span>29</span>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+            <!--<span>102</span>-->
+            <!--<span>阿二</span>-->
+            <!--<span>女</span>-->
+            <!--<span>21</span>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+            <!--<span>103</span>-->
+            <!--<span>阿三</span>-->
+            <!--<span>男</span>-->
+            <!--<span>16</span>-->
+        <!--</div>-->
+    </div>
+</div>
+
+<script type="text/javascript" src="../../zepto-1.2.0.js"></script>
+// 第0步：引入ejs文件
+<script type="text/javascript" src="../../ejs.js"></script>
+// 第1步：便携模板文件
+<script charset="utf-8" type="text/template" id="tt">
+    <%$.each(matchData, function(index, item) {%>
+    <div class="row">
+        <span><%=item.id%></span>
+        <span><%=item.name%></span>
+        <span><%=item.sex%></span>
+        <span><%=item.score%></span>
+    </div>
+    <%})%>
+</script>
+<script type="text/javascript">
+  // REM
+  document.documentElement.style.fontSize = document.documentElement.clientWidth / 320 * 100 + 'px';
+
+  function cb(data) {
+    // 第3步：获取模板脚本文件的html()字符串
+    var temp = $('#tt').html();
+    // 第4步：使用ejs的render方法转换模板
+    var res = ejs.render(temp, {matchData: data});
+    // 第5步：将模板编译后的html代码放入元素容器内
+    $('.content').html(res);
+  }
+
+  $.ajax({
+    url: 'students.json',
+    dataType: 'json',
+    success: cb
+  });
+</script>
+</body>
+</html>

@@ -70,7 +70,7 @@ var bannerRender = (function () {
       }
       // 因为step总比index大1，所以直接用count做判断
       if (step === count - 2) {
-        a[a.length-1].className = 'bg';
+        a[a.length - 1].className = 'bg';
       }
     });
   };
