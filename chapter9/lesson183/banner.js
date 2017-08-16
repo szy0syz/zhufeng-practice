@@ -93,7 +93,6 @@ var bannerRender = (function () {
       // 设定容器滑动
       $wrapper.css('left', curL);
     }
-
   };
 
   var dragEnd = function dragEnd(ev) {
@@ -117,15 +116,10 @@ var bannerRender = (function () {
       // 当动画运动过程中，设置一个定时器：动画运动完成后判断当前是否运动到边界，如果到边界了，就立马让其回到自己本该在的位置
       window.clearTimeout(swipeTimer);
       swipeTimer = window.setTimeout(function () {
-        if (step === 0) {
+        if (step === 0 || step >= count -1) {
           $wrapper[0].style.webkitTransitionDuration = '0s';
-          $wrapper.css('left', -(count - 2) * winW);
-          step = count - 2;
-        }
-        if (step >= count -1) {
-          $wrapper[0].style.webkitTransitionDuration = '0s';
-          $wrapper.css('left', -winW);
-          step = 1;
+          $wrapper.css('left', step === 0 ? -(count - 2) * winW : -winW);
+          step = step === 0 ? count - 2 : 1;
         }
       }, 201)
     }
