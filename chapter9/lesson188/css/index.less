@@ -1,2 +1,62 @@
 //只引入，不参与编译
 @import (reference) "public";
+
+html {
+  font-size: 100px;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  // less中的方法，从定义的序列中按索引获取第一个值，没0
+  color: extract(@cl, 1);
+  background: extract(@cl, 3);
+}
+
+a, a:active, a:visited, a:hover, a:target {
+  display: block;
+  color: extract(@cl, 1);
+}
+
+/////*****container*****////
+.container {
+  margin: 0 auto;
+  max-width: 6.4rem;
+}
+
+
+/////*****header*****////
+.header {
+  /////*****content*****////
+  .con {
+    height: .88rem;
+    line-height: .88rem;
+    font-size: .32rem;
+    color: extract(@cl, 4);;
+    background: extract(@cl, 5);
+
+    .logo, .type {
+      float: left;
+    }
+
+    .login, .menu {
+      float: right;
+    }
+
+    .logo {
+      padding-left: .7rem;
+      width: 1.44rem;
+      font-size: .32rem;
+      font-weight: normal;
+      background: url("@{url}/icon-logo.png") no-repeat .12rem center;
+      background-size: .48rem;
+      border-right: .02rem solid extract(@cl, 7);
+    }
+
+    .type {
+      padding: 0 .2rem;
+    }
+  }
+
+  /////*****nav*****////
+}
