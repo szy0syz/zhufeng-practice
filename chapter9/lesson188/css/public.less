@@ -1,3 +1,8 @@
 // 因为整个webAPP的背景颜色是#ebf0f5，所以定义在公用的lss中
 @cl: #555, #999, #ebf0f5, #fff, #1c90f2, #f82d2d, #066DC4;
 @url: '../static';
+
+.transition (@property:all, @duration:1s, @function:linear, @delay:0s) {
+  -webkit-transition: @arguments;
+  transition: @arguments;
+}

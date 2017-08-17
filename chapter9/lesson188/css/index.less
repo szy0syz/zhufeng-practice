@@ -24,7 +24,6 @@ a, a:active, a:visited, a:hover, a:target {
   max-width: 6.4rem;
 }
 
-
 /////*****header*****////
 .header {
   /////*****content*****////
@@ -55,8 +54,48 @@ a, a:active, a:visited, a:hover, a:target {
 
     .type {
       padding: 0 .2rem;
+      border-left: .02rem solid #61b2f6;
     }
+
+    .login {
+      padding: 0 .3rem;
+    }
+
+    .menu {
+      height: .88rem;
+      width: .88rem;
+      background: url("@{url}/nav-menu.png") no-repeat center;
+      background-size: .48rem .44rem;
+    }
+
   }
 
   /////*****nav*****////
+  .nav {
+    padding: 0; // 默认是0 0 目标值.1rem 0
+    // nav的高度要算的：有三列a，每列高.74，.74*3=2.22
+    height: 0; // 默认是0  目标值2.22rem
+    overflow: hidden;
+    // .transition(@duration: .3s);
+    .transition(@duration: .3s, @property: height); //因为给padding也加过渡动画会有点抖，所以只给height加动画！
+    // 好了，设置这个后出现时不抖了，但收起来的时候回抖，咯噔了一哈，得再动画完成时设置一个定时器来处理。哎，可惜没回调函数啊！！
+
+    a {
+      float: left;
+      height: .74rem;
+      font-size: .32rem;
+      line-height: .74rem;
+      text-align: center;
+      width: 16%;
+
+      // 连字符必须写在a标签里，因为&表示当前容器的父元素，即a的父元素就是.nav元素，然后才可以用子元素
+      // 这里为什么要设2%呢，因为每排有6个a，每个a宽度16%，还剩4%没用，所以设2%！
+      &:nth-child(6n+1) {
+        margin-left: 2%;
+      }
+    }
+
+
+  }
+
 }
