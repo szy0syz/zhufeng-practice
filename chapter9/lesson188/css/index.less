@@ -111,4 +111,78 @@ a, a:active, a:visited, a:hover, a:target {
   }
 }
 
+/////*****match info*****////
+.macthInfo {
+  background: extract(@cl, 4);
+  box-sizing: border-box; // new box model~
+  padding: .3rem;
+  height: 2.04rem;
+  overflow: hidden;
+
+  .top {
+    height: .6rem;
+    line-height: .6rem;
+
+    .home, .away {
+      float: left;
+      width: 34%;
+
+      img {
+        display: inline-block; //图片和文字同一行展示
+        width: .64rem;
+        height: .64rem;
+        vertical-align: top;
+      }
+
+      span {
+        display: inline-block;
+        font-size: .4rem;
+        vertical-align: top;
+      }
+    }
+
+    .home {
+
+      span {
+        margin-left: .24rem;
+      }
+    }
+
+    .away { // 因为加了inline-block，所以可以用text-align控制
+      float: right;
+      text-align: right;
+
+      span {
+        margin-right: .34rem;
+      }
+    }
+
+    .time {
+      float: left;
+      width: 32%;
+      font-size: .24rem;
+      color: extract(@cl, 2);
+      text-align: center;
+    }
+  }
+
+  .middle {
+    position: relative;
+    margin: .2rem auto;
+    height: .04rem;
+    background: extract(@cl, 5);
+
+    span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 10%;
+      height: .04rem;
+      background: extract(@cl, 6);
+      .transition(@duration: .5s); //设置它width时有个过渡动画效果
+    }
+
+  }
+
+}
 
