@@ -184,5 +184,43 @@ a, a:active, a:visited, a:hover, a:target {
 
   }
 
+  .bottom {
+    height: .4rem;
+    line-height: .4rem;
+    text-align: center;
+
+    span {
+      float: left;
+      width: 34%;
+      font-size: .24rem;
+      color: extract(@cl, 2);
+    }
+
+    .type {
+      width: 32%;
+    }
+    
+    .home {
+      background: url("@{url}/support-left.png") no-repeat left center;
+      background-size: .24rem;
+
+      &.homeBG {
+        color: extract(@cl, 6);
+        background: url("@{url}/support-red.png") no-repeat left center;
+        background-size: .24rem;
+      }
+    }
+
+    .away {
+      background: url("@{url}/support-right.png") no-repeat right center;
+      background-size: .24rem;
+
+      &.awayBG {
+        color: extract(@cl, 5);
+        background: url("@{url}/support-blue.png") no-repeat right center;
+        background-size: .24rem;
+      }
+    }
+  }
 }
 
