@@ -14,7 +14,6 @@
 
 
 // -> header
-
 !function () {
   var $header = $('.header'),
     $menu = $header.find('.menu'), // .menu是孙子元素所以要用find
@@ -43,3 +42,26 @@
   });
   
 }();
+
+// -> matchInfo
+
+var  matchInfo = (function () {
+
+  return {
+    init: function () {
+        // -> get data
+        $.ajax({
+            url:'http://matchweb.sports.qq.com/html/matchDetail?mid=100000:1468531',
+            dataType: 'json',
+            success: function (res) {
+              if (res && res[0] === 0) {
+                res = res[1];
+                var matchInfo = res['matchInfo'];
+                matchInfo['leftSupport'] = res['leftSupport'];
+                matchInfo['rightSupport'] = res['rightSupport'];
+              }
+            }
+        })
+    }
+  }
+})();
