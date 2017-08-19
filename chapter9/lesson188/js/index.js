@@ -47,21 +47,35 @@
 
 var  matchInfo = (function () {
 
+  var $matchInfo = $('.macthInfo'),
+    $matchInfoTemplate = $('#matchInfoTemplate');
+
+  function bindHtml(matchInfo) {
+    // var ttt = EJS.render($matchInfoTemplate.html(), { matchInfo: matchInfo });
+    var html = new EJS({url: 'template/matchInfo.ejs'}).render(matchInfo);
+    $matchInfo.html(html);
+  }
+
   return {
     init: function () {
         // -> get data
         $.ajax({
             url:'http://matchweb.sports.qq.com/html/matchDetail?mid=100000:1468531',
-            dataType: 'json',
+            dataType: 'jsonp',
             success: function (res) {
               if (res && res[0] === 0) {
                 res = res[1];
                 var matchInfo = res['matchInfo'];
                 matchInfo['leftSupport'] = res['leftSupport'];
                 matchInfo['rightSupport'] = res['rightSupport'];
+
+                // -> bind html
+                bindHtml(matchInfo);
               }
             }
         })
     }
   }
 })();
+
+matchInfo.init();
