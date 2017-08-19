@@ -56,6 +56,22 @@ var matchInfo = (function () {
 
   // -> bind event support
   function bindEvent() {
+    var $bottom = $matchInfo.children('.bottom'),
+      $bottomLeft = $bottom.children('.home'),
+      $bottomRight = $bottom.children('.away');
+
+    // 获取本地存储信息，判断是否有支持
+    var support = localStorage.getItem('support');
+    if(support) {
+      // 如果存在再继续处理
+      support = JSON.parse(support);
+      if (support.isTap) {
+        $bottom.attr('isTap', true);
+        // 注意这里通过JSON转换出来后都是字符串了，判断时必须坚持使用===!!!
+        support.type === '1' ? $bottomLeft.addClass('bg'):$bottomRight.addClass('bg');
+      }
+    }
+
     $matchInfo.tap(function (ev) {
       var tar = ev.target,
         tarTag = tar.tagName,
@@ -66,10 +82,6 @@ var matchInfo = (function () {
 
       // 这里nodeName记得要大写
       if (tarTag === 'SPAN' && tarP.className === 'bottom') {
-        var $bottom = $matchInfo.children('.bottom'),
-          $bottomLeft = $bottom.children('.home'),
-          $bottomRight = $bottom.children('.away');
-
         // 如果你点击的是type就返回
         if (tar.className === 'type') return;
 
@@ -94,7 +106,11 @@ var matchInfo = (function () {
 
         // 设置自定义属性表示已经投票过！
         $bottom.attr('isTap', true);
-
+        // 设置本地存储
+        localStorage.setItem('support', JSON.stringify({
+          "isTap": true,
+          "type": $tar.attr('type')
+        }));
 
       }
 
