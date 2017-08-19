@@ -51,9 +51,14 @@ var  matchInfo = (function () {
     $matchInfoTemplate = $('#matchInfoTemplate');
 
   function bindHtml(matchInfo) {
-    // var ttt = EJS.render($matchInfoTemplate.html(), { matchInfo: matchInfo });
     var html = new EJS({url: 'template/matchInfo.ejs'}).render(matchInfo);
     $matchInfo.html(html);
+
+    window.setTimeout(function () {
+      var leftNum = parseFloat(matchInfo.leftSupport),
+        rightNum = parseFloat(matchInfo.rightSupport);
+      $matchInfo.children('.middle').children('span').css('width', (leftNum/(leftNum+rightNum))*100+'%');
+    }, 300);
   }
 
   return {
