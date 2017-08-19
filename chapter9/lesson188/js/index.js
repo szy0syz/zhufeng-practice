@@ -56,10 +56,6 @@ var  matchInfo = (function () {
 
   // -> bind event support
   function bindEvent () {
-    $(document).tap(function (ev) {
-      console.log(ev);
-    });
-
     $matchInfo.tap(function (ev) {
       var tar = ev.target,
         tarTag = tar.tagName,
