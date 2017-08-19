@@ -2,13 +2,13 @@
 ~function () {
   var desW = 640,
     winW = document.documentElement.clientWidth || document.body.clientWidth;
-  
+
   if (winW > desW) {
     document.getElementById('container').style.width = desW + 'px';
     // $('.container').css('width', desW); // for 兼容
     return
   }
-  
+
   document.documentElement.style.fontSize = winW / desW * 100 + 'px';
 }();
 
@@ -18,7 +18,7 @@
   var $header = $('.header'),
     $menu = $header.find('.menu'), // .menu是孙子元素所以要用find
     $nav = $header.children('.nav');
-  
+
   $menu.tap(function () {
     if ($(this).attr('isShow') === '1') {
       $nav.css({
@@ -41,7 +41,7 @@
     $(this).attr('isShow', 1);
   });
 
-  $header.tap(function(ev){
+  $header.tap(function (ev) {
     console.log(ev);
   })
 
@@ -49,13 +49,13 @@
 
 // -> matchInfo
 
-var  matchInfo = (function () {
+var matchInfo = (function () {
 
   var $matchInfo = $('.macthInfo'),
     $matchInfoTemplate = $('#matchInfoTemplate');
 
   // -> bind event support
-  function bindEvent () {
+  function bindEvent() {
     $matchInfo.tap(function (ev) {
       var tar = ev.target,
         tarTag = tar.tagName,
@@ -65,9 +65,37 @@ var  matchInfo = (function () {
         tarInn = $tar.html();
 
       // 这里nodeName记得要大写
-      if(tarTag === 'SPAN' && tarP.className === 'bottom') {
+      if (tarTag === 'SPAN' && tarP.className === 'bottom') {
+        var $bottom = $matchInfo.children('.bottom'),
+          $bottomLeft = $bottom.children('.home'),
+          $bottomRight = $bottom.children('.away');
 
+        // 如果你点击的是type就返回
+        if (tar.className === 'type') return;
+
+        // 如果已经点击过了，使用自定义属性
+        if ($bottom.attr('isTap') === 'true') return;
+
+
+        // 使所点击方数量+1并且设置样式背景
         $tar.html(parseFloat(tarInn) + 1).addClass('bg');
+
+        // 重新计算进度条
+        var leftN = parseFloat($bottomLeft.html()),
+          rightN = parseFloat($bottomRight.html());
+        // console.log(leftN,rightN, (leftN / (rightN + leftN)) * 100 + '%');
+        $matchInfo.children('.middle').children('span').css('width', (leftN / (rightN + leftN)) * 100 + '%');
+
+        // 告诉服务器信息
+        $.ajax({ // 注意又用到了事件源，此时经过判断，事件源已经是home和away了！
+          url: 'http://matchweb.sports.qq.com/kbs/teamSupport?mid=100000:1468531&type=' + $tar.attr('type'),
+          dataType: 'jsonp'
+        });
+
+        // 设置自定义属性表示已经投票过！
+        $bottom.attr('isTap', true);
+
+
       }
 
 
@@ -82,6 +110,7 @@ var  matchInfo = (function () {
     window.setTimeout(function () {
       var leftNum = parseFloat(matchInfo.leftSupport),
         rightNum = parseFloat(matchInfo.rightSupport);
+      $matchInfo.children('.middle').children('span').css('width', (leftNum / (leftNum + rightNum)) * 100 + '%');
     }, 300);
 
 
@@ -89,23 +118,23 @@ var  matchInfo = (function () {
 
   return {
     init: function () {
-        // -> get data
-        $.ajax({
-            url:'http://matchweb.sports.qq.com/html/matchDetail?mid=100000:1468531',
-            dataType: 'jsonp',
-            success: function (res) {
-              if (res && res[0] === 0) {
-                res = res[1];
-                var matchInfo = res['matchInfo'];
-                matchInfo['leftSupport'] = res['leftSupport'];
-                matchInfo['rightSupport'] = res['rightSupport'];
+      // -> get data
+      $.ajax({
+        url: 'http://matchweb.sports.qq.com/html/matchDetail?mid=100000:1468531',
+        dataType: 'jsonp',
+        success: function (res) {
+          if (res && res[0] === 0) {
+            res = res[1];
+            var matchInfo = res['matchInfo'];
+            matchInfo['leftSupport'] = res['leftSupport'];
+            matchInfo['rightSupport'] = res['rightSupport'];
 
-                // -> bind html
-                bindHtml(matchInfo);
-                bindEvent();
-              }
-            }
-        })
+            // -> bind html
+            bindHtml(matchInfo);
+            bindEvent();
+          }
+        }
+      })
     }
   }
 })();
