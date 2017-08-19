@@ -40,7 +40,11 @@
     });
     $(this).attr('isShow', 1);
   });
-  
+
+  $header.tap(function(ev){
+    console.log(ev);
+  })
+
 }();
 
 // -> matchInfo
@@ -50,6 +54,31 @@ var  matchInfo = (function () {
   var $matchInfo = $('.macthInfo'),
     $matchInfoTemplate = $('#matchInfoTemplate');
 
+  // -> bind event support
+  function bindEvent () {
+    $(document).tap(function (ev) {
+      console.log(ev);
+    });
+
+    $matchInfo.tap(function (ev) {
+      var tar = ev.target,
+        tarTag = tar.tagName,
+        tarP = tar.parentNode,
+        $tar = $(tar),
+        $tarP = $tar.parent(),
+        tarInn = $tar.html();
+
+      // 这里nodeName记得要大写
+      if(tarTag === 'SPAN' && tarP.className === 'bottom') {
+
+        $tar.html(parseFloat(tarInn) + 1).addClass('bg');
+      }
+
+
+    });
+  }
+
+
   function bindHtml(matchInfo) {
     var html = new EJS({url: 'template/matchInfo.ejs'}).render(matchInfo);
     $matchInfo.html(html);
@@ -57,8 +86,9 @@ var  matchInfo = (function () {
     window.setTimeout(function () {
       var leftNum = parseFloat(matchInfo.leftSupport),
         rightNum = parseFloat(matchInfo.rightSupport);
-      $matchInfo.children('.middle').children('span').css('width', (leftNum/(leftNum+rightNum))*100+'%');
     }, 300);
+
+
   }
 
   return {
@@ -76,6 +106,7 @@ var  matchInfo = (function () {
 
                 // -> bind html
                 bindHtml(matchInfo);
+                bindEvent();
               }
             }
         })

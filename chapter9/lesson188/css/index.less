@@ -203,7 +203,7 @@ a, a:active, a:visited, a:hover, a:target {
       background: url("@{url}/support-left.png") no-repeat left center;
       background-size: .24rem;
 
-      &.homeBG {
+      bg {
         color: extract(@cl, 6);
         background: url("@{url}/support-red.png") no-repeat left center;
         background-size: .24rem;
@@ -213,8 +213,8 @@ a, a:active, a:visited, a:hover, a:target {
     .away {
       background: url("@{url}/support-right.png") no-repeat right center;
       background-size: .24rem;
-
-      &.awayBG {
+      // 这里不会和上面重复，仅代表是.away里的bg
+      bg {
         color: extract(@cl, 5);
         background: url("@{url}/support-blue.png") no-repeat right center;
         background-size: .24rem;
