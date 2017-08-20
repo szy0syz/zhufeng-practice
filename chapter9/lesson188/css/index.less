@@ -198,7 +198,7 @@ a, a:active, a:visited, a:hover, a:target {
     .type {
       width: 32%;
     }
-    
+
     .home {
       background: url("@{url}/support-left.png") no-repeat left center;
       background-size: .24rem;
@@ -223,3 +223,41 @@ a, a:active, a:visited, a:hover, a:target {
   }
 }
 
+/////*****match list*****////
+.matchList {
+  box-sizing: border-box;
+  width: 100%;
+  padding: .2rem .3rem;
+  overflow: hidden;
+  background: extract(@cl, 4);
+
+  li {
+    float: left;
+    width: 2.2rem;
+    margin-right: .2rem;
+    overflow: hidden;
+
+    div {
+      position: relative;
+      width: 100%;
+      height: 1.24rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+      span {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding: .08rem;
+        height: .31rem;
+        line-height: .31rem;
+        color: extract(@cl, 4);
+        background: rgba(0, 0, 0, 0.5);
+
+      }
+    }
+  }
+}

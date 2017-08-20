@@ -13,5 +13,6 @@ legend{color:#000;}
 fieldset,img{border:0;}
 button,input,select,textarea{font-size:100%;}
 table{border-collapse:collapse;border-spacing:0;}
-.clear{clear: both;float: none;height: 0;overflow: hidden;}
+.clear{clear: both;float: none;overflow: hidden;}
+/*.clear{clear: both;float: none;height: 0;overflow: hidden;}*/
 html .hide{display:none;}
