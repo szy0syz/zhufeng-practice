@@ -1,7 +1,7 @@
 <% $.each(this, function(index, item){ %>
 <li <%=index === 0 ? 'class="bg"': ''%> >
     <div>
-        <img src="<% item.pic %>" alt="v1">
+        <img src="<% item.pic %>">
         <span><%=item.duration.replace(/^\d\d:/,'')%></span>
     </div>
     <p><%=item.title%></p>
