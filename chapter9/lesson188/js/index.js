@@ -156,3 +156,38 @@ var matchInfo = (function () {
 })();
 
 matchInfo.init();
+
+// -> match list
+var matchListRender = (function () {
+
+  function bindHTML(data) {
+    var $matchList = $('.matchList'),
+      $matchListUL = $matchList.children('ul');
+    var html = new EJS({url: 'template/matchList.ejs'}).render(data);
+    $matchListUL.html(html);
+  }
+
+  return {
+    init: function () {
+      $.ajax({
+        url: 'http://matchweb.sports.qq.com/html/matchStatV37?mid=100002:2365',
+        dataType: 'jsonp',
+        success: function (result) {
+          if(result && result[0] === 0) {
+            result = result[1]['stats'];
+            var matchList = null;
+            $.each(result, function (index, item) {
+               if (item['type'] === '9') {
+                 matchList = item['list'];
+                 return false;
+               }
+            });
+            // bind html
+            bindHTML(matchList);
+          }
+        }
+      });
+    }
+  }
+})();
+matchListRender.init();
