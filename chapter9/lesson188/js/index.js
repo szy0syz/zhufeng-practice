@@ -171,6 +171,7 @@ var matchListRender = (function () {
     init: function () {
       $.ajax({
         url: 'http://matchweb.sports.qq.com/html/matchStatV37?mid=100002:2365',
+        //url: 'json/matchList.json',
         dataType: 'jsonp',
         success: function (result) {
           if(result && result[0] === 0) {
