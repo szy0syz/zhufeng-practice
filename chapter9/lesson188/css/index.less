@@ -254,9 +254,20 @@ a, a:active, a:visited, a:hover, a:target {
         padding: .08rem;
         height: .31rem;
         line-height: .31rem;
+        font-size: .24rem;
         color: extract(@cl, 4);
         background: rgba(0, 0, 0, 0.5);
+      }
+    }
 
+    p {
+      font-size: .24rem;
+      line-height: .28rem;
+    }
+
+    &.bg {
+      p {
+        color: extract(@cl, 6);
       }
     }
   }
