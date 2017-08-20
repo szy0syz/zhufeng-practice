@@ -167,7 +167,13 @@ var matchListRender = (function () {
     // document.documentElement 仅是移动端有效，PC端无效！document.defaultView.getComputedStyle(document.documentElement)['fontSize']
     // $matchListUL.html(html).css('width', parseFloat(document.documentElement.style.fontSize || document.body.style.fontSize) * 2.4 * data.length + 'px');
     // 为了兼容PC端
-    $matchListUL.html(html).css('width', parseFloat(document.defaultView.getComputedStyle(document.documentElement)['fontSize']) * 2.4 * data.length + 'px');
+    $matchListUL.html(html).css('width', parseFloat(document.defaultView.getComputedStyle(document.documentElement)['fontSize']) * 2.4 * data.length + 18 + 'px');
+
+    new IScroll('.matchList', {
+      scrollX: true,
+      srcollY: false,
+      click: true
+    });
   }
 
   return {
