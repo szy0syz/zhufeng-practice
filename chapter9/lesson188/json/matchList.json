@@ -1,5 +1,3 @@
-// http://matchweb.sports.qq.com/html/matchStatV37?mid=100002:2365
-
 [
   0,
   {
@@ -24,7 +22,7 @@
             "videoCate": "3",
             "cateDesc": "\u5168\u573a\u96c6\u9526",
             "desc": "",
-            "pic": "http:\/\/puui.qpic.cn\/vpic\/0\/z0020jvzcm6_160_90_3.jpg\/0",
+            "pic": "static\/j1.jpeg",
             "duration": "00:02:32",
             "view": "4085403",
             "covers": "1vg08oqg75nciil",
@@ -45,7 +43,7 @@
             "videoCate": "3",
             "cateDesc": "\u5168\u573a\u96c6\u9526",
             "desc": "",
-            "pic": "http:\/\/puui.qpic.cn\/vpic\/0\/r00207rp6zr_160_90_3.jpg\/0",
+            "pic": "static\/j2.jpeg",
             "duration": "00:02:05",
             "view": "493013",
             "covers": "1vg08oqg75nciil",
@@ -66,7 +64,7 @@
             "videoCate": "6",
             "cateDesc": "\u7403\u661f\u96c6\u9526",
             "desc": "",
-            "pic": "http:\/\/puui.qpic.cn\/vpic\/0\/b00206jyxjp_160_90_3.jpg\/0",
+            "pic": "static\/j3.jpeg",
             "duration": "00:01:32",
             "view": "2293782",
             "covers": "1vg08oqg75nciil",

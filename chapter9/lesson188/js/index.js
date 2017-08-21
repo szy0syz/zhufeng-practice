@@ -2,13 +2,13 @@
 ~function () {
   var desW = 640,
     winW = document.documentElement.clientWidth || document.body.clientWidth;
-
+  
   if (winW > desW) {
     document.getElementById('container').style.width = desW + 'px';
     // $('.container').css('width', desW); // for 兼容
     return
   }
-
+  
   document.documentElement.style.fontSize = winW / desW * 100 + 'px';
 }();
 
@@ -18,7 +18,7 @@
   var $header = $('.header'),
     $menu = $header.find('.menu'), // .menu是孙子元素所以要用find
     $nav = $header.children('.nav');
-
+  
   $menu.tap(function () {
     if ($(this).attr('isShow') === '1') {
       $nav.css({
@@ -40,38 +40,38 @@
     });
     $(this).attr('isShow', 1);
   });
-
+  
   $header.tap(function (ev) {
     console.log(ev);
   })
-
+  
 }();
 
 // -> matchInfo
 
 var matchInfo = (function () {
-
+  
   var $matchInfo = $('.macthInfo'),
     $matchInfoTemplate = $('#matchInfoTemplate');
-
+  
   // -> bind event support
   function bindEvent() {
     var $bottom = $matchInfo.children('.bottom'),
       $bottomLeft = $bottom.children('.home'),
       $bottomRight = $bottom.children('.away');
-
+    
     // 获取本地存储信息，判断是否有支持
     var support = localStorage.getItem('support');
-    if(support) {
+    if (support) {
       // 如果存在再继续处理
       support = JSON.parse(support);
       if (support.isTap) {
         $bottom.attr('isTap', true);
         // 注意这里通过JSON转换出来后都是字符串了，判断时必须坚持使用===!!!
-        support.type === '1' ? $bottomLeft.addClass('bg'):$bottomRight.addClass('bg');
+        support.type === '1' ? $bottomLeft.addClass('bg') : $bottomRight.addClass('bg');
       }
     }
-
+    
     $matchInfo.tap(function (ev) {
       var tar = ev.target,
         tarTag = tar.tagName,
@@ -79,31 +79,31 @@ var matchInfo = (function () {
         $tar = $(tar),
         $tarP = $tar.parent(),
         tarInn = $tar.html();
-
+      
       // 这里nodeName记得要大写
       if (tarTag === 'SPAN' && tarP.className === 'bottom') {
         // 如果你点击的是type就返回
         if (tar.className === 'type') return;
-
+        
         // 如果已经点击过了，使用自定义属性
         if ($bottom.attr('isTap') === 'true') return;
-
-
+        
+        
         // 使所点击方数量+1并且设置样式背景
         $tar.html(parseFloat(tarInn) + 1).addClass('bg');
-
+        
         // 重新计算进度条
         var leftN = parseFloat($bottomLeft.html()),
           rightN = parseFloat($bottomRight.html());
         // console.log(leftN,rightN, (leftN / (rightN + leftN)) * 100 + '%');
         $matchInfo.children('.middle').children('span').css('width', (leftN / (rightN + leftN)) * 100 + '%');
-
+        
         // 告诉服务器信息
         $.ajax({ // 注意又用到了事件源，此时经过判断，事件源已经是home和away了！
           url: 'http://matchweb.sports.qq.com/kbs/teamSupport?mid=100000:1468531&type=' + $tar.attr('type'),
           dataType: 'jsonp'
         });
-
+        
         // 设置自定义属性表示已经投票过！
         $bottom.attr('isTap', true);
         // 设置本地存储
@@ -111,27 +111,27 @@ var matchInfo = (function () {
           "isTap": true,
           "type": $tar.attr('type')
         }));
-
+        
       }
-
-
+      
+      
     });
   }
-
-
+  
+  
   function bindHtml(matchInfo) {
     var html = new EJS({url: 'template/matchInfo.ejs'}).render(matchInfo);
     $matchInfo.html(html);
-
+    
     window.setTimeout(function () {
       var leftNum = parseFloat(matchInfo.leftSupport),
         rightNum = parseFloat(matchInfo.rightSupport);
       $matchInfo.children('.middle').children('span').css('width', (leftNum / (leftNum + rightNum)) * 100 + '%');
     }, 300);
-
-
+    
+    
   }
-
+  
   return {
     init: function () {
       // -> get data
@@ -144,7 +144,7 @@ var matchInfo = (function () {
             var matchInfo = res['matchInfo'];
             matchInfo['leftSupport'] = res['leftSupport'];
             matchInfo['rightSupport'] = res['rightSupport'];
-
+            
             // -> bind html
             bindHtml(matchInfo);
             bindEvent();
@@ -154,12 +154,11 @@ var matchInfo = (function () {
     }
   }
 })();
-
 matchInfo.init();
 
 // -> match list
 var matchListRender = (function () {
-
+  
   function bindHTML(data) {
     var $matchList = $('.matchList'),
       $matchListUL = $matchList.children('ul');
@@ -168,36 +167,56 @@ var matchListRender = (function () {
     // $matchListUL.html(html).css('width', parseFloat(document.documentElement.style.fontSize || document.body.style.fontSize) * 2.4 * data.length + 'px');
     // 为了兼容PC端
     $matchListUL.html(html).css('width', parseFloat(window.getComputedStyle(document.documentElement)['fontSize']) * 2.4 * data.length + 18 + 'px');
-
+    
     new IScroll('.matchList', {
       scrollX: true,
       srcollY: false,
       click: true
     });
   }
-
+  
   return {
     init: function () {
+      // $.getJSON('json/matchList.json', function(data){
+      //   console.log(data);
+      //   if (result && result[0] === 0) {
+      //     result = result[1]['stats'];
+      //     var matchList = null;
+      //     $.each(result, function (index, item) {
+      //       if (item['type'] === '9') {
+      //         matchList = item['list'];
+      //         return false;
+      //       }
+      //     });
+      //     // bind html
+      //     bindHTML(matchList);
+      //   }
+      // })
+      // http://matchweb.sports.qq.com/html/matchStatV37?mid=100002:2365
       $.ajax({
-        url: 'http://matchweb.sports.qq.com/html/matchStatV37?mid=100002:2365',
-        //url: 'json/matchList.json',
-        dataType: 'jsonp',
+        //url: 'http://matchweb.sports.qq.com/html/matchStatV37?mid=100002:2365',
+        url: 'json/matchList.json',
+        dataType: 'json',
         success: function (result) {
-          if(result && result[0] === 0) {
+          if (result && result[0] === 0) {
             result = result[1]['stats'];
             var matchList = null;
             $.each(result, function (index, item) {
-               if (item['type'] === '9') {
-                 matchList = item['list'];
-                 return false;
-               }
+              if (item['type'] === '9') {
+                matchList = item['list'];
+                return false;
+              }
             });
             // bind html
             bindHTML(matchList);
           }
+        },
+        error: function (xhr, type, error) {
+          console.log(type,error)
         }
       });
     }
   }
 })();
 matchListRender.init();
+// 怕腾讯图片失效，我加了三种本地图在json里
